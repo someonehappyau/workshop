@@ -5,6 +5,11 @@
   "description": "workshop website",
   "dependencies": {
     "bower": "^1.4.1",
-    "express": "^4.12.4"
+    "express": "^4.12.4",
+    "mongodb": "^2.0.33",
+    "mongoose": "^4.0.4",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^1.0.0"
   }
 }
