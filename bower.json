@@ -1,0 +1,9 @@
+{
+  "name": "workshop",
+  "description": "workshop website",
+  "private": "true",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-mocks": "~1.4.0"
+  }
+}

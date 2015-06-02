@@ -1,0 +1,10 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "name": "workshop",
+  "description": "workshop website",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "express": "^4.12.4"
+  }
+}
