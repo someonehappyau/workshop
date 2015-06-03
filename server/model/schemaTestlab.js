@@ -3,12 +3,12 @@ var Schema=mongoose.Schema;
 
 //mongoose.connect('mongodb://localhost/test');
 var petSchema=new Schema({
-	name: String,
+	name: {type:String,unique:true},
     	type: Schema.Types.ObjectId,
 });
 
 var petTypeSchema=new Schema({
-	name:String,
+	name:{type:String,unique:true},
 });
 
 module.exports.pet=mongoose.model('pet',petSchema);

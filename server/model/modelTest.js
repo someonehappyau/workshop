@@ -1,32 +1,52 @@
 var models=require('./schemaTestlab');
+var async=require('async');
 
-//var Cat=new models.petType({name:"Cat"});
-//var Dog=new models.petType();
-//Dog.name="Dog";
+
+
+
 
 var mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost/test');
 
 var Cat;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback (done) {
-  // yay connected!
-  console.log('opened');
-//var Cat=new models.petType();
-//Cat.findOne();
+
+
+async.series([
+	function(cb){
+		mongoose.connect('mongodb://localhost/test');
+		cb();
+	},
+function(cb){
+
+var Cat=new models.petType({name:"Cat"});
+var Dog=new models.petType();
+Dog.name="Dog";
+console.log(Cat);
+Cat.save(function(err){if (err) console.log(err);});
+Dog.save();
 models.petType.findOne({name:"Cat"},function(err,cat){
 	if(err) console.log (err);
 	console.log('hi');
-	console.log(cat);
+	console.log(cat._id);
 	Cat=cat;
-	
-}).then(done);
-
-//console.log(Cat);
-
-//Cat.save();
-
-//Dog.save();
-}).then(mongoose.disconnect());
-//mongoose.disconnect();
+	var wangcai=new models.pet();
+	wangcai.name='wangcai';
+	wangcai.type=Cat._id;
+	//wangcai.save(function(err){
+	//	if (err) console.log(err);
+	//	cb();
+	//});
+	cb();
+});
+},
+function(cb){
+console.log(Cat);
+cb();
+},
+function(cb){
+mongoose.disconnect();
+cb();
+}],
+function(err){
+	if (err) console.log(err);
+	console.log('hi');	
+});
