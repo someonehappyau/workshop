@@ -1,10 +1,12 @@
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
-var schemaStatus=Schema({
+var schemaType=Schema({
 	name:{type:String, unique:true},
     description:{type:String}
 });
 
-modules.exports=mongoose.model('TDStatus',schemaStatus);
+module.exports=function(modelName){
+	return mongoose.model(modelName,schemaType);
+};
 

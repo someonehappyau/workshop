@@ -1,10 +1,10 @@
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
-var schemaCategory=Schema({
+var schemaPriority=Schema({
 	name:{type:String, unique:true},
-    	description:{type:String}
+    description:{type:String}
 });
 
-modules.exports=mongoose.model('TDCategory',schemaCategory);
+modules.exports=mongoose.model('TDPriority',schemaPriority);
 
