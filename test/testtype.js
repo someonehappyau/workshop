@@ -1,7 +1,8 @@
 var Type=require('../server/toolbox/service/svcType');
 var mongoose=require('mongoose');
 var async=require('async');
-var t=require('./testlib');
+//var t=require('./testlib');
+var Category=require('../server/toolbox/service/svcCategory');
 
 connect=function(done){
 	mongoose.connect('mongodb://localhost/test',function(err){
@@ -10,8 +11,24 @@ connect=function(done){
 };
 
 fn1=function(done){
-	Type.setTypeName('ItemType');
-	Type.addOne('op1','This is Option 1.',function(err,type){
+	for(var i=11;i<=12;i++){
+	Category.addOne('category_op'+i,'This is Option '+i+'.',function(err,type){
+		console.log(type.name);
+		if(err){
+			console.log(err);
+		}
+		else{
+			console.log(type);
+		}
+		if (i==10)
+			done();
+	});}
+};
+
+fn12=function(done){
+	//Type.setTypeName('ItemType');
+	for(var i=5;i<=6;i++)
+	Type.addOne('types_op'+i,'This is Option '+i+'.',function(err,type){
 		if(err){
 			console.log(err);
 		}
@@ -23,6 +40,7 @@ fn1=function(done){
 };
 
 fn2=function(done){
+	//console.log(Type.model.name);
 	Type.getAll(function(err,types){
 		if (!err) console.log(types);
 		done();
@@ -30,12 +48,13 @@ fn2=function(done){
 };
 
 fn3=function(done){
-	Type.setCollectionName('ItemType');
+	//Type.setTypeName('ItemType');
+	Category.addOne();
 	done();
 };
 
 fn4=function(done){
-	t.fn(function(err,ts){
+	Category.getAll(function(err,ts){
 		if(err) console.log(err);
 		else console.log(ts);
 		done();
@@ -48,4 +67,4 @@ disconnect=function(done){
 };
 
 
-async.series([connect,fn1,fn2,fn4,disconnect]);
+async.series([connect,fn1,disconnect]);

@@ -1,13 +1,13 @@
-var typeHelper=require('../model/Type');
+var Type=require('../model/Type');
 var mongoose=require('mongoose');
 
-var Type=typeHelper('Type');
-
-exports.setTypeName=function(name){
-	Type=typeHelper(name);
-};
+//var Type=typeHelper('Type');
 
 exports.addOne=function(name,desc,callback){
+	(new Type)._addOne(Type.modelName,name,desc,callback);
+};
+
+exports.addOne1=function(name,desc,callback){
 	var type=new Type;
 	type.name=name;
 	type.description=desc;
@@ -31,7 +31,7 @@ exports.getOneById=function(id,callback){
 };
 
 exports.getAll=function(callback){
-	console.log(Type.collection.name);
+	//console.log(Type.collection.name);
 	Type.find(function(err,types){
 		if(err)
 			callback(err,null);

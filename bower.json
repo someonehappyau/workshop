@@ -4,6 +4,10 @@
   "private": "true",
   "dependencies": {
     "angular": "~1.4.0",
-    "angular-mocks": "~1.4.0"
+    "angular-mocks": "~1.4.0",
+    "bootstrap": "~3.3.4",
+    "angular-resource": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-bootstrap": "~0.13.0"
   }
 }

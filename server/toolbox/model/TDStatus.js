@@ -1,10 +1,4 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
+var typeHelper=require('./schemaType');
 
-var schemaStatus=Schema({
-	name:{type:String, unique:true},
-    description:{type:String}
-});
-
-modules.exports=mongoose.model('TDStatus',schemaStatus);
+module.exports=typeHelper('TDStatus');
 

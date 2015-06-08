@@ -1,12 +1,4 @@
-var mongoose=require('mongoose');
-var Schema=mongoose.Schema;
+var typeHelper=require('./schemaType');
 
-var schemaType=Schema({
-	name:{type:String, unique:true},
-    description:{type:String}
-});
-
-module.exports=function(modelName){
-	return mongoose.model(modelName,schemaType);
-};
+module.exports=typeHelper('Type');
 
