@@ -23,8 +23,16 @@ toolboxControllers.controller('TodolistCtrl',['$scope', 'TDCategorySvc', '$modal
 					console.log(result);
 				});
 			};
+			
+			$scope.addOne=function(){
+				var modalInstance=$modal.open({
+ 				   	animation:true,
+					templateUrl:'partials/categoryEdit.html',
+					controller:'AddCategoryCtrl'
+				});	
+			};
 
-			$scope.editIt=function(Id){
+			$scope.editIt=function(id){
 
 			};
 
@@ -41,6 +49,19 @@ toolboxControllers.controller('ModalInstanceCtrl',['$scope','TDCategorySvc','$mo
 	});
 }]);
 
-toolboxControllers.controller('AddCategoryCtrl',['$scope','TDCategorySvc','$modalInstance','Id',function($scope, TDCategorySvc, $modalInstance, Id){
+toolboxControllers.controller('AddCategoryCtrl',['$scope','TDCategorySvc','$modalInstance',function($scope, TDCategorySvc, $modalInstance){
 	$scope.title='Add Category';
-	
+	$scope.btnName='ADD';
+	$scope.category={
+		name:'',
+		description:''
+	};
+	$scope.submitForm=function(){
+		var category=new TDCategorySvc();
+		//category.category=$scope.category;
+		//category.data='aaa';
+		category.$add(function(){
+			console.log(category);
+		});
+	};
+}]);

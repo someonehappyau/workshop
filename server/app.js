@@ -12,6 +12,7 @@ var app=express();
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 app.use('/svcToolbox',rtToolbox);
 

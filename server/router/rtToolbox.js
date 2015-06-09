@@ -26,13 +26,19 @@ router.delete('/todolist/category/:id',function(req,res){
 });
 
 router.post('/todolist/category/:id',function(req,res){
-	if (req.query.update===true){
+	console.log(req.params);
+	console.log(req.body);
+	console.log(req.query);
+	//console.log(req);
+	res.end();
+	return;
+	if (req.params.id==='update'){
 		ctlTodolist.updateOneById(req.params.id,req.body.name,req.body.description,function(err,category){
 			if (err) res.status(500).end(err);
 			else res.end(category);
 		});
 	}
-	else{
+	else if(req.params.id==='add'){
 		ctlTodolist.addCategory(req.body.name,req.body.description,function(err,category){
 			if (err) res.status(500).end(err);
 			else res.end(JSON.stringify(category));

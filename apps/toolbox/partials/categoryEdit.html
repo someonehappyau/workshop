@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
-			<form>
+			<form ng-submit="submitForm()">
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
@@ -18,7 +18,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="text" name="name" ng-model="name" ng-trim="true" ng-minlength="1" ng-maxlength="20"></td>
+						<td><input type="text" name="name" ng-model="category.name" ng-trim="true" ng-minlength="1" ng-maxlength="20" value="{{category.name}}"></td>
 					</tr>
 				</tbody>
 				<thead>
@@ -28,12 +28,12 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="text" name="description" ng-model="description" ng-trim="true" ng-minlength="1" ng-maxlength="250"></td>
+						<td><input type="text" name="description" ng-model="category.description" ng-trim="true" ng-minlength="1" ng-maxlength="250" value="{{category.description}}"></td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td><input type="button" value="{{btnName}}" ng-click="clickEdit()"></td>
+						<td><input type="submit" value="{{btnName}}"></td>
 					</tr>
 				</tfoot>
 			</table>
