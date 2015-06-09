@@ -1,0 +1,45 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<h1>{{title}}</h1>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<form>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="name" ng-model="name" ng-trim="true" ng-minlength="1" ng-maxlength="20"></td>
+					</tr>
+				</tbody>
+				<thead>
+					<tr>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="description" ng-model="description" ng-trim="true" ng-minlength="1" ng-maxlength="250"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td><input type="button" value="{{btnName}}" ng-click="clickEdit()"></td>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+
+

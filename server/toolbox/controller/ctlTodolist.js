@@ -13,3 +13,11 @@ exports.getCategory=function(id, callback){
 		else callback(null,category);
 	});
 };
+
+exports.addCategory=function(name,desc,callback){
+	svcCategory.addOne(name,desc,callback);
+};
+
+exports.updateCategory=function(id,name,desc,callback){
+	svcCategory.updateOneById(id,name,desc,callback);
+};

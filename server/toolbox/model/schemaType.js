@@ -34,6 +34,19 @@ schemaType.methods._getOneById=function(modelName,id,callback){
 	});
 };
 
+schemaType.methods._newOne=function(modelName,name,desc,callback){
+	var Type=this.model(modelName);
+	var type=new Type;
+	type.name=name;
+	type.description=desc;
+	type.save(callback);
+};
+
+schemaType.methods._updateOneById=function(modelName,id,name,desc,callback){
+	var Type=this.model(modelName);
+	Type.findByIdAndUpdate(id,{name:name,description:desc},callback);
+};
+
 module.exports=function(modelName){
 	return mongoose.model(modelName,schemaType);
 };

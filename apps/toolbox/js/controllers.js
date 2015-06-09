@@ -21,7 +21,7 @@ toolboxControllers.controller('TodolistCtrl',['$scope', 'TDCategorySvc', '$modal
 			$scope.deleteIt=function(Id){
 				var result=TDCategorySvc.delete({id:Id},function(){
 					console.log(result);
-				}
+				});
 			};
 
 			$scope.editIt=function(Id){
@@ -40,3 +40,7 @@ toolboxControllers.controller('ModalInstanceCtrl',['$scope','TDCategorySvc','$mo
 		$scope.category=category;
 	});
 }]);
+
+toolboxControllers.controller('AddCategoryCtrl',['$scope','TDCategorySvc','$modalInstance','Id',function($scope, TDCategorySvc, $modalInstance, Id){
+	$scope.title='Add Category';
+	

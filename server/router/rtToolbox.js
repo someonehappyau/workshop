@@ -20,8 +20,24 @@ router.get('/todolist/category/:id',function(req,res){
 
 router.delete('/todolist/category/:id',function(req,res){
 	ctlTodolist.findByIdAndRemove(req.params.id,function(err){
-		if (err) 
+		if (err) res.status(500).end(err);
+		else res.status(200).end();	
 	});
+});
+
+router.post('/todolist/category/:id',function(req,res){
+	if (req.query.update===true){
+		ctlTodolist.updateOneById(req.params.id,req.body.name,req.body.description,function(err,category){
+			if (err) res.status(500).end(err);
+			else res.end(category);
+		});
+	}
+	else{
+		ctlTodolist.addCategory(req.body.name,req.body.description,function(err,category){
+			if (err) res.status(500).end(err);
+			else res.end(JSON.stringify(category));
+		});
+	}
 });
 
 router.get('/todolist/categories',function(req,res){
