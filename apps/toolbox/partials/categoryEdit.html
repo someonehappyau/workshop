@@ -9,6 +9,13 @@
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
+			<div class="alert {{alertStyle}}" role="alert">{{alertMsg}}</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 			<form ng-submit="submitForm()">
 			<table class="table table-bordered table-striped">
 				<thead>
@@ -18,7 +25,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><input type="text" name="name" ng-model="category.name" ng-trim="true" ng-minlength="1" ng-maxlength="20" value="{{category.name}}"></td>
+						<td><input type="text" name="name" ng-model="category.name" ng-trim="true" ng-minlength="1" ng-maxlength="20" value="{{category.name}}" {{nameIsDisabled}}></td>
 					</tr>
 				</tbody>
 				<thead>

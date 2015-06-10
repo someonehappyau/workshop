@@ -19,3 +19,7 @@ exports.newOne=function(name,desc,callback){
 exports.updateOneById=function(id,name,desc,callback){
 	(new Category)._updateOneById(Category.modelName,id,name,desc,callback);
 };
+
+exports.deleteOneById=function(id,callback){
+	(new Category)._deleteOneById(Category.modelName,id,callback);
+};

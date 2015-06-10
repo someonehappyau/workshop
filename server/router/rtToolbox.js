@@ -19,28 +19,24 @@ router.get('/todolist/category/:id',function(req,res){
 });
 
 router.delete('/todolist/category/:id',function(req,res){
-	ctlTodolist.findByIdAndRemove(req.params.id,function(err){
-		if (err) res.status(500).end(err);
+	console.log(req.params);
+	ctlTodolist.deleteOneById(req.params.id,function(err){
+		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();	
 	});
 });
 
 router.post('/todolist/category/:id',function(req,res){
-	console.log(req.params);
-	console.log(req.body);
-	console.log(req.query);
-	//console.log(req);
-	res.end();
-	return;
 	if (req.params.id==='update'){
-		ctlTodolist.updateOneById(req.params.id,req.body.name,req.body.description,function(err,category){
-			if (err) res.status(500).end(err);
-			else res.end(category);
+		ctlTodolist.updateOneById(req.body.category._id,req.body.category.name,req.body.category.description,function(err,category){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else res.end(JSON.stringify(category));
 		});
 	}
 	else if(req.params.id==='add'){
-		ctlTodolist.addCategory(req.body.name,req.body.description,function(err,category){
-			if (err) res.status(500).end(err);
+		ctlTodolist.addCategory(req.body.category.name,req.body.category.description,function(err,category){
+			console.log(err);
+			if (err) res.status(500).end(JSON.stringify(err));
 			else res.end(JSON.stringify(category));
 		});
 	}
