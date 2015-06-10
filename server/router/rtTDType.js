@@ -10,49 +10,44 @@ router.get('/todolist/:typeName/:id',function(req,res){
 		});
 	}
 	else if (req.params.id==='byname'){
-		ctlTodolist.findByName(req.query.name,function(err,category){
-			if (err) res.status(500).end(JSON.stringify(err));
-			else if (category===null)
+		ctrlTDType.getTDTypeByName(req.params.typeName,req.query.name,function(err,type){
+			if (err) 
 				res.status(500).end(JSON.stringify(err));
-			else res.end(JSON.stringify(category));
+			else if (type===null)
+				res.status(500).end(JSON.stringify(err));
+			else 
+				res.end(JSON.stringify(type));
 		});
 	}
 	else{
-		ctlTodolist.getCategory(req.params.id,function(err,category){
+		ctrlTDType.getTDType(req.params.typeName,req.params.id,function(err,type){
 			if(err) res.status(500).end(JSON.stringify(err));
-			else res.end(JSON.stringify(category));
+			else res.end(JSON.stringify(type));
 		});		
 	}
 
 });
 
-router.delete('/todolist/category/:id',function(req,res){
-	ctlTodolist.deleteOneById(req.params.id,function(err){
+router.delete('/todolist/:typeName/:id',function(req,res){
+	ctrlTDType.deleteTDTypeById(req.params.typeName,req.params.id,function(err){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();	
 	});
 });
 
-router.post('/todolist/category/:id',function(req,res){
+router.post('/todolist/:typeName/:id',function(req,res){
 	if (req.params.id==='update'){
-		ctlTodolist.updateOneById(req.body.category._id,req.body.category.name,req.body.category.description,function(err,category){
+		ctrlTDType.updateTDTypeById(req.params.typeName,req.body.type._id,req.body.type.name,req.body.type.description,function(err,type){
 			if (err) res.status(500).end(JSON.stringify(err));
-			else res.end(JSON.stringify(category));
+			else res.end(JSON.stringify(type));
 		});
 	}
 	else if(req.params.id==='add'){
-		ctlTodolist.addCategory(req.body.category.name,req.body.category.description,function(err,category){
+		ctrlTDType.addTDType(req.body.type.name,req.body.type.description,function(err,type){
 			if (err) res.status(500).end(JSON.stringify(err));
-			else res.end(JSON.stringify(category));
+			else res.end(JSON.stringify(type));
 		});
 	}
-});
-
-router.get('/todolist/categories',function(req,res){
-	ctlTodolist.getCategories(function(err,categories){
-		if (err) res.status(500).end(JSON.stringify(err));
-		else res.end(JSON.stringify(categories));
-	});
 });
 
 module.exports=router;

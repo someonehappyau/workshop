@@ -1,0 +1,39 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">Todo List</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			Search: <input ng-model="query">
+			<input type="button" ng-click="addTDType()" value="ADD">
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-dblclick="showTDTypeDetail(type._id)" ng-repeat="type in types | filter: query">
+						<td>{{type.name}}</td>
+						<td>{{type.description | limitTo:20}}</td>
+						<td><button type="button" class="btn btn-primary" ng-click="editTDType(type._id)">EDIT</button></td>
+						<td><button type="button" class="btn btn-danger" ng-click="deleteTDType(type._id)">DELETE</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
