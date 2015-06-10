@@ -25,3 +25,7 @@ exports.updateOneById=function(id,name,desc,callback){
 exports.deleteOneById=function(id,callback){
 	svcCategory.deleteOneById(id,callback);
 };
+
+exports.findByName=function(name,callback){
+	svcCategory.findByName(name,callback);
+};

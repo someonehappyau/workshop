@@ -23,3 +23,7 @@ exports.updateOneById=function(id,name,desc,callback){
 exports.deleteOneById=function(id,callback){
 	(new Category)._deleteOneById(Category.modelName,id,callback);
 };
+
+exports.findByName=function(name,callback){
+	(new Category)._findByName(Category.modelName,name,callback);
+};

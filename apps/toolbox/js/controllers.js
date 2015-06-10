@@ -78,6 +78,7 @@ toolboxControllers.controller('AddCategoryCtrl',['$scope','TDCategorySvc','$moda
 	$scope.alertMsg='';
 	$scope.alertStyle='';
 	$scope.btnName='ADD';
+	$scope.nameIsDisabled=false;
 	$scope.category={
 		name:'',
 		description:''
@@ -100,6 +101,18 @@ toolboxControllers.controller('AddCategoryCtrl',['$scope','TDCategorySvc','$moda
 			$scope.alertStyle='alert-danger';
 		});
 	};
+
+	$scope.checkDuplication=function(){
+		var category=new TDCategorySvc();
+		category.$byname({name:$scope.category.name}).then(function(data){
+			$scope.msgDup='Already Existed!';
+			$scope.msgDupStyle='alert-danger';
+		},
+		function(){
+			$scope.msgDup='';
+			$scope.msgDupStyle='';
+		});
+	};
 }]);
 
 
@@ -108,7 +121,7 @@ toolboxControllers.controller('EditCategoryCtrl',['$scope','TDCategorySvc','$mod
 	$scope.alertMsg='';
 	$scope.alertStyle='';
 	$scope.btnName='EDIT';
-	$scope.nameIsDisabled='disabled';
+	$scope.nameIsDisabled=true;
 	$scope.category={name:'',description:''};
 	var category=new TDCategorySvc();
 	category.$get({id:id}).then(function(category){

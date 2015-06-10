@@ -44,6 +44,11 @@ schemaType.methods._deleteOneById=function(modelName,id,callback){
 	Type.findByIdAndRemove(id,callback);
 };
 
+schemaType.methods._findByName=function(modelName,name,callback){
+	var Type=this.model(modelName);
+	Type.findOne({name:name},callback);
+};
+
 module.exports=function(modelName){
 	return mongoose.model(modelName,schemaType);
 };

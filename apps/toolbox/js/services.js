@@ -5,5 +5,6 @@ toolboxServices.factory('TDCategorySvc',['$resource',function($resource){
 		list:{method:'GET',params:{id:'list'},isArray:true},
 		add:{method:'POST',params:{id:'add'}},
 		update:{method:'POST',params:{id:'update'}},
+	        byname:{method:'GET',params:{id:'byname'}}
 	});
 }]);

@@ -9,6 +9,14 @@ router.get('/todolist/category/:id',function(req,res){
 			else res.end(JSON.stringify(categories));
 		});
 	}
+	else if (req.params.id==='byname'){
+		ctlTodolist.findByName(req.query.name,function(err,category){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (category===null)
+				res.status(500).end(JSON.stringify(err));
+			else res.end(JSON.stringify(category));
+		});
+	}
 	else{
 		ctlTodolist.getCategory(req.params.id,function(err,category){
 			if(err) res.status(500).end(JSON.stringify(err));
@@ -19,7 +27,6 @@ router.get('/todolist/category/:id',function(req,res){
 });
 
 router.delete('/todolist/category/:id',function(req,res){
-	console.log(req.params);
 	ctlTodolist.deleteOneById(req.params.id,function(err){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();	
@@ -35,7 +42,6 @@ router.post('/todolist/category/:id',function(req,res){
 	}
 	else if(req.params.id==='add'){
 		ctlTodolist.addCategory(req.body.category.name,req.body.category.description,function(err,category){
-			console.log(err);
 			if (err) res.status(500).end(JSON.stringify(err));
 			else res.end(JSON.stringify(category));
 		});
@@ -43,7 +49,6 @@ router.post('/todolist/category/:id',function(req,res){
 });
 
 router.get('/todolist/categories',function(req,res){
-	//res.end('hi');
 	ctlTodolist.getCategories(function(err,categories){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.end(JSON.stringify(categories));
