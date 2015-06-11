@@ -2,10 +2,11 @@
 
 var todolistControllers=angular.module('todolistControllers',[]);
 
-todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$rootScope','$routeParams',
-		function($scope,TDTypeSvc,$modal,$rootScope,$routeParams){
+todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$rootScope','$routeParams','$location',
+		function($scope,TDTypeSvc,$modal,$rootScope,$routeParams,$location){
+			$scope.title=$routeParams.typeName+' Configuration';
 			$scope.updateTDTypes=function(){
-				TDTypeSvc.list({typeName:$routeParams.typeName}).then(function(types){
+				TDTypeSvc.list({typeName:$routeParams.typeName}).$promise.then(function(types){
 					$scope.types=types;
 				},
 				function(err){console.log(err);});
@@ -58,15 +59,22 @@ todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$r
 				});	
 			};
 
+
 			$scope.deleteTDType=function(typeId){
-				var type=new TDTypeSvc();
-				type.$delete({id:typeId,typeName:$routeParams.typeName}).then(function(result){
-					$scope.updateTDTypes();
-					console.log(result);
-				},
-				function(result){
-					console.log(result);
-				});
+				showMsgBox($modal,'Please confirm you want to delete this item.',true,true,
+					function(result){
+						var type=new TDTypeSvc();
+						type.$delete({id:typeId,typeName:$routeParams.typeName}).then(function(result){
+							$scope.updateTDTypes();
+							console.log(result);
+						},
+						function(result){
+							console.log(result);
+						});
+					},
+					function(result){
+						//Cancelled, doing nothing.
+					});
 			};
 			
 			var myListener=$scope.$on('TDTypeUpdate',function(event){
@@ -74,18 +82,25 @@ todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$r
 			});
 
 			$scope.$on('destroy',myListener);
+
+			var routeListener=$scope.$on('$routeChangeError',function(event, current, previous, rejection){
+				if (rejection==='VALIDATION FAILED'){
+					$location.path('/todolist');
+				}
+			});
 		}]);
 
 
 todolistControllers.controller('mdlTDTypeDetailCtrl',['$scope','TDTypeSvc','$modalInstance','id','typeName',function($scope,TDTypeSvc,$modalInstance,id,typeName){
 	$scope.title=typeName+' Detail';
-	TDTypeSvc.get({id:id,typeName:typeName}).then(function(type){
+	TDTypeSvc.get({id:id,typeName:typeName}).$promise.then(function(type){
 		$scope.type=type;
 	},
 	function(err){
 		console.log(err);
 	});
 }]);
+
 
 todolistControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalInstance','$timeout','$rootScope','typeName',
 		function($scope, TDTypeSvc, $modalInstance,$timeout,$rootScope,typeName){
@@ -152,14 +167,12 @@ todolistControllers.controller('mdlTDTypeEditCtrl',['$scope','TDTypeSvc','$modal
 			$scope.submitForm=function(){
 				var type=new TDTypeSvc();
 				type.type=$scope.type;
-				type.$update().then(function(data){
+				type.$update({typeName:typeName}).then(function(data){
 					$rootScope.$broadcast('TDTypeUpdate');
 					$scope.alertMsg='Update '+typeName+' successfully!';
 					$scope.alertStyle='alert-success';
 					$scope.type={name:'',description:''};
 					$timeout(function(){
-						//$scope.alertMsg='';
-						//$scope.alertStyle='';
 						$modalInstance.close();
 					},1000);
 				},function(err){

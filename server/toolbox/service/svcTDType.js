@@ -1,28 +1,28 @@
-var TDTypes=require('../model/TDTypes');
+var TDType=require('../model/TDTypes');
 
 
 exports.getAll=function(modelName,callback){
-	(new TDType(modelName))._getAll(modelName,callback);
+	(new (TDType(modelName)))._getAll(modelName,callback);
 };
 
-exports.getOneById=function(id,callback){
-	(new TDType(modelName))._getOneById(TDType.modelName,id,callback);
+exports.getOneById=function(modelName,id,callback){
+	(new (TDType(modelName)))._getOneById(modelName,id,callback);
 };
 
-exports.getOneByName=function(name,callback){
-	(new TDType(modelName))._findByName(TDType.modelName,name,callback);
+exports.getOneByName=function(modelName,name,callback){
+	(new (TDType(modelName)))._findByName(modelName,name,callback);
 };
 
-exports.addOne=function(name,desc,callback){
-	(new TDType(modelName))._addOne(TDType.modelName,name,desc,callback);
+exports.addOne=function(modelName,name,desc,callback){
+	(new (TDType(modelName)))._addOne(modelName,name,desc,callback);
 };
 
-exports.updateOneById=function(id,name,desc,callback){
-	(new TDType(modelName))._updateOneById(TDType.modelName,id,name,desc,callback);
+exports.updateOneById=function(modelName,id,name,desc,callback){
+	(new (TDType(modelName)))._updateOneById(modelName,id,name,desc,callback);
 };
 
-exports.deleteOneById=function(id,callback){
-	(new TDType(modelName))._deleteOneById(TDType.modelName,id,callback);
+exports.deleteOneById=function(modelName,id,callback){
+	(new (TDType(modelName)))._deleteOneById(modelName,id,callback);
 };
 
 

@@ -20,7 +20,7 @@ router.get('/todolist/:typeName/:id',function(req,res){
 		});
 	}
 	else{
-		ctrlTDType.getTDType(req.params.typeName,req.params.id,function(err,type){
+		ctrlTDType.getTDTypeById(req.params.typeName,req.params.id,function(err,type){
 			if(err) res.status(500).end(JSON.stringify(err));
 			else res.end(JSON.stringify(type));
 		});		
@@ -43,7 +43,7 @@ router.post('/todolist/:typeName/:id',function(req,res){
 		});
 	}
 	else if(req.params.id==='add'){
-		ctrlTDType.addTDType(req.body.type.name,req.body.type.description,function(err,type){
+		ctrlTDType.addTDType(req.params.typeName,req.body.type.name,req.body.type.description,function(err,type){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else res.end(JSON.stringify(type));
 		});

@@ -5,6 +5,7 @@ var path=require('path');
 var bodyParser=require('body-parser');
 
 var rtToolbox=require('./router/rtToolbox');
+var rtTDType=require('./router/rtTDType');
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -14,6 +15,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+app.use('/svcToolbox',rtTDType);
 app.use('/svcToolbox',rtToolbox);
 
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
