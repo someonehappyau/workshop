@@ -21,7 +21,7 @@ function showMsgBox($modal,msg,btnOk,btnCancel,cbOk,cbCancel){
 	modalInstance.result.then(cbOk,cbCancel);
 };
 
-todolistControllers.controller('mdlMsgBoxCtrl',['$scope','$modalInstance','msg','btnOk','btnCancel',
+toolboxControllers.controller('mdlMsgBoxCtrl',['$scope','$modalInstance','msg','btnOk','btnCancel',
 		function($scope,$modalInstance,msg,btnOk,btnCancel){
 			$scope.msg=msg;
 

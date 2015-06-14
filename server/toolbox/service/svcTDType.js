@@ -1,5 +1,8 @@
 var TDType=require('../model/TDTypes');
 
+exports.initialize=function(modelName){
+	TDType(modelName);	
+};
 
 exports.getAll=function(modelName,callback){
 	(new (TDType(modelName)))._getAll(modelName,callback);

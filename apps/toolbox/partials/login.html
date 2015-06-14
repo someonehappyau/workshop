@@ -1,0 +1,52 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<h1>Login</h1>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div class="alert {{alertStyle}}" role="alert">{{alertMsg}}</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<form ng-submit="submitForm()">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" name="username" ng-model="user.username" ng-trim="true" ng-minlength="1" ng-maxlength="20" required="true"></td>
+					</tr>
+				</tbody>
+				<thead>
+					<tr>
+						<th>Password</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="password" name="password" ng-model="user.password" ng-trim="true" ng-minlength="1" ng-maxlength="20" required="true"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td><input type="submit" value="Login"></td>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+
+

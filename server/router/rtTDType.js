@@ -2,6 +2,8 @@ var express=require('express');
 var router=express.Router();
 var ctrlTDType=require('../toolbox/controller/ctrlTDType');
 
+ctrlTDType.initialize();
+
 router.get('/todolist/:typeName/:id',function(req,res){
 	if (req.params.id==='list'){
 		ctrlTDType.getTDTypes(req.params.typeName,function(err,types){

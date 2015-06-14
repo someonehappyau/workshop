@@ -1,4 +1,10 @@
 var svcTDType=require('../service/svcTDType');
+var mongoose=require('mongoose');
+
+exports.initialize=function(){
+	svcTDType.initialize('UserRole');
+	svcTDType.initialize('UserStatus');
+};
 
 exports.getTDTypes=function(typeName,callback){
 	svcTDType.getAll(typeName,callback);

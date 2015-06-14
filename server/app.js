@@ -6,8 +6,8 @@ var bodyParser=require('body-parser');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 
-var rtToolbox=require('./router/rtToolbox');
 var rtTDType=require('./router/rtTDType');
+var rtUser=require('./router/rtUser');
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -24,13 +24,25 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var User=require('toolbox/model/User');
-passport.use(LocalStrategy(User.authenticate()));
+var User=require('./toolbox/model/User');
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use('/svcToolbox',rtTDType);
-app.use('/svcToolbox',rtToolbox);
+var checkUserRole=function(role){
+	return [
+		passport.authenticate('local'),
+		function(req,res,next){
+			if(req.user && req.user.role==='')
+				next();
+			else
+				res.send(401, 'Unauthorized');
+		}
+	];
+};
+
+app.use('/svcTodolist',rtTDType);
+app.use('/svcToolbox',rtUser);
 
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
 app.use('/bower',express.static(path.join(__dirname,'../bower_components')));
@@ -38,3 +50,9 @@ app.use(express.static(__dirname + '/public'));
 
 
 app.listen(3000);
+
+process.on('uncaughtException', function (err) {
+	  console.log('Caught exception: ' + err);
+});
+
+
