@@ -39,7 +39,8 @@ router.delete('/todolist/user/:id',function(req,res){
 router.post('/todolist/user/:id',function(req,res){
 	if (req.params.id==='login'){
 		passport.authenticate('local',function(err,user){
-			if(err || !user) res.status(500).end();
+			if(err) res.status(500).end(JSON.stringify(err));
+			else if (!user) res.status(401).end('Username and/or Password is incorrect.');
 			else{
 				ctrlUser.populateUser(user,function(err,user){
 					if (err) res.status(500).end(JSON.stringify(err));

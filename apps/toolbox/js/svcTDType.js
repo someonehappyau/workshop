@@ -1,6 +1,6 @@
 'use strict';
 
-todolistServices.factory('TDTypeSvc',['$resource',function($resource){
+toolboxServices.factory('TDTypeSvc',['$resource',function($resource){
 	return $resource('/svcTodolist/todolist/:typeName/:id',{id:'list'},{
 		list:{method:'GET',params:{id:'list'},isArray:true},
 		add:{method:'POST',params:{id:'add'}},

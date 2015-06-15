@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<title>ToolBox</title>
 	<link rel="stylesheet" href="/bower/bootstrap/dist/css/bootstrap.css">
+	<script src="/bower/jquery/dist/jquery.js"></script>
+	<script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="/bower/angular/angular.js"></script>
 	<script src="/bower/angular-route/angular-route.js"></script>
 	<script src="/bower/angular-resource/angular-resource.js"></script>
@@ -53,11 +55,15 @@
 	        <li><a href="#">About</a></li>
 	      </ul>
 		  <ul class="nav navbar-nav navbar-right">
-			  <li><a ng-if="currentUser" href="">{{currentUser.username}}</a></li>
-		  	<li>
+			  <li ng-if="currentUser" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">{{currentUser.username}} <span class="caret"></span></a>
+			  	<ul class="dropdown-menu" role="menu">
+					<li><a href="" ng-click="logout()">Log Out</a></li>
+				</ul>
+			  </li>
+		  	<li ng-if="!currentUser">
 				<a href="" ng-click="register()">Register</a>
 			</li>
-			<li>
+			<li ng-if="!currentUser">
 				<a href="" ng-click="login()">Login</a>
 			</li>
 		  </ul>

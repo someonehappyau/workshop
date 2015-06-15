@@ -11,7 +11,10 @@ toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_
 			$scope.setCurrentUser=function(user){
 				$scope.currentUser = user;
 			};
-
+	
+			$scope.logout=function(){
+				$scope.currentUser=null;
+			};
 			
 			$scope.register=function(){
 				showRegisterBox($modal);

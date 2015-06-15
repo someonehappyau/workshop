@@ -54,7 +54,7 @@ toolboxApp.constant('AUTH_EVENTS', {
 .constant('USER_ROLES', {
 	  all: '*',
 	  admin: 'admin',
-	  editor: 'editor',
+	  user: 'user',
 	  guest: 'guest'
 });
 
