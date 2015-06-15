@@ -44,6 +44,7 @@ var checkUserRole=function(role){
 app.use('/svcTodolist',rtTDType);
 app.use('/svcToolbox',rtUser);
 
+app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
 app.use('/bower',express.static(path.join(__dirname,'../bower_components')));
 app.use(express.static(__dirname + '/public'));

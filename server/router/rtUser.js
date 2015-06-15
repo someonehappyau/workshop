@@ -46,7 +46,7 @@ router.post('/todolist/user/:id',function(req,res){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
 						if (user.role.name==='user' && user.status.name==='normal'){
-							res.status(200).end(JSON.stringify(user));
+							res.status(200).end(JSON.stringify({sessionid:req.sessionID,user:user}));
 						}
 						else
 							res.status(401).end('Login failed');
