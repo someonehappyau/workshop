@@ -35,3 +35,7 @@ exports.updatePl=function(id,pl,plexpiry,callback){
 exports.populateUser=function(user,callback){
 	svcUser.populateUser(user,callback);
 };
+
+exports.profile=function(pl,username,callback){
+	svcUser.profile(pl,username,callback);
+};

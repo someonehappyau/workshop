@@ -20,6 +20,8 @@
 	<script src="js/ctrlLogin.js"></script>
 	<script src="js/ctrlMsgBox.js"></script>
 
+	<script src="js/ctrlToolbox.js"></script>
+
 	<script src="js/ctrlTodolist.js"></script>
 	<script src="js/ctrlTDType.js"></script>
 	
@@ -56,15 +58,15 @@
 	        <li><a href="#">About</a></li>
 	      </ul>
 		  <ul class="nav navbar-nav navbar-right">
-			  <li ng-if="currentUser" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">{{currentUser.username}} <span class="caret"></span></a>
+			  <li ng-if="isLoggedin()" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">{{getUsername()}} <span class="caret"></span></a>
 			  	<ul class="dropdown-menu" role="menu">
 					<li><a href="" ng-click="logout()">Log Out</a></li>
 				</ul>
 			  </li>
-		  	<li ng-if="!currentUser">
+		  	<li ng-if="!isLoggedin()">
 				<a href="" ng-click="register()">Register</a>
 			</li>
-			<li ng-if="!currentUser">
+			<li ng-if="!isLoggedin()">
 				<a href="" ng-click="login()">Login</a>
 			</li>
 		  </ul>

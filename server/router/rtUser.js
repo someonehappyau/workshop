@@ -47,9 +47,6 @@ router.post('/todolist/user/:id',function(req,res){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
 						if (user.role.name==='user' && user.status.name==='normal'){
-
-							user.salt='';
-							user.hash='';
 							bcrypt.hash('loggedin'+Date.now(),8,function(err,hash){
 
 								if (err) res.status(500).end(JSON.stringify(err));
@@ -59,12 +56,15 @@ router.post('/todolist/user/:id',function(req,res){
 									d.setSeconds(d.getSeconds()+15);
 									ctrlUser.updatePl(user._id,hash,Date.now()+15000,function(err,user){
 									if (err) res.status(500).end(JSON.stringify(err));
-									else
+									else{
+										user.hash='';
+										user.salt='';
 										res
 									.status(200)
 									.cookie('pl',hash,{maxAge:15000}) 
 									.cookie('username',user.username,{maxAge:15000}) 
 									.end(JSON.stringify({sessionid:req.sessionID,user:user}));
+									}
 									});
 								}
 							});
@@ -80,6 +80,25 @@ router.post('/todolist/user/:id',function(req,res){
 		ctrlUser.register(req.body.user.username,req.body.user.password,function(err,user){
 			if (err) {res.status(500).end(JSON.stringify(err));}
 			else res.status(200).end(JSON.stringify(user));
+		});
+	}
+	else if (req.params.id==='profile'){
+		ctrlUser.profile(req.body.pl,req.body.username,function(err,user){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!user){
+ 				res
+				.status(401)
+				.cookie('pl','')
+				.cookie('username','')
+				.end();
+			}
+			else{
+				user.hash='';
+				user.salt='';
+				res
+				.status(200)
+				.end(JSON.stringify({sessionid:req.seesionID,user:user}));
+			}
 		});
 	}
 	else{

@@ -10,38 +10,6 @@ var toolboxApp=angular.module('toolboxApp',[
 	'todolistServices'
 ]);
 
-toolboxApp.config(['$routeProvider',
-		function($routeProvider){
-			$routeProvider.
-				when('/todolist',{
-					templateUrl:'partials/todolist.html',
-					controller:'TodolistCtrl'
-				}).
-				when('/todolist/config/:typeName',{
-					templateUrl:'partials/TDConfig.html',
-					controller:'TDTypeCtrl',
-					resolve:{
-						validation: function($q,$route){
-							var deferred=$q.defer();
-							var typeName=$route.current.params.typeName;
-							if (typeName==='TDCategory' || 
-							    typeName==='TDStatus' ||
-								typeName==='UserStatus' ||
-								typeName==='UserRole'){
-								deferred.resolve();
-							    }
-							else{
-								deferred.reject('VALIDATION FAILED');
-							}
-							return deferred.promise;
-						}
-					}
-								
-				}).
-				otherwise({
-					redirectTo:'/todolist'
-				});
-		}]);
 
 
 toolboxApp.constant('AUTH_EVENTS', {
@@ -58,8 +26,14 @@ toolboxApp.constant('AUTH_EVENTS', {
 	  user: 'user',
 	  guest: 'guest'
 })
-.run(['$cookies',function($cookies){
-	console.log($cookies.getAll());	
+.run(['$cookies','AuthService',function($cookies,AuthService){
+	console.log(Object.keys($cookies.getAll()).indexOf('pl'));
+	if (Object.keys($cookies.getAll()).indexOf('pl')!==-1 && Object.keys($cookies.getAll()).indexOf('username')!==-1)
+   		if($cookies.get('pl')!=='' && $cookies.get('username')!=='' && AuthService.isAuthenticated()===false){
+			console.log('profile');
+			console.log(AuthService.isAuthenticated());
+			AuthService.profile();
+		}
 }]);
 
 toolboxApp.service('Session', function () {
@@ -83,8 +57,6 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
 			svcUser.password=password;
 			svcUser.$login().then(function(res){
 				Session.create(res.sessionid,res.user);
-				console.log(res.user);
-				console.log($cookies.getAll());
 				callback(null,res.user);
 			},
 			function(err){
@@ -92,7 +64,16 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
 			});
 
   		};
-		 
+		
+		authService.profile=function(){
+			var svcUser=new UserSvc();
+			svcUser.pl=$cookies.get('pl');
+			svcUser.username=$cookies.get('username');
+			svcUser.$profile().then(function(res){
+				Session.create(res.sessionid,res.user);
+			});
+		};
+
 		  authService.isAuthenticated = function () {
 			      return !!Session.user;
 				    };
@@ -107,3 +88,64 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
 			 
 			  return authService;
 });
+
+
+
+toolboxApp.config(['$routeProvider',
+		function($routeProvider){
+			$routeProvider.
+				when('/toolbox',{
+					templateUrl:'partials/toolbox.html',
+					controller:'ToolboxCtrl'
+				}).
+				when('/todolist',{
+					templateUrl:'partials/todolist.html',
+					controller:'TodolistCtrl',
+					resolve:{
+						validation: ['$q','AuthService','$location',function($q,AuthService,$location){
+										var deferred=$q.defer();
+										if (AuthService.isAuthenticated()){
+											console.log('hi');
+											deferred.resolve();
+										}
+										else{
+											$location.path('/toolbox');
+											deferred.reject('NOT_AUTHENTICATED');
+										}
+										return deferred.promise;
+									}]
+					}
+				}).
+				when('/todolist/config/:typeName',{
+					templateUrl:'partials/TDConfig.html',
+					controller:'TDTypeCtrl',
+					resolve:{
+						validation: function($q,$route,AuthService,$location){
+							var deferred=$q.defer();
+							if (AuthService.isAuthenticated()){
+								var typeName=$route.current.params.typeName; 
+								if (typeName==='TDCategory'	|| 
+									typeName==='TDStatus' || 
+									typeName==='UserStatus' ||
+									typeName==='UserRole'){
+										deferred.resolve();
+							    	}
+								else{
+									$location.path('toolbox');
+									deferred.reject('VALIDATION FAILED');
+								}
+							}
+							else{
+								$location.path('/toolbox');
+								deferred.reject('NOT_AUTHENTICATED');
+							}
+							return deferred.promise;
+						}
+					}
+								
+				}).
+				otherwise({
+					redirectTo:'/todolist'
+				});
+		}]);
+

@@ -57,3 +57,21 @@ exports.populateUser=function(user,callback){
 		callback);
 };
 
+exports.profile=function(pl,username,callback){
+	User.findOne({username:username},function(err,user){
+		if (err) callback(err,null);
+		else if (!user) callback(null,false);
+		else{
+			if (user.pl===pl && user.username===username){
+				if (Date.now()<user.plexpiry)
+					console.log('small');
+				else
+					console.log('great');
+				callback(null,user);
+			}
+			else{
+				callback(null,false);
+			}
+		}
+	});
+};

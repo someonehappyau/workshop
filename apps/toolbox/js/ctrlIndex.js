@@ -2,12 +2,20 @@
 
 var toolboxControllers=angular.module('toolboxControllers',[]);
 
-toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_ROLES','AuthService',
-		function($scope,$modal,$rootScope,USER_ROLES,AuthService){
+toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_ROLES','AuthService','Session',
+		function($scope,$modal,$rootScope,USER_ROLES,AuthService,Session){
 			$scope.currentUser=null;
 			$scope.userRoles = USER_ROLES;
 			$scope.isAuthorized = AuthService.isAuthorized;
-				 
+			
+	   		$scope.isLoggedin=function(){
+				return AuthService.isAuthenticated();
+			};
+
+			$scope.getUsername=function(){
+				return Session.user.username;
+			};
+
 			$scope.setCurrentUser=function(user){
 				$scope.currentUser = user;
 			};
