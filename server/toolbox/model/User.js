@@ -5,6 +5,8 @@ var passportLocalMongoose=require('passport-local-mongoose');
 var schemaUser=new Schema({
 	username:{type:String, unique:true},
 	password:{type:String},
+    	pl:{type:String},
+    	plexpiry:{type:Date},
 	role:{type:Schema.Types.ObjectId},
 	status:{type:Schema.Types.ObjectId},
 });

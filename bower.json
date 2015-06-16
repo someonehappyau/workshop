@@ -8,6 +8,7 @@
     "bootstrap": "~3.3.4",
     "angular-resource": "~1.4.0",
     "angular-route": "~1.4.0",
-    "angular-bootstrap": "~0.13.0"
+    "angular-bootstrap": "~0.13.0",
+    "angular-cookies": "~1.4.0"
   }
 }

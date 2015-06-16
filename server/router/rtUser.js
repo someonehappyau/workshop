@@ -2,6 +2,7 @@ var express=require('express');
 var router=express.Router();
 var ctrlUser=require('../toolbox/controller/ctrlUser');
 var passport=require('passport');
+var bcrypt=require('bcrypt');
 
 router.get('/todolist/user/:id',function(req,res){
 	if (req.params.id==='list'){
@@ -46,7 +47,27 @@ router.post('/todolist/user/:id',function(req,res){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
 						if (user.role.name==='user' && user.status.name==='normal'){
-							res.status(200).end(JSON.stringify({sessionid:req.sessionID,user:user}));
+
+							user.salt='';
+							user.hash='';
+							bcrypt.hash('loggedin'+Date.now(),8,function(err,hash){
+
+								if (err) res.status(500).end(JSON.stringify(err));
+								else{
+									var d=new Date();
+									//d.setMinutes(d.getMinutes()+15);
+									d.setSeconds(d.getSeconds()+15);
+									ctrlUser.updatePl(user._id,hash,Date.now()+15000,function(err,user){
+									if (err) res.status(500).end(JSON.stringify(err));
+									else
+										res
+									.status(200)
+									.cookie('pl',hash,{maxAge:15000}) 
+									.cookie('username',user.username,{maxAge:15000}) 
+									.end(JSON.stringify({sessionid:req.sessionID,user:user}));
+									});
+								}
+							});
 						}
 						else
 							res.status(401).end('Login failed');

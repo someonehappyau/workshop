@@ -3,6 +3,7 @@ var logger=require('morgan');
 var mongoose=require('mongoose');
 var path=require('path');
 var bodyParser=require('body-parser');
+var cookieParser=require('cookie-parser');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 
@@ -16,6 +17,7 @@ var app=express();
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(require('express-session')({
 	secret: 'cat',
 	resave: false,

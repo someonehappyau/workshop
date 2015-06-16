@@ -2,6 +2,7 @@
 
 var toolboxApp=angular.module('toolboxApp',[
 	'ngRoute',
+	'ngCookies',
 	'ui.bootstrap',
 	'toolboxControllers',
 	'toolboxServices',
@@ -56,7 +57,10 @@ toolboxApp.constant('AUTH_EVENTS', {
 	  admin: 'admin',
 	  user: 'user',
 	  guest: 'guest'
-});
+})
+.run(['$cookies',function($cookies){
+	console.log($cookies.getAll());	
+}]);
 
 toolboxApp.service('Session', function () {
 	this.create = function (sessionId, user) {
@@ -70,19 +74,21 @@ toolboxApp.service('Session', function () {
 	};
 });
 
-toolboxApp.factory('AuthService', function (UserSvc, Session) {
+toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
 	  var authService = {};
 	   
-	    authService.login = function (username,password) {
+	    authService.login = function (username,password,callback) {
 			var svcUser=new UserSvc();
 			svcUser.username=username;
 			svcUser.password=password;
 			svcUser.$login().then(function(res){
 				Session.create(res.sessionid,res.user);
-				return res.user;
+				console.log(res.user);
+				console.log($cookies.getAll());
+				callback(null,res.user);
 			},
 			function(err){
-				return err
+				callback(err,null);
 			});
 
   		};

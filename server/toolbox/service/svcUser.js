@@ -44,6 +44,11 @@ exports.updateStatus=function(id,status,callback){
 	});
 };
 
+exports.updatePl=function(id,pl,plexpiry,callback){
+	console.log(plexpiry);
+	User.findByIdAndUpdate(id,{pl:pl,plexpiry:plexpiry},callback);
+};
+
 exports.populateUser=function(user,callback){
 	user.populate([
 			{path:'role',model:'UserRole'},
@@ -51,3 +56,4 @@ exports.populateUser=function(user,callback){
 		],
 		callback);
 };
+

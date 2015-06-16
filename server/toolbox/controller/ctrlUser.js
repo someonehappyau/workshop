@@ -28,6 +28,10 @@ exports.updateStatus=function(id,status,callback){
 	svcUser.updateStatus(id,status,callback);
 };
 
+exports.updatePl=function(id,pl,plexpiry,callback){
+	svcUser.updatePl(id,pl,plexpiry,callback);
+};
+
 exports.populateUser=function(user,callback){
 	svcUser.populateUser(user,callback);
 };

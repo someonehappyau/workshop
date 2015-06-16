@@ -15,20 +15,22 @@ function showLoginBox($modal,callback){
 	});
 };
 
-toolboxControllers.controller('mdlLoginBoxCtrl',['$scope','$modalInstance','UserSvc','Session','AuthService',
-		function($scope,$modalInstance,UserSvc,Session,AuthService){
+toolboxControllers.controller('mdlLoginBoxCtrl',['$scope','$modalInstance','UserSvc','Session','AuthService','$cookies',
+		function($scope,$modalInstance,UserSvc,Session,AuthService,$cookies){
 			$scope.user={username:'',password:''};
 
 			$scope.submitForm=function(){
-				var user=AuthService.login($scope.username,$scope.password);
-				if (!!user){
-					$modalInstance.close(user);
-				}
-				else{
-					$scope.alertMsg=err.statusText;
-					$scope.alertStyle='alert-danger';
-				}
+				AuthService.login($scope.user.username,$scope.user.password,function(err,user){
+					if(err){
+						$cookies.put('pl','');
+						$cookies.put('username','');
+						$scope.alertMsg=err.statusText;
+						$scope.alertStyle='alert-danger';
+					}
+					else{
+						$modalInstance.close(user);
+					}	
+				});
 			};
-
 		}]);
 
