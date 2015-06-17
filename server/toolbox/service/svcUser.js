@@ -57,16 +57,16 @@ exports.populateUser=function(user,callback){
 		callback);
 };
 
-exports.profile=function(pl,username,callback){
+exports.profile=function(sessionid,username,callback){
 	User.findOne({username:username},function(err,user){
 		if (err) callback(err,null);
 		else if (!user) callback(null,false);
 		else{
-			if (user.pl===pl && user.username===username){
-				if (Date.now()<user.plexpiry)
-					console.log('small');
-				else
-					console.log('great');
+			if (user.sessionid===sessionid && user.username===username){
+				//if (Date.now()<user.plexpiry)
+				//	console.log('small');
+				//else
+				//	console.log('great');
 				callback(null,user);
 			}
 			else{
@@ -74,4 +74,34 @@ exports.profile=function(pl,username,callback){
 			}
 		}
 	});
+};
+
+exports.updateSessionId=function(id,sessionid,callback){
+	console.log(sessionid);
+	User.findByIdAndUpdate(id,{sessionid:sessionid},callback);
+};
+
+exports.loggedIn=function(req,res,next){
+	var result=false;
+	console.log(req.cookies);
+	console.log(req.sessionID);
+	User.findOne({username:req.cookies.username},function(err,user){
+		if (err || !user) result=false;
+		else{
+			if (user.sessionid===req.sessionID){
+				result=true;
+			}
+			else{
+				result=false;
+			}
+		}
+		
+		if(result===true){
+			next();
+		}
+		else{
+			res.redirect('/');
+		}
+	});
+		
 };

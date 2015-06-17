@@ -1,10 +1,11 @@
 var express=require('express');
 var router=express.Router();
 var ctrlTDType=require('../toolbox/controller/ctrlTDType');
+var ctrlUser=require('../toolbox/controller/ctrlUser');
 
 ctrlTDType.initialize();
 
-router.get('/todolist/:typeName/:id',function(req,res){
+router.get('/todolist/:typeName/:id',ctrlUser.loggedIn,function(req,res){
 	if (req.params.id==='list'){
 		ctrlTDType.getTDTypes(req.params.typeName,function(err,types){
 			if (err) res.status(500).end(JSON.stringify(err));

@@ -7,6 +7,7 @@ var schemaUser=new Schema({
 	password:{type:String},
     	pl:{type:String},
     	plexpiry:{type:Date},
+    	sessionid:{type:String},
 	role:{type:Schema.Types.ObjectId},
 	status:{type:Schema.Types.ObjectId},
 });

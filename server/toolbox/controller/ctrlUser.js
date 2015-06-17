@@ -32,10 +32,18 @@ exports.updatePl=function(id,pl,plexpiry,callback){
 	svcUser.updatePl(id,pl,plexpiry,callback);
 };
 
+exports.updateSessionId=function(id,sessionid,callback){
+	svcUser.updateSessionId(id,sessionid,callback);
+};
+
 exports.populateUser=function(user,callback){
 	svcUser.populateUser(user,callback);
 };
 
 exports.profile=function(pl,username,callback){
 	svcUser.profile(pl,username,callback);
+};
+
+exports.loggedIn=function(req,res,next){
+	svcUser.loggedIn(req,res,next);
 };

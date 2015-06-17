@@ -26,14 +26,13 @@ toolboxApp.constant('AUTH_EVENTS', {
 	  user: 'user',
 	  guest: 'guest'
 })
-.run(['$cookies','AuthService',function($cookies,AuthService){
-	console.log(Object.keys($cookies.getAll()).indexOf('pl'));
-	if (Object.keys($cookies.getAll()).indexOf('pl')!==-1 && Object.keys($cookies.getAll()).indexOf('username')!==-1)
-   		if($cookies.get('pl')!=='' && $cookies.get('username')!=='' && AuthService.isAuthenticated()===false){
-			console.log('profile');
-			console.log(AuthService.isAuthenticated());
-			AuthService.profile();
-		}
+.run(['$cookies','AuthService','$q',function($cookies,AuthService){
+	console.log(Date.now());
+//   	if(AuthService.isLoggedIn()===false){
+//		console.log('false');
+//		AuthService.profile();
+//	}
+	AuthService.authenticate();
 }]);
 
 toolboxApp.service('Session', function () {
@@ -48,7 +47,7 @@ toolboxApp.service('Session', function () {
 	};
 });
 
-toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
+toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
 	  var authService = {};
 	   
 	    authService.login = function (username,password,callback) {
@@ -66,17 +65,50 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies) {
   		};
 		
 		authService.profile=function(){
+			var deferred=$q.defer();
 			var svcUser=new UserSvc();
-			svcUser.pl=$cookies.get('pl');
-			svcUser.username=$cookies.get('username');
 			svcUser.$profile().then(function(res){
 				Session.create(res.sessionid,res.user);
+				console.log('relogin');
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject('NOT_AUTHENTICATED');
 			});
+			return deferred.promise;
 		};
 
-		  authService.isAuthenticated = function () {
-			      return !!Session.user;
-				    };
+		authService.authenticate=function(){
+			var deferred=$q.defer();
+			if (authService.isAuthenticated())
+				deferred.resolve();
+			else
+				authService.profile().then(function(){
+					deferred.resolve();
+				},
+				function(){
+					deferred.reject();
+				});
+			return deferred.promise;
+		};
+
+		authService.isLoggedIn=function(){
+			return !!Session.user;
+		};
+
+		authService.isAuthenticated = function () {
+
+//			if (!!Session.user!==true){
+//				authService.profile().then(function(){
+//					return !!Session.user;
+//				},
+//				function(){
+//					return !!Session.user;
+//				});
+//			}
+//			else
+				return !!Session.user;
+		};
 		   
 		    authService.isAuthorized = function (authorizedRoles) {
 				    if (!angular.isArray(authorizedRoles)) {
@@ -102,17 +134,13 @@ toolboxApp.config(['$routeProvider',
 					templateUrl:'partials/todolist.html',
 					controller:'TodolistCtrl',
 					resolve:{
-						validation: ['$q','AuthService','$location',function($q,AuthService,$location){
-										var deferred=$q.defer();
-										if (AuthService.isAuthenticated()){
-											console.log('hi');
-											deferred.resolve();
-										}
-										else{
-											$location.path('/toolbox');
-											deferred.reject('NOT_AUTHENTICATED');
-										}
-										return deferred.promise;
+						validation: ['AuthService','$location',function(AuthService,$location){
+											AuthService.authenticate().then(function(){
+												console.log('hi');
+											},
+											function(){
+												$location.path('/toolbox');
+											});
 									}]
 					}
 				}).
@@ -120,32 +148,28 @@ toolboxApp.config(['$routeProvider',
 					templateUrl:'partials/TDConfig.html',
 					controller:'TDTypeCtrl',
 					resolve:{
-						validation: function($q,$route,AuthService,$location){
-							var deferred=$q.defer();
-							if (AuthService.isAuthenticated()){
+						validation: function($route,AuthService,$location){
+							AuthService.authenticate().then(function(){
+								console.log('authenticated');
 								var typeName=$route.current.params.typeName; 
 								if (typeName==='TDCategory'	|| 
 									typeName==='TDStatus' || 
 									typeName==='UserStatus' ||
 									typeName==='UserRole'){
-										deferred.resolve();
 							    	}
 								else{
-									$location.path('toolbox');
-									deferred.reject('VALIDATION FAILED');
+									$location.path('/toolbox');
 								}
-							}
-							else{
+							},
+							function(){
 								$location.path('/toolbox');
-								deferred.reject('NOT_AUTHENTICATED');
-							}
-							return deferred.promise;
+							});
 						}
 					}
 								
 				}).
 				otherwise({
-					redirectTo:'/todolist'
+					redirectTo:'/toolbox'
 				});
 		}]);
 

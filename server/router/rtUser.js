@@ -4,7 +4,7 @@ var ctrlUser=require('../toolbox/controller/ctrlUser');
 var passport=require('passport');
 var bcrypt=require('bcrypt');
 
-router.get('/todolist/user/:id',function(req,res){
+router.get('/todolist/user/:id',ctrlUser.loggedIn,function(req,res){
 	if (req.params.id==='list'){
 		ctrlUser.getUsers(function(err,users){
 			if (err) res.status(500).end(JSON.stringify(err));
@@ -47,27 +47,23 @@ router.post('/todolist/user/:id',function(req,res){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
 						if (user.role.name==='user' && user.status.name==='normal'){
-							bcrypt.hash('loggedin'+Date.now(),8,function(err,hash){
-
+							ctrlUser.updateSessionId(user._id,req.sessionID,function(err,user){
 								if (err) res.status(500).end(JSON.stringify(err));
 								else{
-									var d=new Date();
-									//d.setMinutes(d.getMinutes()+15);
-									d.setSeconds(d.getSeconds()+15);
-									ctrlUser.updatePl(user._id,hash,Date.now()+15000,function(err,user){
-									if (err) res.status(500).end(JSON.stringify(err));
-									else{
-										user.hash='';
-										user.salt='';
-										res
-									.status(200)
-									.cookie('pl',hash,{maxAge:15000}) 
-									.cookie('username',user.username,{maxAge:15000}) 
-									.end(JSON.stringify({sessionid:req.sessionID,user:user}));
-									}
+									ctrlUser.populateUser(user,function(err,user){
+										if (err) res.status(500).end(JSON.stringify(err));
+										else{
+											user.hash='';
+											user.salt='';
+											user.sessionid='';
+											res.status(200)
+											.cookie('username',user.username,{path:'/toolbox'}) 
+											.end(JSON.stringify({sessionid:'',user:user}));
+										}
 									});
 								}
 							});
+
 						}
 						else
 							res.status(401).end('Login failed');
@@ -77,27 +73,32 @@ router.post('/todolist/user/:id',function(req,res){
 		})(req,res);
 	}
 	else if (req.params.id==='register'){
-		ctrlUser.register(req.body.user.username,req.body.user.password,function(err,user){
+		ctrlUser.register(req.body.username,req.body.password,function(err,user){
 			if (err) {res.status(500).end(JSON.stringify(err));}
 			else res.status(200).end(JSON.stringify(user));
 		});
 	}
 	else if (req.params.id==='profile'){
-		ctrlUser.profile(req.body.pl,req.body.username,function(err,user){
+		ctrlUser.profile(req.sessionID,req.cookies.username,function(err,user){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!user){
  				res
 				.status(401)
-				.cookie('pl','')
-				.cookie('username','')
+				.cookie('username','',{path:'/toolbox'})
 				.end();
 			}
 			else{
-				user.hash='';
-				user.salt='';
-				res
-				.status(200)
-				.end(JSON.stringify({sessionid:req.seesionID,user:user}));
+				ctrlUser.populateUser(user,function(err,user){
+					if (err) res.status(500).end(JSON.stringify(err));
+					else{
+						user.hash='';
+						user.salt='';
+						user.sessionid='';
+						res
+						.status(200)
+						.end(JSON.stringify({sessionid:'',user:user}));
+					}
+				});
 			}
 		});
 	}

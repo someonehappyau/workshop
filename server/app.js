@@ -14,14 +14,17 @@ mongoose.connect('mongodb://localhost/test');
 
 var app=express();
 
+app.use(cookieParser());
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-app.use(cookieParser());
+
 app.use(require('express-session')({
 	secret: 'cat',
 	resave: false,
-	saveUninitialized:false
+	saveUninitialized:false,
+	cookie:{path:'/toolbox',maxAge:60000},
+	rolling:true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,8 +46,8 @@ var checkUserRole=function(role){
 	];
 };
 
-app.use('/svcTodolist',rtTDType);
-app.use('/svcToolbox',rtUser);
+app.use('/toolbox/svcTodolist',rtTDType);
+app.use('/toolbox/svcToolbox',rtUser);
 
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
