@@ -11,27 +11,21 @@ var toolboxApp=angular.module('toolboxApp',[
 ]);
 
 
-
 toolboxApp.constant('AUTH_EVENTS', {
-	  loginSuccess: 'auth-login-success',
-	  loginFailed: 'auth-login-failed',
-	  logoutSuccess: 'auth-logout-success',
-	  sessionTimeout: 'auth-session-timeout',
-	  notAuthenticated: 'auth-not-authenticated',
-	  notAuthorized: 'auth-not-authorized'
+	loginSuccess: 'auth-login-success',
+	loginFailed: 'auth-login-failed',
+	logoutSuccess: 'auth-logout-success',
+	sessionTimeout: 'auth-session-timeout',
+	notAuthenticated: 'auth-not-authenticated',
+	notAuthorized: 'auth-not-authorized'
 })
 .constant('USER_ROLES', {
-	  all: '*',
-	  admin: 'admin',
-	  user: 'user',
-	  guest: 'guest'
+	all: '*',
+	admin: 'admin',
+	user: 'user',
+	guest: 'guest'
 })
 .run(['$cookies','AuthService','$q',function($cookies,AuthService){
-	console.log(Date.now());
-//   	if(AuthService.isLoggedIn()===false){
-//		console.log('false');
-//		AuthService.profile();
-//	}
 	AuthService.authenticate();
 }]);
 
@@ -48,82 +42,79 @@ toolboxApp.service('Session', function () {
 });
 
 toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
-	  var authService = {};
+	var authService = {};
 	   
-	    authService.login = function (username,password,callback) {
-			var svcUser=new UserSvc();
-			svcUser.username=username;
-			svcUser.password=password;
-			svcUser.$login().then(function(res){
-				Session.create(res.sessionid,res.user);
-				callback(null,res.user);
-			},
-			function(err){
-				callback(err,null);
-			});
-
-  		};
+	authService.login = function (username,password,callback) {
+		var svcUser=new UserSvc();
+		svcUser.username=username;
+		svcUser.password=password;
+		svcUser.$login().then(function(res){
+			Session.create(res.sessionid,res.user);
+			callback(null,res.user);
+		},
+		function(err){
+			callback(err,null);
+		});
+  	};
 		
-		authService.profile=function(){
-			var deferred=$q.defer();
-			var svcUser=new UserSvc();
-			svcUser.$profile().then(function(res){
-				Session.create(res.sessionid,res.user);
-				console.log('relogin');
+	authService.resetUser=function(){
+		Session.destroy();
+	};
+
+	authService.profile=function(){
+		var deferred=$q.defer();
+		var svcUser=new UserSvc();
+		svcUser.$profile().then(function(res){
+			Session.create(res.sessionid,res.user);
+			deferred.resolve();
+		},
+		function(){
+			deferred.reject('NOT_AUTHENTICATED');
+		});
+		return deferred.promise;
+	};
+
+	authService.authenticate=function(){
+		var deferred=$q.defer();
+		if (authService.isAuthenticated())
+			deferred.resolve();
+		else
+			authService.profile().then(function(){
 				deferred.resolve();
 			},
 			function(){
-				deferred.reject('NOT_AUTHENTICATED');
+				deferred.reject();
 			});
-			return deferred.promise;
-		};
+		return deferred.promise;
+	};
 
-		authService.authenticate=function(){
-			var deferred=$q.defer();
-			if (authService.isAuthenticated())
-				deferred.resolve();
+	authService.isAdmin=function(){
+		if (!!Session.user) 
+			if (Session.user.role.name==='admin')
+				return true;
 			else
-				authService.profile().then(function(){
-					deferred.resolve();
-				},
-				function(){
-					deferred.reject();
-				});
-			return deferred.promise;
-		};
+				return false;
+		else
+			return false;
+	};
 
-		authService.isLoggedIn=function(){
-			return !!Session.user;
-		};
-
-		authService.isAuthenticated = function () {
-
-//			if (!!Session.user!==true){
-//				authService.profile().then(function(){
-//					return !!Session.user;
-//				},
-//				function(){
-//					return !!Session.user;
-//				});
-//			}
-//			else
-				return !!Session.user;
-		};
+	authService.isAuthenticated = function () {
+		return !!Session.user;
+	};
 		   
-		    authService.isAuthorized = function (authorizedRoles) {
-				    if (!angular.isArray(authorizedRoles)) {
-						      authorizedRoles = [authorizedRoles];
-							      }
-					    return (authService.isAuthenticated() &&
-								      authorizedRoles.indexOf(Session.user.role) !== -1);
-						  };
-			 
-			  return authService;
-});
+	authService.isAuthorized = function (authorizedRoles) {
+		if (!angular.isArray(authorizedRoles)) {
+			authorizedRoles = [authorizedRoles];
+		}
+		
+		return (authService.isAuthenticated() &&
+			authorizedRoles.indexOf(Session.user.role) !== -1);
+		};
+	 
+	  	return authService;
+	});
 
-
-
-toolboxApp.config(['$routeProvider',
+	toolboxApp.config(['$routeProvider',
 		function($routeProvider){
 			$routeProvider.
 				when('/toolbox',{
@@ -136,7 +127,6 @@ toolboxApp.config(['$routeProvider',
 					resolve:{
 						validation: ['AuthService','$location',function(AuthService,$location){
 											AuthService.authenticate().then(function(){
-												console.log('hi');
 											},
 											function(){
 												$location.path('/toolbox');

@@ -89,12 +89,16 @@ todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$r
 		}]);
 
 
-todolistControllers.controller('mdlTDTypeDetailCtrl',['$scope','TDTypeSvc','$modalInstance','id','typeName',function($scope,TDTypeSvc,$modalInstance,id,typeName){
+todolistControllers.controller('mdlTDTypeDetailCtrl',['$rootScope','$scope','TDTypeSvc','$modalInstance','id','typeName','AUTH_EVENTS',function($rootScope,$scope,TDTypeSvc,$modalInstance,id,typeName,AUTH_EVENTS){
 	$scope.title=typeName+' Detail';
 	TDTypeSvc.get({id:id,typeName:typeName}).$promise.then(function(type){
 		$scope.type=type;
 	},
 	function(err){
+		if(err.status===401){
+			$rootScope.$broadcast(AUTH_EVENTS.sessionTimeout);
+			$modalInstance.close();
+		}
 		console.log(err);
 	});
 }]);

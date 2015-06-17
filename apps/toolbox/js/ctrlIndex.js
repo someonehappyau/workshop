@@ -2,14 +2,18 @@
 
 var toolboxControllers=angular.module('toolboxControllers',[]);
 
-toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_ROLES','AuthService','Session',
-		function($scope,$modal,$rootScope,USER_ROLES,AuthService,Session){
+toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_ROLES','AuthService','Session','AUTH_EVENTS','$location',
+		function($scope,$modal,$rootScope,USER_ROLES,AuthService,Session,AUTH_EVENTS,$location){
 			$scope.currentUser=null;
 			$scope.userRoles = USER_ROLES;
 			$scope.isAuthorized = AuthService.isAuthorized;
 			
 	   		$scope.isLoggedin=function(){
 				return AuthService.isAuthenticated();
+			};
+
+			$scope.isAdmin=function(){
+				return AuthService.isAdmin();
 			};
 
 			$scope.getUsername=function(){
@@ -36,5 +40,11 @@ toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_
 					}
 				});
 			};
+
+			$rootScope.$on(AUTH_EVENTS.sessionTimeout,function(event){
+				console.log(event);
+				AuthService.resetUser();
+				$location.path('/toolbox');
+			});
 		}]);
 

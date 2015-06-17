@@ -45,7 +45,6 @@ exports.updateStatus=function(id,status,callback){
 };
 
 exports.updatePl=function(id,pl,plexpiry,callback){
-	console.log(plexpiry);
 	User.findByIdAndUpdate(id,{pl:pl,plexpiry:plexpiry},callback);
 };
 
@@ -63,10 +62,6 @@ exports.profile=function(sessionid,username,callback){
 		else if (!user) callback(null,false);
 		else{
 			if (user.sessionid===sessionid && user.username===username){
-				//if (Date.now()<user.plexpiry)
-				//	console.log('small');
-				//else
-				//	console.log('great');
 				callback(null,user);
 			}
 			else{
@@ -77,14 +72,11 @@ exports.profile=function(sessionid,username,callback){
 };
 
 exports.updateSessionId=function(id,sessionid,callback){
-	console.log(sessionid);
 	User.findByIdAndUpdate(id,{sessionid:sessionid},callback);
 };
 
 exports.loggedIn=function(req,res,next){
 	var result=false;
-	console.log(req.cookies);
-	console.log(req.sessionID);
 	User.findOne({username:req.cookies.username},function(err,user){
 		if (err || !user) result=false;
 		else{
@@ -100,7 +92,7 @@ exports.loggedIn=function(req,res,next){
 			next();
 		}
 		else{
-			res.redirect('/');
+			res.status(401).end();
 		}
 	});
 		

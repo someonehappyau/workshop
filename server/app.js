@@ -23,7 +23,7 @@ app.use(require('express-session')({
 	secret: 'cat',
 	resave: false,
 	saveUninitialized:false,
-	cookie:{path:'/toolbox',maxAge:60000},
+	cookie:{path:'/toolbox',maxAge:30000},
 	rolling:true
 }));
 app.use(passport.initialize());

@@ -46,7 +46,7 @@ router.post('/todolist/user/:id',function(req,res){
 				ctrlUser.populateUser(user,function(err,user){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
-						if (user.role.name==='user' && user.status.name==='normal'){
+						if (user.status.name==='normal'){
 							ctrlUser.updateSessionId(user._id,req.sessionID,function(err,user){
 								if (err) res.status(500).end(JSON.stringify(err));
 								else{
