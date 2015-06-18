@@ -9,6 +9,7 @@ var LocalStrategy=require('passport-local').Strategy;
 
 var rtTDType=require('./router/rtTDType');
 var rtUser=require('./router/rtUser');
+var rtTodo=require('./router/rtTodo');
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -23,7 +24,7 @@ app.use(require('express-session')({
 	secret: 'cat',
 	resave: false,
 	saveUninitialized:false,
-	cookie:{path:'/toolbox',maxAge:30000},
+	cookie:{path:'/toolbox',maxAge:300000},
 	rolling:true
 }));
 app.use(passport.initialize());
@@ -48,6 +49,7 @@ var checkUserRole=function(role){
 
 app.use('/toolbox/svcTodolist',rtTDType);
 app.use('/toolbox/svcToolbox',rtUser);
+app.use('/toolbox/svcTodolist',rtTodo);
 
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));

@@ -1,7 +1,7 @@
 'use strict';
 
 toolboxServices.factory('UserSvc',['$resource',function($resource){
-	return $resource('/toolbox/svcToolbox/todolist/user/:id',{id:'@id'},{
+	return $resource('/toolbox/svcToolbox/toolbox/user/:id',{id:'@id'},{
 		list:{method:'GET',params:{id:'list'},isArray:true},
 	    byusername:{method:'GET',params:{id:'byusername'}},
 		login:{method:'POST',params:{id:'login'}},

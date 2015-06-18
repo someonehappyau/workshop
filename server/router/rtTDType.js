@@ -5,7 +5,7 @@ var ctrlUser=require('../toolbox/controller/ctrlUser');
 
 ctrlTDType.initialize();
 
-router.get('/todolist/:typeName/:id',ctrlUser.loggedIn,function(req,res){
+router.get('/todolist/config/:typeName/:id',ctrlUser.loggedIn,function(req,res){
 	if (req.params.id==='list'){
 		ctrlTDType.getTDTypes(req.params.typeName,function(err,types){
 			if (err) res.status(500).end(JSON.stringify(err));
@@ -31,14 +31,14 @@ router.get('/todolist/:typeName/:id',ctrlUser.loggedIn,function(req,res){
 
 });
 
-router.delete('/todolist/:typeName/:id',function(req,res){
+router.delete('/todolist/config/:typeName/:id',function(req,res){
 	ctrlTDType.deleteTDTypeById(req.params.typeName,req.params.id,function(err){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();	
 	});
 });
 
-router.post('/todolist/:typeName/:id',function(req,res){
+router.post('/todolist/config/:typeName/:id',function(req,res){
 	if (req.params.id==='update'){
 		ctrlTDType.updateTDTypeById(req.params.typeName,req.body.type._id,req.body.type.name,req.body.type.description,function(err,type){
 			if (err) res.status(500).end(JSON.stringify(err));

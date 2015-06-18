@@ -134,6 +134,19 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
 									}]
 					}
 				}).
+				when('/addtodo',{
+					templateUrl:'partials/todolist_add.html',
+					controller:'TodolistAddCtrl',
+					resolve:{
+						validation: ['AuthService','$location',function(AuthService,$location){
+											AuthService.authenticate().then(function(){
+											},
+											function(){
+												$location.path('/toolbox');
+											});
+									}]
+					}
+				}).
 				when('/todolist/config/:typeName',{
 					templateUrl:'partials/TDConfig.html',
 					controller:'TDTypeCtrl',
@@ -143,7 +156,8 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
 								console.log('authenticated');
 								var typeName=$route.current.params.typeName; 
 								if (typeName==='TDCategory'	|| 
-									typeName==='TDStatus' || 
+									typeName==='TDStatus' ||
+								        typeName==='TDPriority' ||	
 									typeName==='UserStatus' ||
 									typeName==='UserRole'){
 							    	}

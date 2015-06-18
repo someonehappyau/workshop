@@ -4,7 +4,7 @@ var ctrlUser=require('../toolbox/controller/ctrlUser');
 var passport=require('passport');
 var bcrypt=require('bcrypt');
 
-router.get('/todolist/user/:id',ctrlUser.loggedIn,function(req,res){
+router.get('/toolbox/user/:id',ctrlUser.loggedIn,function(req,res){
 	if (req.params.id==='list'){
 		ctrlUser.getUsers(function(err,users){
 			if (err) res.status(500).end(JSON.stringify(err));
@@ -30,14 +30,14 @@ router.get('/todolist/user/:id',ctrlUser.loggedIn,function(req,res){
 
 });
 
-router.delete('/todolist/user/:id',function(req,res){
+router.delete('/toolbox/user/:id',function(req,res){
 	ctrlUser.deleteUserById(req.params.id,function(err){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();	
 	});
 });
 
-router.post('/todolist/user/:id',function(req,res){
+router.post('/toolbox/user/:id',function(req,res){
 	if (req.params.id==='login'){
 		passport.authenticate('local',function(err,user){
 			if(err) res.status(500).end(JSON.stringify(err));
@@ -108,7 +108,7 @@ router.post('/todolist/user/:id',function(req,res){
 });
 
 
-router.put('/todolist/user/:id',function(req,res){
+router.put('/toolbox/user/:id',function(req,res){
 	if (req.params.id==='password'){
 		ctrlUser.updatePassword(req.body.id,req.body.password,function(err,user){
 			if (err) res.status(500).end(JSON.stringify(err));

@@ -23,6 +23,7 @@
 	<script src="js/ctrlToolbox.js"></script>
 
 	<script src="js/ctrlTodolist.js"></script>
+	<script src="js/ctrlTodolistAdd.js"></script>
 	<script src="js/ctrlTDType.js"></script>
 	
 	<script src="js/svcTodolist.js"></script>
@@ -54,6 +55,7 @@
 		        	<li><a href="#/todolist">Todolist</a></li>
 		        	<li ng-if="isAdmin()" role="separator" class="divider"></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/TDCategory">TDCategory</a></li>
+		        	<li ng-if="isAdmin()"><a href="#/todolist/config/TDPriority">TDPriority</a></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/TDStatus">TDStatus</a></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/UserRole">UserRole</a></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/UserStatus">UserStatus</a></li>
