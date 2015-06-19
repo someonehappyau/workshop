@@ -1,13 +1,20 @@
 'use strict';
 
 todolistControllers.controller('TodolistAddCtrl',
-	['$scope','TDTodoSvc',
-	function($scope,TDTodoSvc){
+	['$scope','TDTodoSvc','TDTypeSvc','Session',
+	function($scope,TDTodoSvc,TDTypeSvc,Session){
 		$scope.todo={
-			dueDate:''
+			shortDesc:'',
+			description:'',
+			creator:Session.user._id,
+			dueDate:'',
+			category:'',
+			priority:'',
 		};
 
 		$scope.submitForm=function(){
+			console.log($scope.todo);
+			return;
 			var svcTDTodo=new TDTodoSvc();
 			$scope.todo={};
 			svcTDTodo.todo=$scope.todo;
@@ -17,6 +24,27 @@ todolistControllers.controller('TodolistAddCtrl',
 				console.log('submit');
 			});
 		};
+
+		$scope.getCategories=function(){
+			TDTypeSvc.list({typeName:'TDCategory'}).$promise.then(function(types){
+				console.log(types);
+				if (!!types){
+					$scope.categories=types;
+					$scope.todo.category=types[0]._id;
+				}
+			});
+		};
+		$scope.getCategories();
+
+		$scope.getPriorities=function(){
+			TDTypeSvc.list({typeName:'TDPriority'}).$promise.then(function(types){
+				if (!!types){
+					$scope.priorities=types;
+					$scope.todo.priority=types[2]._id;
+				}
+			});
+		};
+		$scope.getPriorities();
 
 		$scope.today=function(){
 			$scope.dt=new Date();

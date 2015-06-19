@@ -27,18 +27,17 @@
 			</div>
 			<div class="form-group">
 				<label>Category</label>
-				<input type="text" class="form-control" ng-model="todo.category">
+				<select ng-model="todo.category" class="form-control">
+					<option ng-repeat="type in categories" value="{{type._id}}">{{type.name}}</option>
+				</select>
 			</div>
 			<div class="form-group">
 				<label>Priority</label>
-				<input type="text" class="form-control" ng-model="todo.priority">
+				<select class="form-control" ng-model="todo.priority" ng-options="type._id as type.name for type in priorities">
+				</select>
 			</div>
 			<div class="form-group">
-				<label>Status</label>
-				<input type="text" class="form-control"  ng-model="todo.status">
-			</div>
-			<div class="form-group">
-				<input type="submit" class="btn btn-default">
+				<input type="submit" class="btn btn-block">
 			</div>
 			</form>
 		</div>
