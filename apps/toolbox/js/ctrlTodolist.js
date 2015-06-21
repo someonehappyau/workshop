@@ -10,7 +10,7 @@ todolistControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$
 				},
 				function(err){
 					console.log(err);
-					$scope.todos={};
+					$scope.todos=[];
 				});
 			};
 
@@ -18,6 +18,26 @@ todolistControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$
 
 			$scope.addOne=function(){
 				$location.path('/addtodo');
+			};
+
+			$scope.editTodo=function(id){
+				$location.path('/edittodo/'+id);
+			};
+
+			$scope.deleteTodo=function(todoid){
+				showMsgBox($modal,'Please confirm you want to delete this item.',true,true,
+					function(result){
+						var todo=new TDTodoSvc();
+						todo.$delete({id:todoid}).then(function(result){
+							$scope.updateTDTodos();
+						},
+						function(result){
+							console.log(result);
+						});
+					},
+					function(result){
+						//Cancel
+					});
 			};
 		}]);
 

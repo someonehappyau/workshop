@@ -2,6 +2,9 @@ var svcTDType=require('../service/svcTDType');
 var mongoose=require('mongoose');
 
 exports.initialize=function(){
+	svcTDType.initialize('TDCategory');
+	svcTDType.initialize('TDPriority');
+	svcTDType.initialize('TDStatus');
 	svcTDType.initialize('UserRole');
 	svcTDType.initialize('UserStatus');
 };

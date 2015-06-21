@@ -78,6 +78,9 @@ router.post('/toolbox/user/:id',function(req,res){
 			else res.status(200).end(JSON.stringify(user));
 		});
 	}
+	else if (req.params.id==='logout'){
+		req.logout();
+	}
 	else if (req.params.id==='profile'){
 		ctrlUser.profile(req.sessionID,req.cookies.username,function(err,user){
 			if (err) res.status(500).end(JSON.stringify(err));

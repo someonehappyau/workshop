@@ -12,7 +12,12 @@ router.get('/todolist/:id',function(req,res){
 		});
 	}
 	else{
-		res.status(404).end();
+		ctrlTDTodo.getOne(req.params.id,function(err,todo){
+			if (err || !todo) res.status(500).end(JSON.stringify(err));
+			else{
+				res.status(200).end(JSON.stringify(todo));
+			}
+		});
 	}
 });
 
@@ -24,9 +29,23 @@ router.post('/todolist/:id',function(req,res){
 			else res.status(200).end(JSON.stringify(todo));
 		});
 	}
+	else if (req.params.id==='update'){
+		ctrlTDTodo.update(req.body.todo,function(err,todo){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!todo) res.status(500).end();
+			else res.status(200).end(JSON.stringify(todo));
+		});
+	}
 	else{
 		res.status(404).end();
 	}
+});
+
+router.delete('/todolist/:id',function(req,res){
+	ctrlTDTodo.deleteTodoById(req.params.id,function(err){
+		if (err) res.status(500).end(JSON.stringify(err));
+		else res.status(200).end();
+	});
 });
 
 module.exports=router;

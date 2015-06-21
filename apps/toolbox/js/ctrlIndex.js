@@ -26,6 +26,7 @@ toolboxControllers.controller('IndexCtrl',['$scope','$modal','$rootScope','USER_
 	
 			$scope.logout=function(){
 				$scope.currentUser=null;
+				AuthService.logout();
 			};
 			
 			$scope.register=function(){

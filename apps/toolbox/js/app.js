@@ -41,7 +41,7 @@ toolboxApp.service('Session', function () {
 	};
 });
 
-toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
+toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$location) {
 	var authService = {};
 	   
 	authService.login = function (username,password,callback) {
@@ -110,8 +110,14 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
 		return (authService.isAuthenticated() &&
 			authorizedRoles.indexOf(Session.user.role) !== -1);
 		};
-	 
-	  	return authService;
+	
+   	authService.logout=function(){
+		UserSvc.logout();
+		authService.resetUser();
+		$location.path('/');
+	};
+
+	return authService;
 	});
 
 	toolboxApp.config(['$routeProvider',
@@ -144,7 +150,26 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q) {
 											function(){
 												$location.path('/toolbox');
 											});
-									}]
+									}],
+						isEdit: function(){
+									return false;
+								}
+					}
+				}).
+				when('/edittodo/:id',{
+					templateUrl:'partials/todolist_add.html',
+					controller:'TodolistAddCtrl',
+					resolve:{
+						validation: ['AuthService','$location',function(AuthService,$location){
+											AuthService.authenticate().then(function(){
+											},
+											function(){
+												$location.path('/toolbox');
+											});
+									}],
+						isEdit: function(){
+									return true;
+								}
 					}
 				}).
 				when('/todolist/config/:typeName',{

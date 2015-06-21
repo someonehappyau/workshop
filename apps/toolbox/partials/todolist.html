@@ -5,35 +5,51 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6">
-			Search: <input ng-model="query">
-			<input type="button" ng-click="addOne()" value="Add">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<form class="form-inline">
+			<label>Search:</label>
+ 		   	<input type="text" class="form-control" ng-model="query">
+			<input type="button" class="btn btn-default" ng-click="addOne()" value="Add">
+			</form>
 		</div>
-		<div class="col-md-3"></div>
+		<div class="col-md-1"></div>
 	</div>
 	<div class="row">
-		<div class="col-md-3"></div>
-		<div class="col-md-6">
+		<div class="col-md-12"><span></span></div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
 			<table class="table table-bordered table-striped table-hover">
 				<thead>
-					<tr>
-						<th>Name</th>
+					<tr class="info">
+						<th>Short Description</th>
 						<th>Description</th>
+						<th>Category</th>
+						<th>Due Date</th>
+						<th>Priority</th>
+						<th>Status</th>
+						<th>Create Date</th>
 						<th>Edit</th>
 						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-dblclick="showDetail(category._id)" ng-repeat="category in categories | filter: query">
-						<td>{{category.name}}</td>
-						<td>{{category.description | limitTo:20}}</td>
-						<td><button type="button" class="btn btn-primary" ng-click="editIt(category._id)">EDIT</button></td>
-						<td><button type="button" class="btn btn-danger" ng-click="deleteIt(category._id)">DELETE</button></td>
+					<tr ng-repeat="todo in todos | filter: query">
+						<td>{{todo.shortDesc}}</td>
+						<td>{{todo.description | limitTo:20}}</td>
+						<td>{{todo.category.name}}</td>
+						<td>{{todo.dateDue | date:'yyyy-MM-dd'}}</td>
+						<td>{{todo.priority.name}}</td>
+						<td>{{todo.status.name}}</td>
+						<td>{{todo.dateCreated | date:'yyyy-MM-dd'}}</td>
+						<td><button type="button" class="btn btn-primary" ng-click="editTodo(todo._id)">EDIT</button></td>
+						<td><button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">DELETE</button></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-3"></div>
+		<div class="col-md-1"></div>
 	</div>
 </div>
