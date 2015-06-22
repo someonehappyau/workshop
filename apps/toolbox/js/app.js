@@ -6,10 +6,9 @@ var toolboxApp=angular.module('toolboxApp',[
 	'ui.bootstrap',
 	'toolboxControllers',
 	'toolboxServices',
-	'todolistControllers',
-	'todolistServices'
 ]);
 
+var toolboxServices=angular.module('toolboxServices',['ngResource']);
 
 toolboxApp.constant('AUTH_EVENTS', {
 	loginSuccess: 'auth-login-success',

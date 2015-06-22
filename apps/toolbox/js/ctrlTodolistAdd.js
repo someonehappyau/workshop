@@ -1,6 +1,6 @@
 'use strict';
 
-todolistControllers.controller('TodolistAddCtrl',
+toolboxControllers.controller('TodolistAddCtrl',
 	['$scope','TDTodoSvc','TDTypeSvc','Session','isEdit','$routeParams',
 	function($scope,TDTodoSvc,TDTypeSvc,Session,isEdit,$routeParams){
 		

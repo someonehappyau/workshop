@@ -23,7 +23,10 @@ router.get('/todolist/:id',function(req,res){
 
 router.post('/todolist/:id',function(req,res){
 	if(req.params.id==='addOne'){
+		console.log(req.body.todo);
 		ctrlTDTodo.addOne(req.body.todo,function(err,todo){
+			console.log(err);
+			console.log(todo);
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todo) res.status(500).end();
 			else res.status(200).end(JSON.stringify(todo));

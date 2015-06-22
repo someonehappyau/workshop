@@ -1,6 +1,6 @@
 'use strict';
 
-todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$rootScope','$routeParams','$location',
+toolboxControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$rootScope','$routeParams','$location',
 		function($scope,TDTypeSvc,$modal,$rootScope,$routeParams,$location){
 			$scope.title=$routeParams.typeName+' Configuration';
 			$scope.updateTDTypes=function(){
@@ -89,7 +89,7 @@ todolistControllers.controller('TDTypeCtrl',['$scope', 'TDTypeSvc', '$modal','$r
 		}]);
 
 
-todolistControllers.controller('mdlTDTypeDetailCtrl',['$rootScope','$scope','TDTypeSvc','$modalInstance','id','typeName','AUTH_EVENTS',function($rootScope,$scope,TDTypeSvc,$modalInstance,id,typeName,AUTH_EVENTS){
+toolboxControllers.controller('mdlTDTypeDetailCtrl',['$rootScope','$scope','TDTypeSvc','$modalInstance','id','typeName','AUTH_EVENTS',function($rootScope,$scope,TDTypeSvc,$modalInstance,id,typeName,AUTH_EVENTS){
 	$scope.title=typeName+' Detail';
 	TDTypeSvc.get({id:id,typeName:typeName}).$promise.then(function(type){
 		$scope.type=type;
@@ -104,7 +104,7 @@ todolistControllers.controller('mdlTDTypeDetailCtrl',['$rootScope','$scope','TDT
 }]);
 
 
-todolistControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalInstance','$timeout','$rootScope','typeName',
+toolboxControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalInstance','$timeout','$rootScope','typeName',
 		function($scope, TDTypeSvc, $modalInstance,$timeout,$rootScope,typeName){
 			$scope.title='Add '+typeName;
 			$scope.alertMsg='';
@@ -149,7 +149,7 @@ todolistControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalI
 }]);
 
 
-todolistControllers.controller('mdlTDTypeEditCtrl',['$scope','TDTypeSvc','$modalInstance','$timeout','$rootScope','id','typeName',
+toolboxControllers.controller('mdlTDTypeEditCtrl',['$scope','TDTypeSvc','$modalInstance','$timeout','$rootScope','id','typeName',
 		function($scope, TDTypeSvc, $modalInstance,$timeout,$rootScope,id,typeName){
 			$scope.title='Edit '+typeName;
 			$scope.alertMsg='';

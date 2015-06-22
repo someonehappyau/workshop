@@ -1,8 +1,6 @@
 'use strict';
 
-var todolistControllers=angular.module('todolistControllers',[]);
-
-todolistControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location',
+toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location',
 		function($scope,TDTodoSvc,$modal,$rootScope,$location){
 			$scope.updateTDTodos=function(){
 				TDTodoSvc.list().$promise.then(function(todos){
