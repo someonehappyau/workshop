@@ -4,7 +4,8 @@ var testlabApp=angular.module('testlabApp',[
 		'testlabControllers',
 		'testlabServices',
 		'testlabProviders',
-		'testlabFactories'
+		'testlabFactories',
+		'testlabDirectives'
 		]);
 
 var testlabControllers=angular.module('testlabControllers',[]);
@@ -42,3 +43,12 @@ testlabFactories.factory('fty1',function(){
 });
 
 var testlabProviders=angular.module('testlabProviders',[]);
+
+var testlabDirectives=angular.module('testlabDirectives',[]);
+
+testlabDirectives.directive('myDiv',function(){
+	return {
+		restrict: 'E',
+		template: 'Hello, This is my directive.This is val1: {{val1}}. This val2: {{val2}}.'
+	};
+});
