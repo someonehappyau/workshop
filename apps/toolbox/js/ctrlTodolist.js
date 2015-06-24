@@ -1,7 +1,7 @@
 'use strict';
 
-toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location',
-		function($scope,TDTodoSvc,$modal,$rootScope,$location){
+toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location','DetailDlgSvc',
+		function($scope,TDTodoSvc,$modal,$rootScope,$location,DetailDlgSvc){
 			$scope.updateTDTodos=function(){
 				TDTodoSvc.list().$promise.then(function(todos){
 					$scope.todos=todos;
@@ -20,6 +20,25 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 
 			$scope.editTodo=function(id){
 				$location.path('/edittodo/'+id);
+			};
+
+			$scope.showDetail=function(todoid){
+				TDTodoSvc.getOne({id:todoid}).$promise.then(function(todo){
+					console.log(todo);
+					DetailDlgSvc.showDetail({
+						title:'Todo',
+						'Short Description':todo.shortDesc,
+						'Category':todo.category.name,
+						'Due Date':todo.dateDue,
+						'Priority':todo.priority.name,
+						'Creation Date':todo.dateCreated,
+						'Created By':todo.creator.username,
+						'Description':todo.description
+					});
+				},
+				function(err){
+					console.log(err);
+				});
 			};
 
 			$scope.deleteTodo=function(todoid){

@@ -4,28 +4,39 @@ var TDTodo=require('../model/TDTodo');
 var svcTDType=require('../service/svcTDType');
 var async=require('async');
 
+function populateTodo(todo,callback){
+	TDTodo.populate(todo,[
+		{path:'creator',model:'User',select:'_id username'},
+		{path:'category',model:'TDCategory'},
+		{path:'priority',model:'TDPriority'},
+		{path:'status',model:'TDStatus'}
+		]).then(function(todo_updated){
+			callback(null,todo_updated);
+		},
+		function(err){
+			callback(err,todo)
+		});
+}
+
+
 exports.getTodos=function(callback){
 	TDTodo.find(function(err,todos){
 		if (err || !todos)
 			callback(err,todos);
 		else{
-			TDTodo.populate(todos,[
-				{path:'creator',model:'User',select:'_id username'},
-				{path:'category',model:'TDCategory'},
-				{path:'priority',model:'TDPriority'},
-				{path:'status',model:'TDStatus'}
-				]).then(function(todos){
-					callback(null,todos);
-				},
-				function(err){
-					callback(err,todos)
-				});
+			populateTodo(todos,callback);
 		}	
 	});
 };
 
 exports.getOne=function(id,callback){
-	TDTodo.findById(id,callback);
+	TDTodo.findById(id,function(err,todo){
+		if(err || !todo)
+			callback(err,todo);
+		else{
+			populateTodo(todo,callback);
+		}	
+	});
 };
 
 exports.addOne=function(shortDesc,description,creator,dateDue,category,priority,callback){

@@ -36,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="todo in todos | filter: query">
+					<tr ng-dblclick="showDetail(todo._id)" ng-repeat="todo in todos | filter: query">
 						<td>{{todo.shortDesc}}</td>
 						<td>{{todo.description | limitTo:20}}</td>
 						<td>{{todo.category.name}}</td>

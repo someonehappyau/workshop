@@ -48,7 +48,17 @@ var testlabDirectives=angular.module('testlabDirectives',[]);
 
 testlabDirectives.directive('myDiv',function(){
 	return {
-		restrict: 'E',
-		template: 'Hello, This is my directive.This is val1: {{val1}}. This val2: {{val2}}.'
+		//restrict: 'E',
+		//replace:true,
+		//template: '<h2>Hello, This is my directive.This is val1: {{val1}}. This val2: {{val2}}.</h2>',
+		link: function(scope,ele,attr){
+			console.log(scope);
+			console.log(ele);
+			console.log(attr);
+			ele.on('dblclick',function(event){
+				console.log(event);
+			});
+			
+		}
 	};
 });
