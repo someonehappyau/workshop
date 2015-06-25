@@ -5,10 +5,22 @@ var ctrlTDTodo=require('../toolbox/controller/ctrlTDTodo');
 
 router.get('/todolist/:id',function(req,res){
 	if(req.params.id==='list'){
-		ctrlTDTodo.getTodos(function(err,todos){
+		var page;
+		if (!req.query.page)
+			page=1;
+		else
+			page=req.query.page;
+		ctrlTDTodo.getTodos(page,function(err,todos){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todos) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(todos));
+		});
+	}
+	else if (req.params.id==='count'){
+		ctrlTDTodo.getCount(function(err,count){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!count) res.status(200).end(JSON.stringify());
+			else res.status(200).end(JSON.stringify({count:count}));
 		});
 	}
 	else{
@@ -34,6 +46,20 @@ router.post('/todolist/:id',function(req,res){
 	}
 	else if (req.params.id==='update'){
 		ctrlTDTodo.update(req.body.todo,function(err,todo){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!todo) res.status(500).end();
+			else res.status(200).end(JSON.stringify(todo));
+		});
+	}
+	else if (req.params.id==='abandon'){
+		ctrlTDTodo.abandon(req.body.todoid,function(err,todo){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!todo) res.status(500).end();
+			else res.status(200).end(JSON.stringify(todo));
+		});
+	}
+	else if (req.params.id==='done'){
+		ctrlTDTodo.done(req.body.todoid,function(err,todo){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todo) res.status(500).end();
 			else res.status(200).end(JSON.stringify(todo));

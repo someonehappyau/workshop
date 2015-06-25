@@ -19,14 +19,21 @@ function populateTodo(todo,callback){
 }
 
 
-exports.getTodos=function(callback){
-	TDTodo.find(function(err,todos){
+exports.getTodos=function(page,callback){
+	TDTodo.find()
+		.skip((page-1)*10)
+		.limit(10)
+		.exec(function(err,todos){
 		if (err || !todos)
 			callback(err,todos);
 		else{
 			populateTodo(todos,callback);
 		}	
 	});
+};
+
+exports.getCount=function(callback){
+	TDTodo.count(callback);
 };
 
 exports.getOne=function(id,callback){
@@ -131,3 +138,28 @@ exports.deleteTodoById=function(id,callback){
 	TDTodo.findByIdAndRemove(id,callback);
 };
 
+exports.abandon=function(id,callback){
+	TDTodo.findById(id,function(err,todo){
+		if (err || !todo)
+			callback(err,todo);
+		else{
+			svcTDType.getOneByName('TDStatus','Normal',function(err,data){
+			       if (err || !data)
+					callback(err,data);
+				else if (data._id!==todo.status)
+					callback(null,false);
+				else{
+					svcTDType.getOneByName('TDStatus','Abandoned',function(err,data){
+						if (err || !data)
+							callback(err,data);
+						else{
+							todo.status=data._id;
+							todo.save();
+							callback(null,todo);
+						}
+					});
+				}
+			});
+		}
+	});
+};

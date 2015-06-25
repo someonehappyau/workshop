@@ -1,8 +1,8 @@
 'use strict';
 
 toolboxControllers.controller('TodolistAddCtrl',
-	['$scope','TDTodoSvc','TDTypeSvc','Session','isEdit','$routeParams',
-	function($scope,TDTodoSvc,TDTypeSvc,Session,isEdit,$routeParams){
+	['$scope','TDTodoSvc','TDTypeSvc','Session','isEdit','$routeParams','$timeout',
+	function($scope,TDTodoSvc,TDTypeSvc,Session,isEdit,$routeParams,$timeout){
 		
 		$scope.getCategories=function(){
 			TDTypeSvc.list({typeName:'TDCategory'}).$promise.then(function(types){
@@ -37,7 +37,9 @@ toolboxControllers.controller('TodolistAddCtrl',
 				priority:'',
 			};
 
+			$scope.getCategories();
 
+			$scope.getPriorities();
 
 			$scope.today=function(){
 				$scope.dt=new Date();
@@ -53,10 +55,17 @@ toolboxControllers.controller('TodolistAddCtrl',
 			TDTodoSvc.getOne({id:$routeParams.id}).$promise.then(function(todo){
 				console.log(todo);
 				$scope.todo=todo;
+				$scope.todo.category=todo.category._id;
+				$scope.todo.priority=todo.priority._id;
 			},
 			function(err){
 				console.log(err);
 			});
+		};
+
+		$scope.resetMsg=function(){
+			$scope.msg='';
+			$scope.msgStyle='';
 		};
 
 		$scope.submitForm=function(){
@@ -66,19 +75,29 @@ toolboxControllers.controller('TodolistAddCtrl',
 			if (isEdit===true){
 				svcTDTodo.$update().then(function(todo){
 					console.log('updated');
+					$scope.msg='Update Successfully!';
+					$timeout($scope.resetMsg,3000);
+					$scope.msgStyle='alert-success';
 				},
 				function(err){
 					console.log(err);
+					$scope.msg=err.statusText;
+					$scope.msgStyle='alert-danger';
 				});
 			}
 			else{
 
 				svcTDTodo.$addOne().then(function(todo){
+					$scope.msg='Add new Todo Successfully!';
+					$scope.msgStyle='alert-success';
 					$scope.reset();
+					$timeout($scope.resetMsg,3000);
 					console.log('submit');
 				},
 				function(err){
 					console.log(err);
+					$scope.msg=err.statusText;
+					$scope.msgStyle='alert-danger';
 				});
 			}
 		};
@@ -86,10 +105,12 @@ toolboxControllers.controller('TodolistAddCtrl',
 		if (isEdit===true){
 			$scope.title='Edit Todo';
 			$scope.loadTodo();
+			$scope.categoryIsDisabled=true;
 		}
 		else{
 			$scope.title='New Todo';
 			$scope.reset();
+			$scope.categoryIsDisabled=false;
 		}
 
 

@@ -9,7 +9,8 @@ var schemaTodo=Schema({
     	dateDue:{type:Date},
     	category:{type:Schema.Types.ObjectId},
     	priority:{type:Schema.Types.ObjectId},
-    	status:{type:Schema.Types.ObjectId}
+    	status:{type:Schema.Types.ObjectId},
+    	dateUpdated:{type:Date, default:Date.now}
 });
 
 module.exports=mongoose.model('TDTodo',schemaTodo);

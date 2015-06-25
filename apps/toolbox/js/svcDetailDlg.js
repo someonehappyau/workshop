@@ -5,7 +5,7 @@ toolboxServices.factory('DetailDlgSvc',
 	function($modal){
 		var svc={};
 
-		svc.showDetail=function(data){
+		svc.showDetail=function(title,data){
 			console.log(data);
 			for (var o in data){
 				if (typeof(data[o])!=='function')
@@ -17,6 +17,9 @@ toolboxServices.factory('DetailDlgSvc',
 			    	templateUrl:'partials/DetailDlg.html',
 			    	controller:'mdlDetailDlgCtrl',
 			    	resolve:{
+					title:function(){
+						return title;
+					},
 					data:function(){
 						return data;
 					}
@@ -28,21 +31,10 @@ toolboxServices.factory('DetailDlgSvc',
 	}]);
 
 toolboxControllers.controller('mdlDetailDlgCtrl',
-	['$scope','$modalInstance','data',
-	function($scope,$modalInstance,data){
+	['$scope','$modalInstance','title','data',
+	function($scope,$modalInstance,title,data){
+		$scope.title=title;
+		$scope.keys=Object.keys(data);
 		$scope.data=data;
 	}]);
 
-toolboxApp.directive('ngDetailList',function(){
-	function link(scope,element,attrs){
-		console.log(scope);
-		element.bind('click',function(){
-		console.log('aaa');
-		element.html('aaa');
-		});
-	}
-
-	return {
-		link:link
-	};
-});

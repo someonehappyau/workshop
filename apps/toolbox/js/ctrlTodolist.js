@@ -5,6 +5,7 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 			$scope.updateTDTodos=function(){
 				TDTodoSvc.list().$promise.then(function(todos){
 					$scope.todos=todos;
+					$scope.currentPage=1;
 				},
 				function(err){
 					console.log(err);
@@ -13,9 +14,33 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 			};
 
 			$scope.updateTDTodos();
+		
+			$scope.updateCount=function(){
+				TDTodoSvc.getCount().$promise.then(function(count){
+					$scope.totalItems=count.count;
+				},
+				function(err){
+					console.log(err);
+					$scope.totalItems=-1;
+				});
+			};
+			$scope.updateCount();
+
+			$scope.pageChanged=function(){
+				console.log($scope.currentPage);
+				TDTodoSvc.list({page:$scope.currentPage}).$promise.then(function(todos){
+					$scope.todos=todos;
+				},
+				function(err){
+					console.log(err);
+					$scope.todos=[];
+				});
+
+				$scope.updateCount();
+			};
 
 			$scope.addOne=function(){
-				$location.path('/addtodo');
+				$location.path('/todolist/addOne');
 			};
 
 			$scope.editTodo=function(id){
@@ -25,8 +50,8 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 			$scope.showDetail=function(todoid){
 				TDTodoSvc.getOne({id:todoid}).$promise.then(function(todo){
 					console.log(todo);
-					DetailDlgSvc.showDetail({
-						title:'Todo',
+					DetailDlgSvc.showDetail('Todo',
+						{
 						'Short Description':todo.shortDesc,
 						'Category':todo.category.name,
 						'Due Date':todo.dateDue,
@@ -39,6 +64,28 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 				function(err){
 					console.log(err);
 				});
+			};
+
+			$scope.abandonTodo=function(todoid){
+				showMsgBox($modal,'Please confirm you want to abandon this item.',true,true,
+					function(result){
+						var todo=new TDTodoSvc();
+						todo.todoid=todoid;
+						todo.$abandon().then(function(result){
+							$scope.updateTDTodos();
+						},
+						function(result){
+							console.log(result);
+						});
+					},
+					function(result){
+						//Cancel
+					});
+				
+			};
+
+			$scope.doneTodo=function(id){
+
 			};
 
 			$scope.deleteTodo=function(todoid){

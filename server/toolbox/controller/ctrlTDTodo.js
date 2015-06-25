@@ -1,7 +1,11 @@
 var svcTDTodo=require('../service/svcTDTodo');
 
-exports.getTodos=function(callback){
-	svcTDTodo.getTodos(callback);
+exports.getTodos=function(page,callback){
+	svcTDTodo.getTodos(page,callback);
+};
+
+exports.getCount=function(callback){
+	svcTDTodo.getCount(callback);
 };
 
 exports.getOne=function(id,callback){
@@ -16,6 +20,13 @@ exports.update=function(todo,callback){
 	svcTDTodo.update(todo._id,todo.description,todo.dateDue,todo.priority,callback);
 };
 
+exports.abandon=function(id,callback){
+	svcTDTodo.abandon(id,callback);
+};
+
+exports.done=function(id,callback){
+	svcTDTodo.done(id,callback);
+};
 exports.deleteTodoById=function(id,callback){
 	svcTDTodo.deleteTodoById(id,callback);
 };

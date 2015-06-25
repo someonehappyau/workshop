@@ -43,6 +43,13 @@
 		.container .text-muted {
 	  		margin: 15px 0;
   		}
+
+		td {
+			-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+			-moz-user-select: none; /* mozilla browsers */
+			-khtml-user-select: none; /* webkit (konqueror) browsers */
+			-ms-user-select: none; /* IE10+ */
+		}
 	</style>
 </head>
 <body ng-controller="IndexCtrl">
@@ -64,10 +71,11 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li ng-if="isLoggedin()" class="dropdown">
-				<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Todolist <span class="caret"></span></a>
+				<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">Todo List <span class="caret"></span></a>
 
 		        <ul class="dropdown-menu" role="menu">
-		        	<li><a href="#/todolist">Todolist</a></li>
+		        	<li><a href="#/todolist">Todo List</a></li>
+				<li><a href="#/todolist/addOne">Add Todo</a></li>
 		        	<li ng-if="isAdmin()" role="separator" class="divider"></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/TDCategory">TDCategory</a></li>
 		        	<li ng-if="isAdmin()"><a href="#/todolist/config/TDPriority">TDPriority</a></li>

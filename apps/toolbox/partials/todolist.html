@@ -21,6 +21,7 @@
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
+			<pagination class="pull-right" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
 			<table class="table table-bordered table-striped table-hover">
 				<thead>
 					<tr class="info">
@@ -32,7 +33,8 @@
 						<th>Status</th>
 						<th>Create Date</th>
 						<th>Edit</th>
-						<th>Delete</th>
+						<th>Abandon</th>
+						<th>Done</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,10 +47,12 @@
 						<td>{{todo.status.name}}</td>
 						<td>{{todo.dateCreated | date:'yyyy-MM-dd'}}</td>
 						<td><button type="button" class="btn btn-primary" ng-click="editTodo(todo._id)">EDIT</button></td>
-						<td><button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">DELETE</button></td>
+						<td><button type="button" class="btn btn-danger" ng-click="abandonTodo(todo._id)">ABANDON</button></td>
+						<td><button type="button" class="btn btn-info" ng-click="doneTodo(todo._id)">DONE</button></td>
 					</tr>
 				</tbody>
 			</table>
+			<pagination class="pull-right" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>
 		</div>
 		<div class="col-md-1"></div>
 	</div>

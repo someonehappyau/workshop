@@ -139,7 +139,7 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$locat
 									}]
 					}
 				}).
-				when('/addtodo',{
+				when('/todolist/addOne',{
 					templateUrl:'partials/todolist_add.html',
 					controller:'TodolistAddCtrl',
 					resolve:{
