@@ -19,8 +19,11 @@ function populateTodo(todo,callback){
 }
 
 
-exports.getTodos=function(page,callback){
-	TDTodo.find()
+exports.getTodos=function(page,abandon,done,callback){
+	var query={};
+	//if (abandon==='none')
+	//	query=;
+	TDTodo.find(query)
 		.skip((page-1)*10)
 		.limit(10)
 		.exec(function(err,todos){
@@ -121,7 +124,6 @@ exports.addOne=function(shortDesc,description,creator,dateDue,category,priority,
 				todo.category=category;
 				todo.priority=priority;
 				todo.status=status;
-				console.log(todo);
 				todo.save(callback);
 			}
 		});
@@ -144,16 +146,47 @@ exports.abandon=function(id,callback){
 			callback(err,todo);
 		else{
 			svcTDType.getOneByName('TDStatus','Normal',function(err,data){
-			       if (err || !data)
+			       	if (err || !data)
 					callback(err,data);
-				else if (data._id!==todo.status)
+				else if (data._id.equals(todo.status)===false){
 					callback(null,false);
+				}
 				else{
 					svcTDType.getOneByName('TDStatus','Abandoned',function(err,data){
 						if (err || !data)
 							callback(err,data);
 						else{
 							todo.status=data._id;
+							todo.dateUpdated=Date.now();
+							todo.save();
+							callback(null,todo);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+
+exports.done=function(id,callback){
+	TDTodo.findById(id,function(err,todo){
+		if (err || !todo)
+			callback(err,todo);
+		else{
+			svcTDType.getOneByName('TDStatus','Normal',function(err,data){
+			       	if (err || !data)
+					callback(err,data);
+				else if (data._id.equals(todo.status)===false){
+					callback(null,false);
+				}
+				else{
+					svcTDType.getOneByName('TDStatus','Done',function(err,data){
+						if (err || !data)
+							callback(err,data);
+						else{
+							todo.status=data._id;
+							todo.dateUpdated=Date.now();
 							todo.save();
 							callback(null,todo);
 						}

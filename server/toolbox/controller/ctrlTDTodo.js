@@ -1,7 +1,7 @@
 var svcTDTodo=require('../service/svcTDTodo');
 
-exports.getTodos=function(page,callback){
-	svcTDTodo.getTodos(page,callback);
+exports.getTodos=function(page,abandon,done,callback){
+	svcTDTodo.getTodos(page,abandon,done,callback);
 };
 
 exports.getCount=function(callback){
@@ -27,6 +27,7 @@ exports.abandon=function(id,callback){
 exports.done=function(id,callback){
 	svcTDTodo.done(id,callback);
 };
+
 exports.deleteTodoById=function(id,callback){
 	svcTDTodo.deleteTodoById(id,callback);
 };

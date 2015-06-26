@@ -1,7 +1,7 @@
 'use strict';
 
-toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location','DetailDlgSvc',
-		function($scope,TDTodoSvc,$modal,$rootScope,$location,DetailDlgSvc){
+toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location','DetailDlgSvc','$filter',
+		function($scope,TDTodoSvc,$modal,$rootScope,$location,DetailDlgSvc,$filter){
 			$scope.updateTDTodos=function(){
 				TDTodoSvc.list().$promise.then(function(todos){
 					$scope.todos=todos;
@@ -56,7 +56,8 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 						'Category':todo.category.name,
 						'Due Date':todo.dateDue,
 						'Priority':todo.priority.name,
-						'Creation Date':todo.dateCreated,
+						'Last Modified At':$filter('date')(todo.dateUpdated,'yyyy-MM-dd HH:mm:ss','+1000'),
+						'Creation Date':$filter('date')(todo.dateCreated,'yyyy-MM-dd HH:mm:ss','+1000'),
 						'Created By':todo.creator.username,
 						'Description':todo.description
 					});
@@ -73,6 +74,7 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 						todo.todoid=todoid;
 						todo.$abandon().then(function(result){
 							$scope.updateTDTodos();
+							console.log('abandoned');
 						},
 						function(result){
 							console.log(result);
@@ -81,11 +83,24 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 					function(result){
 						//Cancel
 					});
-				
 			};
 
-			$scope.doneTodo=function(id){
-
+			$scope.doneTodo=function(todoid){
+				showMsgBox($modal,'Please confirm you want to set this item as done.',true,true,
+					function(result){
+						var todo=new TDTodoSvc();
+						todo.todoid=todoid;
+						todo.$done().then(function(result){
+							$scope.updateTDTodos();
+							console.log('done');
+						},
+						function(result){
+							console.log(result);
+						});
+					},
+					function(result){
+						//Cancel
+					});
 			};
 
 			$scope.deleteTodo=function(todoid){

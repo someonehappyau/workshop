@@ -5,12 +5,23 @@ var ctrlTDTodo=require('../toolbox/controller/ctrlTDTodo');
 
 router.get('/todolist/:id',function(req,res){
 	if(req.params.id==='list'){
-		var page;
+		var page,abandon,done;
 		if (!req.query.page)
 			page=1;
 		else
 			page=req.query.page;
-		ctrlTDTodo.getTodos(page,function(err,todos){
+
+		if (!req.query.abandon  || ['recent','all'].indexOf(req.query.abandon)===-1)
+			abandon='none';
+		else
+			abandon=req.query.abandon;
+
+		if (!req.query.done || ['recent','all'].indexOf(req.query.done)===-1)
+			done='none';
+		else
+			done=req.query.done;
+
+		ctrlTDTodo.getTodos(page,abandon,done,function(err,todos){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todos) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(todos));

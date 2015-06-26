@@ -46,9 +46,9 @@
 						<td>{{todo.priority.name}}</td>
 						<td>{{todo.status.name}}</td>
 						<td>{{todo.dateCreated | date:'yyyy-MM-dd'}}</td>
-						<td><button type="button" class="btn btn-primary" ng-click="editTodo(todo._id)">EDIT</button></td>
-						<td><button type="button" class="btn btn-danger" ng-click="abandonTodo(todo._id)">ABANDON</button></td>
-						<td><button type="button" class="btn btn-info" ng-click="doneTodo(todo._id)">DONE</button></td>
+						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-primary" ng-click="editTodo(todo._id)">EDIT</button></td>
+						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-danger" ng-click="abandonTodo(todo._id)">ABANDON</button></td>
+						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-info" ng-click="doneTodo(todo._id)">DONE</button></td>
 					</tr>
 				</tbody>
 			</table>
