@@ -1,7 +1,25 @@
 var User=require('../model/User');
 var svcTDType=require('../service/svcTDType');
+var pool=require('../../db/dbpool');
+var bcrypt=require('bcrypt');
 
-exports.register=function(username,password,callback){
+exports.addOne=function(username,password,callback){
+	bcrypt.hash(password,8,function(err,hash){
+		if (err) callback(err,null);
+		else{
+			console.log(hash);
+			var user={username:username,password:hash,role:1,state:1};
+			pool.query('insert into User set ?',user,function(err,result){
+				console.log(err);
+				console.log(result);
+				if (err) callback(err,null);
+				else callback(null,result);
+			});
+		}
+	});
+};
+
+exports._register=function(username,password,callback){
 	svcTDType.getOneByName('UserStatus','normal',function(err,userstatus){
 		if (err || !userstatus) callback(err,null);
 		else{
@@ -19,7 +37,15 @@ exports.getUserById=function(id,callback){
 	User.findById(id,callback);
 };
 
-exports.getUserByUsername=function(username,callback){
+exports.getOneByUsername=function(username,callback){
+	var user={username:username};
+	pool.query('select * from Users where ?',user,function(err,result){
+		if (err) callback(err,null);
+		else callback(null,result);
+	});	
+};
+
+exports._getUserByUsername=function(username,callback){
 	User.findOne({username:username},callback);
 };
 
@@ -32,6 +58,21 @@ exports.deleteUserById=function(id,callback){
 };
 
 exports.updatePassword=function(id,password,callback){
+	bcrypt.hash(password,8,function(err,hash){
+		if (err) callback(err,null);
+		else{
+			var user={password:hash};
+			pool.query('update User set ? where id=?',[user,id],function(err,result){
+				console.log(err);
+				console.log(result);
+				if (err) callback(err,null);
+				else callback(null,result);
+			});
+		}
+	});
+};
+
+exports._updatePassword=function(id,password,callback){
 	User.findByIdAndUpdate(id,{password:password},callback);
 };
 
