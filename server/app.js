@@ -30,10 +30,10 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var User=require('./toolbox/model/User');
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+var svcUser=require('./toolbox/service/svcUser');
+passport.use(new LocalStrategy(svcUser.authenticate));
+passport.serializeUser(svcUser.serializeUser);
+passport.deserializeUser(svcUser.deserializeUser);
 
 var checkUserRole=function(role){
 	return [

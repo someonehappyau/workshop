@@ -39,45 +39,29 @@ router.delete('/toolbox/user/:id',function(req,res){
 
 router.post('/toolbox/user/:id',function(req,res){
 	if (req.params.id==='login'){
-		passport.authenticate('local',function(err,user){
-			if(err) res.status(500).end(JSON.stringify(err));
-			else if (!user) res.status(401).end('Username and/or Password is incorrect.');
+		passport.authenticate('local',function(err,user,info){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!user) res.status(401).end('Not able to log in user.');
 			else{
-				ctrlUser.populateUser(user,function(err,user){
+				ctrlUser.updateSessionIdById(user.id,req.sessionID,function(err,result){
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
-						if (user.status.name==='normal'){
-							ctrlUser.updateSessionId(user._id,req.sessionID,function(err,user){
-								if (err) res.status(500).end(JSON.stringify(err));
-								else{
-									ctrlUser.populateUser(user,function(err,user){
-										if (err) res.status(500).end(JSON.stringify(err));
-										else{
-											user.hash='';
-											user.salt='';
-											user.sessionid='';
-											res.status(200)
-											.cookie('username',user.username,{path:'/toolbox'}) 
-											.end(JSON.stringify({sessionid:'',user:user}));
-										}
-									});
-								}
-							});
-
-						}
-						else
-							res.status(401).end('Login failed');
+						user.password='';
+						user.sessionId='';
+						res.status(200)
+						.cookie('username', user.username,{path:'/toolbox'})
+						.end(JSON.stringify({sessionid:'',user:user}));
 					}
 				});
 			}
 		})(req,res);
 	}
-	else if (req.params.id==='register'){
-		ctrlUser.register(req.body.username,req.body.password,function(err,user){
-			if (err) {res.status(500).end(JSON.stringify(err));}
-			else res.status(200).end(JSON.stringify(user));
-		});
-	}
+//	else if (req.params.id==='register'){
+//		ctrlUser.register(req.body.username,req.body.password,function(err,user){
+//			if (err) {res.status(500).end(JSON.stringify(err));}
+//			else res.status(200).end(JSON.stringify(user));
+//		});
+//	}
 	else if (req.params.id==='logout'){
 		req.logout();
 	}
@@ -91,17 +75,15 @@ router.post('/toolbox/user/:id',function(req,res){
 				.end();
 			}
 			else{
-				ctrlUser.populateUser(user,function(err,user){
-					if (err) res.status(500).end(JSON.stringify(err));
-					else{
-						user.hash='';
-						user.salt='';
-						user.sessionid='';
-						res
-						.status(200)
-						.end(JSON.stringify({sessionid:'',user:user}));
-					}
-				});
+
+				if (err) res.status(500).end(JSON.stringify(err));
+				else{
+					user.password='';
+					user.sessionid='';
+					res
+					.status(200)
+					.end(JSON.stringify({sessionid:'',user:user}));
+				}
 			}
 		});
 	}

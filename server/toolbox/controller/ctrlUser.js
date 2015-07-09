@@ -1,49 +1,43 @@
 var svcUser=require('../service/svcUser');
 
-exports.register=function(username,password,callback){
-	svcUser.register(username,password,callback);
+function register(username,password,callback){
+	svcUser.addOne(username,password,callback);
 };
 
-exports.getUserByUsername=function(username,callback){
-	svcUser.getUserByUsername(username,callback);
+function getOneByUsername(username,callback){
+	svcUser.getOneByUsername(username,callback);
 };
 
-exports.getUserById=function(id,callback){
-	svcUser.getUserById(id,callback);
+function getOneById(id,callback){
+	svcUser.getOneById(id,callback);
 };
 
-exports.getUsers=function(callback){
-	svcUser.getUsers(callback);
+function updatePasswordById(id,password,callback){
+	svcUser.updatePasswordById(id,password,callback);
 };
 
-exports.deleteUserById=function(id,callback){
-	svcUser.deleteUserById(id,callback);
+function updateSessionIdById(id,sessionid,callback){
+	svcUser.updateSessionIdById(id,sessionid,callback);
 };
 
-exports.updatePassword=function(id,password,callback){
-	svcUser.updatePassword(id,password,callback);
+function profile(sessionId,username,callback){
+	svcUser.profile(sessionId,username,callback);
 };
 
-exports.updateStatus=function(id,status,callback){
-	svcUser.updateStatus(id,status,callback);
-};
-
-exports.updatePl=function(id,pl,plexpiry,callback){
-	svcUser.updatePl(id,pl,plexpiry,callback);
-};
-
-exports.updateSessionId=function(id,sessionid,callback){
-	svcUser.updateSessionId(id,sessionid,callback);
-};
-
-exports.populateUser=function(user,callback){
-	svcUser.populateUser(user,callback);
-};
-
-exports.profile=function(pl,username,callback){
-	svcUser.profile(pl,username,callback);
-};
-
-exports.loggedIn=function(req,res,next){
+function loggedIn(req,res,next){
 	svcUser.loggedIn(req,res,next);
+};
+
+module.exports={
+	register:register,
+	
+	getOneByUsername:getOneByUsername,
+	getOneById:getOneById,
+	
+	updatePasswordById:updatePasswordById,
+	updateSessionIdById:updateSessionIdById,
+
+	profile:profile,
+	loggedIn:loggedIn
+
 };

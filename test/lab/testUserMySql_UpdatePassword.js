@@ -2,7 +2,7 @@ var svcUser=require('../../server/toolbox/service/svcUser');
 var pool=require('../../server/db/dbpool');
 var bcrypt=require('bcrypt');
 
-svcUser.updatePassword(1,'woshiuser111',function(err,result){
+svcUser.updatePasswordById(1,'woshiuser222',function(err,result){
 	console.log(err);
 	console.log(result);
 });

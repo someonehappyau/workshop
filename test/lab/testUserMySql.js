@@ -4,9 +4,10 @@ var bcrypt=require('bcrypt');
 
 //svcUser.addOne('user2','woshiuser222',function(err,result){});
 
-svcUser.getOneByUsername('user1',function(err,result){
-	console.log(result[0].password);
-	bcrypt.compare('woshiuser111',result[0].password,function(err,res){
+svcUser.getOneByUsername('user2',function(err,result){
+	console.log(err);
+	console.log(result);
+	bcrypt.compare('woshiuser222',result.password,function(err,res){
 		console.log(err);
 		console.log(res);
 	});
