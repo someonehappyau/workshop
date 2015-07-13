@@ -25,11 +25,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-dblclick="showTDTypeDetail(type._id)" ng-repeat="type in types | filter: query">
-						<td>{{type.name}}</td>
+					<tr ng-dblclick="showTDTypeDetail(type.id)" ng-repeat="type in types | filter: query">
+						<td>{{type.label}}</td>
 						<td>{{type.description | limitTo:20}}</td>
-						<td><button type="button" class="btn btn-primary" ng-click="editTDType(type._id)">EDIT</button></td>
-						<td><button type="button" class="btn btn-danger" ng-click="deleteTDType(type._id)">DELETE</button></td>
+						<td><button type="button" class="btn btn-primary" ng-click="editTDType(type.id)">EDIT</button></td>
+						<td><button type="button" class="btn btn-danger" ng-click="deleteTDType(type.id)">DELETE</button></td>
 					</tr>
 				</tbody>
 			</table>

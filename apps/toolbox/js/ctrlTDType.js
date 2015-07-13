@@ -112,18 +112,18 @@ toolboxControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalIn
 			$scope.btnName='ADD';
 			$scope.nameIsDisabled=false;
 			$scope.type={
-				name:'',
+				label:'',
 				description:''
 			};
 
 			$scope.submitForm=function(){
 				var type=new TDTypeSvc();
-				type.type=$scope.type;
+				type.config=$scope.type;
 				type.$add({typeName:typeName}).then(function(data){
 					$rootScope.$broadcast('TDTypeUpdate');
 					$scope.alertMsg='Add '+typeName+' successfully!';
 					$scope.alertStyle='alert-success';
-					$scope.type={name:'',description:''};
+					$scope.type={label:'',description:''};
 					$timeout(function(){
 						$scope.alertMsg='';
 						$scope.alertStyle='';
@@ -137,7 +137,7 @@ toolboxControllers.controller('mdlTDTypeAddCtrl',['$scope','TDTypeSvc','$modalIn
 
 			$scope.checkDuplication=function(){
 				var type=new TDTypeSvc();
-				type.$byname({typeName:typeName,name:$scope.type.name}).then(function(data){
+				type.$byname({typeName:typeName,label:$scope.type.label}).then(function(data){
 					$scope.msgDup='Already Existed!';
 					$scope.msgDupStyle='alert-danger';
 				},
@@ -168,7 +168,7 @@ toolboxControllers.controller('mdlTDTypeEditCtrl',['$scope','TDTypeSvc','$modalI
 
 			$scope.submitForm=function(){
 				var type=new TDTypeSvc();
-				type.type=$scope.type;
+				type.config=$scope.type;
 				type.$update({typeName:typeName}).then(function(data){
 					$rootScope.$broadcast('TDTypeUpdate');
 					$scope.alertMsg='Update '+typeName+' successfully!';

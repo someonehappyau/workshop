@@ -7,7 +7,7 @@ var cookieParser=require('cookie-parser');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 
-var rtTDType=require('./router/rtTDType');
+var rtTDConfig=require('./router/rtTDConfig');
 var rtUser=require('./router/rtUser');
 var rtTodo=require('./router/rtTodo');
 
@@ -47,7 +47,7 @@ var checkUserRole=function(role){
 	];
 };
 
-app.use('/toolbox/svcTodolist',rtTDType);
+app.use('/toolbox/svcTodolist',rtTDConfig);
 app.use('/toolbox/svcToolbox',rtUser);
 app.use('/toolbox/svcTodolist',rtTodo);
 

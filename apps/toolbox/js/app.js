@@ -89,7 +89,7 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$locat
 
 	authService.isAdmin=function(){
 		if (!!Session.user) 
-			if (Session.user.role.name==='admin')
+			if (Session.user.role==='admin')
 				return true;
 			else
 				return false;
@@ -180,9 +180,9 @@ toolboxApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$locat
 								console.log('authenticated');
 								var typeName=$route.current.params.typeName; 
 								if (typeName==='TDCategory'	|| 
-									typeName==='TDStatus' ||
+									typeName==='TDState' ||
 								        typeName==='TDPriority' ||	
-									typeName==='UserStatus' ||
+									typeName==='UserState' ||
 									typeName==='UserRole'){
 							    	}
 								else{

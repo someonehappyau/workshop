@@ -7,8 +7,7 @@ var TDType=require('../model/TDTypes');
 
 //---------Exports functions--------------------------------------------
 function getAll(typeName,callback){
-	var type={typeLabel:typeName};
-	pool.query('select * from Configs where ?',type,callback);
+	pool.query('select * from ??',[typeName],callback);
 };
 
 module.exports={
