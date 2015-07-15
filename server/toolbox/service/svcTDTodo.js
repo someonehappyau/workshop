@@ -4,6 +4,40 @@ var TDTodo=require('../model/TDTodo');
 var svcTDType=require('../service/svcTDType');
 var async=require('async');
 
+var pool=require('../../db/dbpool');
+var mysql=require('mysql');
+
+function getAll(page, countPerPage,abandon,done,callback){
+	var offset=(page-1)*countPerPage;
+	var condition='';
+	if (abandon==='none')
+		condition="where stateLabel<>'abandoned'";
+	if (done==='none'){
+		if (abandon==='none')
+			condition=condition+' and ';
+		else
+			condition='where ';
+			
+		condition=condition+"stateLabel<>'done'";
+	}
+	var sql=mysql.format('select * from TDTodos '+condition+' order by dateDue desc limit ?,?',[offset,countPerPage]);
+	console.log(sql);
+	pool.query('select * from TDTodos '+condition+' order by dateDue desc limit ?,?',[offset,countPerPage],callback);
+};	
+
+function getCount(callback){
+	pool.query('select count(*) as count from TDTodos',function(err,data){
+		console.log(JSON.stringify(data[0].count));
+		if (err) callback(err,-1);
+		else callback(null, data[0].count);
+	});
+};
+
+module.exports={
+	getAll:getAll,
+	getCount:getCount,
+};
+
 function populateTodo(todo,callback){
 	TDTodo.populate(todo,[
 		{path:'creator',model:'User',select:'_id username'},
@@ -19,7 +53,7 @@ function populateTodo(todo,callback){
 }
 
 
-exports.getTodos=function(page,abandon,done,callback){
+exports._getTodos=function(page,abandon,done,callback){
 	var query={};
 	//if (abandon==='none')
 	//	query=;

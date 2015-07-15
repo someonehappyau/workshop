@@ -21,7 +21,7 @@ router.get('/todolist/:id',function(req,res){
 		else
 			done=req.query.done;
 
-		ctrlTDTodo.getTodos(page,abandon,done,function(err,todos){
+		ctrlTDTodo.getAll(page,abandon,done,function(err,todos){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todos) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(todos));
