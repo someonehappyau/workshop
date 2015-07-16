@@ -8,9 +8,21 @@ function getCount(callback){
 	svcTDTodo.getCount(callback);
 };
 
+function getOneById(id,callback){
+	svcTDTodo.getOneById(id,callback);
+};
+
+function addOne(todo.callback){
+	svcTDTodo.addOne(todo.shortDesc,todo.description,todo.creator,todo.dateDue,todo.category,todo.priority,callback);
+};
+
 module.exports={
 	getAll:getAll,
 	getCount:getCount,
+	getOneById:getOneById,
+
+	addOne:addOne,
+
 };
 
 exports._getTodos=function(page,abandon,done,callback){

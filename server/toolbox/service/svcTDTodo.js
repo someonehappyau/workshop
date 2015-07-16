@@ -33,9 +33,36 @@ function getCount(callback){
 	});
 };
 
+function getOneById(id,callback){
+	pool.query('select * from TDTodos where id=?',[id],function(err,data){
+		if (err || !data) callback(err,data);
+		else{
+			if (data.length>0)
+				callback(null,data[0]);
+			else
+				callback(null,false);
+		}
+	});
+};
+
+function addOne(shortDesc,description,creator,dateDue,category,priority,callback){
+	var data={
+		shortDesc:shortDesc,
+		description:description,
+		category:category,
+		priority:priority,
+		dateDue:dateDue,
+		creator:creator
+	};
+	pool.query('insert into TDTodo set ?',[data],callback);
+};
+
 module.exports={
 	getAll:getAll,
 	getCount:getCount,
+	getOneById:getOneById,
+
+	addOne:addOne,
 };
 
 function populateTodo(todo,callback){
@@ -69,11 +96,11 @@ exports._getTodos=function(page,abandon,done,callback){
 	});
 };
 
-exports.getCount=function(callback){
+exports._getCount=function(callback){
 	TDTodo.count(callback);
 };
 
-exports.getOne=function(id,callback){
+exports._getOne=function(id,callback){
 	TDTodo.findById(id,function(err,todo){
 		if(err || !todo)
 			callback(err,todo);
@@ -83,7 +110,7 @@ exports.getOne=function(id,callback){
 	});
 };
 
-exports.addOne=function(shortDesc,description,creator,dateDue,category,priority,callback){
+exports._addOne=function(shortDesc,description,creator,dateDue,category,priority,callback){
 	var hasErr=false;
 	var myErr=null;
 	var myData=null;
@@ -163,18 +190,18 @@ exports.addOne=function(shortDesc,description,creator,dateDue,category,priority,
 		});
 };			
 
-exports.update=function(id,description,dateDue,priority,callback){
+exports._update=function(id,description,dateDue,priority,callback){
 	TDTodo.findByIdAndUpdate(id,
 			{description:description,
 			dateDue:dateDue,
 			priority:priority},callback);
 };
 
-exports.deleteTodoById=function(id,callback){
+exports._deleteTodoById=function(id,callback){
 	TDTodo.findByIdAndRemove(id,callback);
 };
 
-exports.abandon=function(id,callback){
+exports._abandon=function(id,callback){
 	TDTodo.findById(id,function(err,todo){
 		if (err || !todo)
 			callback(err,todo);
@@ -203,7 +230,7 @@ exports.abandon=function(id,callback){
 };
 
 
-exports.done=function(id,callback){
+exports._done=function(id,callback){
 	TDTodo.findById(id,function(err,todo){
 		if (err || !todo)
 			callback(err,todo);
