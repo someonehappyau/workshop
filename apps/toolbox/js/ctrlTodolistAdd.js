@@ -10,7 +10,7 @@ toolboxControllers.controller('TodolistAddCtrl',
 				if (!!types){
 					$scope.categories=types;
 					if (isEdit!==true)
-						$scope.todo.category=types[0]._id;
+						$scope.todo.category=types[0].id;
 				}
 			});
 		};
@@ -21,7 +21,7 @@ toolboxControllers.controller('TodolistAddCtrl',
 				if (!!types){
 					$scope.priorities=types;
 					if (isEdit!==true)
-						$scope.todo.priority=types[2]._id;
+						$scope.todo.priority=types[2].id;
 				}
 			});
 		};
@@ -31,7 +31,7 @@ toolboxControllers.controller('TodolistAddCtrl',
 			$scope.todo={
 				shortDesc:'',
 				description:'',
-				creator:Session.user._id,
+				creator:Session.user.id,
 				dateDue:'',
 				category:'',
 				priority:'',
@@ -55,8 +55,8 @@ toolboxControllers.controller('TodolistAddCtrl',
 			TDTodoSvc.getOne({id:$routeParams.id}).$promise.then(function(todo){
 				console.log(todo);
 				$scope.todo=todo;
-				$scope.todo.category=todo.category._id;
-				$scope.todo.priority=todo.priority._id;
+				$scope.todo.category=todo.category.id;
+				$scope.todo.priority=todo.priority.id;
 			},
 			function(err){
 				console.log(err);

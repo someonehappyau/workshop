@@ -82,7 +82,7 @@ router.post('/todolist/:id',function(req,res){
 });
 
 router.delete('/todolist/:id',function(req,res){
-	ctrlTDTodo.deleteTodoById(req.params.id,function(err){
+	ctrlTDTodo.deleteOneById(req.params.id,function(err){
 		if (err) res.status(500).end(JSON.stringify(err));
 		else res.status(200).end();
 	});

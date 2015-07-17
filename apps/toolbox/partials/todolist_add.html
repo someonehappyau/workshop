@@ -36,12 +36,12 @@
 			<div class="form-group">
 				<label>Category</label>
 				<select ng-model="todo.category" ng-disabled="categoryIsDisabled" class="form-control">
-					<option ng-repeat="type in categories" value="{{type._id}}">{{type.name}}</option>
+					<option ng-repeat="type in categories" value="{{type.id}}">{{type.label}}</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Priority</label>
-				<select class="form-control" ng-model="todo.priority" ng-options="type._id as type.name for type in priorities">
+				<select class="form-control" ng-model="todo.priority" ng-options="type.id as type.label for type in priorities">
 				</select>
 			</div>
 			<div class="form-group">

@@ -12,8 +12,28 @@ function getOneById(id,callback){
 	svcTDTodo.getOneById(id,callback);
 };
 
-function addOne(todo.callback){
-	svcTDTodo.addOne(todo.shortDesc,todo.description,todo.creator,todo.dateDue,todo.category,todo.priority,callback);
+function addOne(todo,callback){
+	var dateDue=new Date(todo.dateDue);
+	console.log(dateDue);
+	console.log(dateDue.toISOString());
+
+	svcTDTodo.addOne(todo.shortDesc,todo.description,todo.creator,dateDue,todo.category,todo.priority,callback);
+};
+
+function updateOneById(todo,callback){
+	svcTDTodo.updateOneById(todo.id,todo.description,todo.dateDue,todo.priority,callback);
+};
+
+function abandon(id,callback){
+	svcTDTodo.abandon(id,callback);
+};
+
+function done(id, callback){
+	svcTDTodo.done(id,callback);
+};
+
+function deleteOneById(id,callback){
+	svcTDTodo.deleteOneById(id,callback);
 };
 
 module.exports={
@@ -22,7 +42,12 @@ module.exports={
 	getOneById:getOneById,
 
 	addOne:addOne,
-
+	
+	updateOneById:updateOneById,
+	abandon:abandon,
+	done:done,
+	
+	deleteOneById:deleteOneById,	
 };
 
 exports._getTodos=function(page,abandon,done,callback){

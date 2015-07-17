@@ -57,12 +57,39 @@ function addOne(shortDesc,description,creator,dateDue,category,priority,callback
 	pool.query('insert into TDTodo set ?',[data],callback);
 };
 
+function updateOneById(id, description,dateDue,priority,callback){
+	var data={
+		description:description,
+		dateDue:dateDue,
+		priority:priority,
+	};
+	pool.query('update TDTodo set ? where id=?',[data,id],callback);
+};
+
+function abandon(id,callback){
+	pool.query('update TDTodo set state=3 where id=?',[id],callback);
+};
+
+function done(id,callback){
+	pool.query('update TDTodo set state=2 where id=?',[id],callback);
+};
+
+function deleteOneById(id,callback){
+	pool.query('delete from TDTodo where id=?',[id],callback);
+};
+
 module.exports={
 	getAll:getAll,
 	getCount:getCount,
 	getOneById:getOneById,
 
 	addOne:addOne,
+	
+	updateOneById:updateOneById,
+	abandon:abandon,
+	done:done,
+
+	deleteOneById:deleteOneById,
 };
 
 function populateTodo(todo,callback){
