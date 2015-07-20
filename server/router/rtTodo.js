@@ -5,23 +5,27 @@ var ctrlTDTodo=require('../toolbox/controller/ctrlTDTodo');
 
 router.get('/todolist/:id',function(req,res){
 	if(req.params.id==='list'){
-		var page,abandon,done;
+		var page,normal,abandon,done;
 		if (!req.query.page)
 			page=1;
 		else
 			page=req.query.page;
 
-		if (!req.query.abandon  || ['recent','all'].indexOf(req.query.abandon)===-1)
-			abandon='none';
+		if (!req.query.normal)
+			normal=false;
+		else
+			normal=req.query.normal;
+		if (!req.query.abandon)//  || ['recent','all'].indexOf(req.query.abandon)===-1)
+			abandon=false;
 		else
 			abandon=req.query.abandon;
 
-		if (!req.query.done || ['recent','all'].indexOf(req.query.done)===-1)
-			done='none';
+		if (!req.query.done)// || ['recent','all'].indexOf(req.query.done)===-1)
+			done=false;
 		else
 			done=req.query.done;
 
-		ctrlTDTodo.getAll(page,abandon,done,function(err,todos){
+		ctrlTDTodo.getAll(page,normal,abandon,done,function(err,todos){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todos) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(todos));
@@ -35,7 +39,7 @@ router.get('/todolist/:id',function(req,res){
 		});
 	}
 	else{
-		ctrlTDTodo.getOne(req.params.id,function(err,todo){
+		ctrlTDTodo.getOneById(req.params.id,function(err,todo){
 			if (err || !todo) res.status(500).end(JSON.stringify(err));
 			else{
 				res.status(200).end(JSON.stringify(todo));
@@ -56,7 +60,9 @@ router.post('/todolist/:id',function(req,res){
 		});
 	}
 	else if (req.params.id==='update'){
-		ctrlTDTodo.update(req.body.todo,function(err,todo){
+		console.log(req.body.todo);
+		ctrlTDTodo.updateOneById(req.body.todo,function(err,todo){
+			console.log(err);
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!todo) res.status(500).end();
 			else res.status(200).end(JSON.stringify(todo));

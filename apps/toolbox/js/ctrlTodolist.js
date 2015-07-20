@@ -2,8 +2,17 @@
 
 toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$rootScope','$location','DetailDlgSvc','$filter',
 		function($scope,TDTodoSvc,$modal,$rootScope,$location,DetailDlgSvc,$filter){
+			$scope.shouldShowNormal=true;
+			$scope.shouldShowDone=false;
+			$scope.shouldShowAbandon=false;
+
 			$scope.updateTDTodos=function(){
-				TDTodoSvc.list().$promise.then(function(todos){
+				var shouldShow={
+					normal:$scope.shouldShowNormal,
+					abandon:$scope.shouldShowAbandon,
+					done:$scope.shouldShowDone,
+				};
+				TDTodoSvc.list(shouldShow).$promise.then(function(todos){
 					$scope.todos=todos;
 					$scope.currentPage=1;
 				},
@@ -53,12 +62,12 @@ toolboxControllers.controller('TodolistCtrl',['$scope','TDTodoSvc', '$modal','$r
 					DetailDlgSvc.showDetail('Todo',
 						{
 						'Short Description':todo.shortDesc,
-						'Category':todo.category.name,
+						'Category':todo.categoryLabel,
 						'Due Date':todo.dateDue,
-						'Priority':todo.priority.name,
+						'Priority':todo.priorityLabel,
 						'Last Modified At':$filter('date')(todo.dateUpdated,'yyyy-MM-dd HH:mm:ss','+1000'),
-						'Creation Date':$filter('date')(todo.dateCreated,'yyyy-MM-dd HH:mm:ss','+1000'),
-						'Created By':todo.creator.username,
+						'Creation Date':$filter('date')(todo.dateCreation,'yyyy-MM-dd HH:mm:ss','+1000'),
+						'Created By':todo.creatorUsername,
 						'Description':todo.description
 					});
 				},

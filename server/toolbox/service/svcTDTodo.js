@@ -7,22 +7,19 @@ var async=require('async');
 var pool=require('../../db/dbpool');
 var mysql=require('mysql');
 
-function getAll(page, countPerPage,abandon,done,callback){
+function getAll(page, countPerPage,normal,abandon,done,callback){
 	var offset=(page-1)*countPerPage;
-	var condition='';
-	if (abandon==='none')
-		condition="where stateLabel<>'abandoned'";
-	if (done==='none'){
-		if (abandon==='none')
-			condition=condition+' and ';
-		else
-			condition='where ';
-			
-		condition=condition+"stateLabel<>'done'";
+	var condition='where 1=1 ';
+	if (normal==='false')
+		condition=condition+" and stateLabel<>'normal'";
+	if (abandon==='false')
+		condition=condition+" and stateLabel<>'abandoned'";
+	if (done==='false'){
+		condition=condition+" and stateLabel<>'done'";
 	}
-	var sql=mysql.format('select * from TDTodos '+condition+' order by dateDue desc limit ?,?',[offset,countPerPage]);
+	var sql=mysql.format('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage]);
 	console.log(sql);
-	pool.query('select * from TDTodos '+condition+' order by dateDue desc limit ?,?',[offset,countPerPage],callback);
+	pool.query('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage],callback);
 };	
 
 function getCount(callback){

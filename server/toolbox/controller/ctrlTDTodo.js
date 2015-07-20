@@ -1,7 +1,7 @@
 var svcTDTodo=require('../service/svcTDTodo');
 
-function getAll(page,abandon,done,callback){
-	svcTDTodo.getAll(page,10,abandon,done,callback);
+function getAll(page,normal,abandon,done,callback){
+	svcTDTodo.getAll(page,10,normal,abandon,done,callback);
 };
 
 function getCount(callback){
@@ -14,14 +14,12 @@ function getOneById(id,callback){
 
 function addOne(todo,callback){
 	var dateDue=new Date(todo.dateDue);
-	console.log(dateDue);
-	console.log(dateDue.toISOString());
-
 	svcTDTodo.addOne(todo.shortDesc,todo.description,todo.creator,dateDue,todo.category,todo.priority,callback);
 };
 
 function updateOneById(todo,callback){
-	svcTDTodo.updateOneById(todo.id,todo.description,todo.dateDue,todo.priority,callback);
+	var dateDue=new Date(todo.dateDue);
+	svcTDTodo.updateOneById(todo.id,todo.description,dateDue,todo.priority,callback);
 };
 
 function abandon(id,callback){

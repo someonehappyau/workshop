@@ -11,6 +11,9 @@
 			<label>Search:</label>
  		   	<input type="text" class="form-control" ng-model="query">
 			<input type="button" class="btn btn-default" ng-click="addOne()" value="Add">
+			<label class="checkbox"><input id="chk_normal" type="checkbox" ng-model="shouldShowNormal" ng-change="updateTDTodos()">Normal</label>
+			<label class="checkbox"><input id="chk_done" type="checkbox" ng-model="shouldShowDone" ng-change="updateTDTodos()">Done</label>
+			<label class="checkbox"><input id="chk_abandon" type="checkbox" ng-model="shouldShowAbandon" ng-change="updateTDTodos()">Abandon</label>
 			</form>
 		</div>
 		<div class="col-md-1"></div>
@@ -38,17 +41,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-dblclick="showDetail(todo._id)" ng-repeat="todo in todos | filter: query">
+					<tr ng-dblclick="showDetail(todo.id)" ng-repeat="todo in todos | filter: query">
 						<td>{{todo.shortDesc}}</td>
 						<td>{{todo.description | limitTo:20}}</td>
-						<td>{{todo.category.name}}</td>
+						<td>{{todo.categoryLabel}}</td>
 						<td>{{todo.dateDue | date:'yyyy-MM-dd'}}</td>
-						<td>{{todo.priority.name}}</td>
-						<td>{{todo.status.name}}</td>
-						<td>{{todo.dateCreated | date:'yyyy-MM-dd'}}</td>
-						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-primary" ng-click="editTodo(todo._id)">EDIT</button></td>
-						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-danger" ng-click="abandonTodo(todo._id)">ABANDON</button></td>
-						<td><button ng-disabled="todo.status.name!=='Normal'" type="button" class="btn btn-info" ng-click="doneTodo(todo._id)">DONE</button></td>
+						<td>{{todo.priorityLabel}}</td>
+						<td>{{todo.stateLabel}}</td>
+						<td>{{todo.dateCreation | date:'yyyy-MM-dd'}}</td>
+						<td><button ng-disabled="todo.stateLabel.toUpperCase()!=='NORMAL'" type="button" class="btn btn-primary" ng-click="editTodo(todo.id)">EDIT</button></td>
+						<td><button ng-disabled="todo.stateLabel.toUpperCase()!=='NORMAL'" type="button" class="btn btn-danger" ng-click="abandonTodo(todo.id)">ABANDON</button></td>
+						<td><button ng-disabled="todo.stateLabel.toUpperCase()!=='NORMAL'" type="button" class="btn btn-info" ng-click="doneTodo(todo.id)">DONE</button></td>
 					</tr>
 				</tbody>
 			</table>

@@ -55,8 +55,8 @@ toolboxControllers.controller('TodolistAddCtrl',
 			TDTodoSvc.getOne({id:$routeParams.id}).$promise.then(function(todo){
 				console.log(todo);
 				$scope.todo=todo;
-				$scope.todo.category=todo.category.id;
-				$scope.todo.priority=todo.priority.id;
+				//$scope.todo.category=todo.category.id;
+				//$scope.todo.priority=todo.priority.id;
 			},
 			function(err){
 				console.log(err);
