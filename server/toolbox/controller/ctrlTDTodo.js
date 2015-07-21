@@ -4,8 +4,8 @@ function getAll(page,normal,abandon,done,callback){
 	svcTDTodo.getAll(page,10,normal,abandon,done,callback);
 };
 
-function getCount(callback){
-	svcTDTodo.getCount(callback);
+function getCount(normal,abandon,done,callback){
+	svcTDTodo.getCount(normal,abandon,done,callback);
 };
 
 function getOneById(id,callback){

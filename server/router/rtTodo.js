@@ -32,7 +32,21 @@ router.get('/todolist/:id',function(req,res){
 		});
 	}
 	else if (req.params.id==='count'){
-		ctrlTDTodo.getCount(function(err,count){
+		var normal,abandon,done;
+		if (!req.query.normal)
+			normal=false;
+		else
+			normal=req.query.normal;
+		if (!req.query.abandon)//  || ['recent','all'].indexOf(req.query.abandon)===-1)
+			abandon=false;
+		else
+			abandon=req.query.abandon;
+
+		if (!req.query.done)// || ['recent','all'].indexOf(req.query.done)===-1)
+			done=false;
+		else
+			done=req.query.done;
+		ctrlTDTodo.getCount(normal,abandon,done,function(err,count){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!count) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify({count:count}));

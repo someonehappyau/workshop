@@ -4,7 +4,7 @@ toolboxServices.factory('TDTodoSvc',
 		['$resource',
 		function($resource){
 			return $resource('/toolbox/svcTodolist/todolist/:id',{id:'@id'},{
-				list:{method:'GET',params:{id:'list'},isArray:true},
+				list:{method:'GET',params:{id:'list'}},
 				getCount:{method:'GET',params:{id:'count'}},
 				getOne:{method:'GET'},
 				update:{method:'POST',params:{id:'update'}},

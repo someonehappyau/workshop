@@ -11,6 +11,7 @@
 			<label>Search:</label>
  		   	<input type="text" class="form-control" ng-model="query">
 			<input type="button" class="btn btn-default" ng-click="addOne()" value="Add">
+			<span>{{result.length}}</span>
 			<label class="checkbox"><input id="chk_normal" type="checkbox" ng-model="shouldShowNormal" ng-change="updateTDTodos()">Normal</label>
 			<label class="checkbox"><input id="chk_done" type="checkbox" ng-model="shouldShowDone" ng-change="updateTDTodos()">Done</label>
 			<label class="checkbox"><input id="chk_abandon" type="checkbox" ng-model="shouldShowAbandon" ng-change="updateTDTodos()">Abandon</label>
@@ -41,7 +42,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-dblclick="showDetail(todo.id)" ng-repeat="todo in todos | filter: query">
+					<tr ng-dblclick="showDetail(todo.id)" ng-repeat="todo in todos | filter: query as result">
 						<td>{{todo.shortDesc}}</td>
 						<td>{{todo.description | limitTo:20}}</td>
 						<td>{{todo.categoryLabel}}</td>

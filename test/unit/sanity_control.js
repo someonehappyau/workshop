@@ -1,14 +1,15 @@
 'use strict';
 
 describe('controllers',function(){
-
+	var modal;
 	beforeEach(module('toolboxControllers'));
-	beforeEach(module('$modal'));
+	beforeEach(module('ui.bootstrap'));
+	beforeEach(module('toolboxApp'));
 
 	it('exist',inject(function($controller){
 		var scope={};
 		var ctrl=$controller('IndexCtrl',{$scope:scope});
-		expect(scope.currentUser).equals(null);
+		expect(scope.currentUser).toBe(null);
 	}));
 
 

@@ -17,13 +17,48 @@ function getAll(page, countPerPage,normal,abandon,done,callback){
 	if (done==='false'){
 		condition=condition+" and stateLabel<>'done'";
 	}
-	var sql=mysql.format('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage]);
-	console.log(sql);
-	pool.query('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage],callback);
+	//var sql=mysql.format('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage]);
+	//console.log(sql);
+	var resultCount,resultData,errCount,errResult;
+	async.parallel([
+		function(done){
+			pool.query('select count(*) as count from TDTodos '+condition,function(err,result){
+				errCount=err;
+				resultCount=result;
+				done();
+			});
+		},
+		function(done){
+			pool.query('select * from TDTodos '+condition+' order by dateDue asc limit ?,?',[offset,countPerPage],function(err,result){
+				errResult=err;
+				resultData=result;
+				done();
+			});
+		}],
+		function(){
+			if (errCount)
+				callback(errCount,null);
+			else if (errResult)
+				callback(errResult,null);
+			else if (!resultCount)
+			       callback(null,resultCount)
+			else if (!resultData)
+				callback(null,resultData);
+			else
+				callback(null,{totalCount:resultCount[0].count,data:resultData});
+		});
 };	
 
-function getCount(callback){
-	pool.query('select count(*) as count from TDTodos',function(err,data){
+function getCount(normal,abandon,done,callback){
+	var condition='where 1=1 ';
+	if (normal==='false')
+		condition=condition+" and stateLabel<>'normal'";
+	if (abandon==='false')
+		condition=condition+" and stateLabel<>'abandoned'";
+	if (done==='false'){
+		condition=condition+" and stateLabel<>'done'";
+	}
+	pool.query('select count(*) as count from TDTodos '+condition,function(err,data){
 		console.log(JSON.stringify(data[0].count));
 		if (err) callback(err,-1);
 		else callback(null, data[0].count);
