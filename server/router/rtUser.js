@@ -44,6 +44,7 @@ router.post('/toolbox/user/:id',function(req,res){
 			else if (!user) res.status(401).end('Not able to log in user.');
 			else{
 				ctrlUser.updateSessionIdById(user.id,req.sessionID,function(err,result){
+					console.log(JSON.stringify(err));
 					if (err) res.status(500).end(JSON.stringify(err));
 					else{
 						user.password='';

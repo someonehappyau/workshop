@@ -1,6 +1,5 @@
 var express=require('express');
 var logger=require('morgan');
-var mongoose=require('mongoose');
 var path=require('path');
 var bodyParser=require('body-parser');
 var cookieParser=require('cookie-parser');
@@ -10,8 +9,6 @@ var LocalStrategy=require('passport-local').Strategy;
 var rtTDConfig=require('./router/rtTDConfig');
 var rtUser=require('./router/rtUser');
 var rtTodo=require('./router/rtTodo');
-
-mongoose.connect('mongodb://localhost/test');
 
 var app=express();
 
@@ -34,18 +31,6 @@ var svcUser=require('./toolbox/service/svcUser');
 passport.use(new LocalStrategy(svcUser.authenticate));
 passport.serializeUser(svcUser.serializeUser);
 passport.deserializeUser(svcUser.deserializeUser);
-
-var checkUserRole=function(role){
-	return [
-		passport.authenticate('local'),
-		function(req,res,next){
-			if(req.user && req.user.role==='')
-				next();
-			else
-				res.send(401, 'Unauthorized');
-		}
-	];
-};
 
 app.use('/toolbox/svcTodolist',rtTDConfig);
 app.use('/toolbox/svcToolbox',rtUser);
