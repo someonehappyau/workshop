@@ -10,6 +10,8 @@ var rtTDConfig=require('./router/rtTDConfig');
 var rtUser=require('./router/rtUser');
 var rtTodo=require('./router/rtTodo');
 
+var rtMCOrigin=require('./router/rtMCOrigin');
+
 var app=express();
 
 app.use(cookieParser());
@@ -36,8 +38,11 @@ app.use('/toolbox/svcTodolist',rtTDConfig);
 app.use('/toolbox/svcToolbox',rtUser);
 app.use('/toolbox/svcTodolist',rtTodo);
 
+app.use('/mc/svcMCO',rtMCOrigin);
+
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
+app.use('/mc',express.static(path.join(__dirname,'../apps/mc')));
 app.use('/bower',express.static(path.join(__dirname,'../bower_components')));
 app.use(express.static(__dirname + '/public'));
 

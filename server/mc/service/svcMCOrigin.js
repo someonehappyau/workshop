@@ -39,8 +39,38 @@ function getAll(page,countPerPage,callback){
 		});
 };
 
+function getCount(callback){
+	var condition='where 1=1 ';
+	pool.query('select count(*) as count from MCOrigin '+condition,function(err,data){
+		console.log(JSON.stringify(data[0].count));
+		if (err) callback(err,-1);
+		else callback(null, data[0].count);
+	});
+};
+
+function getOneById(id,callback){
+	pool.query('select * from MCOrigin where id=?',[id],function(err,data){
+		if (err || !data) callback(err,data);
+		else{
+			if (data.length>0)
+				callback(null,data[0]);
+			else
+				callback(null,false);
+		}
+	});
+};
+
+function updateOneById(id, mcFinal, callback){
+	var data={
+		mcFinal:mcFinal
+	};
+	pool.query('update MCOrigin set ? where id=?',[data,id],callback);
+};
 
 module.exports={
 	getAll:getAll,
+	getCount:getCount,
+	getOneById:getOneById,
 
+	updateOneById:updateOneById,
 };
