@@ -139,20 +139,17 @@ mcApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$location) 
 									}]
 					}
 				}).
-				when('/todolist/addOne',{
-					templateUrl:'partials/todolist_add.html',
-					controller:'TodolistAddCtrl',
+				when('/mcoDetail/:id',{
+					templateUrl:'partials/mcoDetail.html',
+					controller:'MCODetailCtrl',
 					resolve:{
 						validation: ['AuthService','$location',function(AuthService,$location){
 											AuthService.authenticate().then(function(){
 											},
 											function(){
-												$location.path('/toolbox');
+												$location.path('/mc');
 											});
-									}],
-						isEdit: function(){
-									return false;
-								}
+									}]
 					}
 				}).
 				when('/edittodo/:id',{

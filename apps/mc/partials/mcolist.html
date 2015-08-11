@@ -1,0 +1,47 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">MC Origin</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<form class="form-inline">
+				<label>Search:</label>
+				<input type="text" class="form-control" ng-model="query">
+			</form>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<pagination class="pull-right" total-items="totalItems" max-size="10" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+			<table class="table table-bordered table-striped tabel-hover">
+				<thead>
+					<tr class="info">
+						<th>Line</th>
+						<th>Maker</th>
+						<th>Model URL</th>
+						<th>Line State</th>
+						<th>MC Final</th>
+						<th>Detail</th>
+					</tr>
+				<thead>
+				<tbody>
+					<tr ng-dblclick="showDetail(mco.id)" ng-repeat="mco in mcos | filter: query as result">
+						<td>{{mco.line}}</td>
+						<td>{{mco.maker}}</td>
+						<td>{{mco.urlModel}}</td>
+						<td>{{mco.lineState}}</td>
+						<td>{{mco.mcFinal}}</td>
+						<td><button type="button" class="btn btn-primary" ng-click="gotoDetail(mco.id)">DETAIL</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<pagination class="pull-right" total-items="totalItems" max-size="10" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>

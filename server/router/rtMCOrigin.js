@@ -13,6 +13,7 @@ router.get('/mco/:id',function(req,res){
 		else
 			page=req.query.page;
 
+		console.log(page);
 		ctrlMCOrigin.getAll(page,function(err,mcs){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!mcs) res.status(200).end(JSON.stringify());
