@@ -55,6 +55,7 @@ testlabDirectives.directive('myDiv',function(){
 			console.log(scope);
 			console.log(ele);
 			console.log(attr);
+			ele.context.innerHTML='Hello!';
 			ele.on('dblclick',function(event){
 				console.log(event);
 			});

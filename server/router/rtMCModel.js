@@ -3,9 +3,9 @@
 var express=require('express');
 var router=express.Router();
 var ctrlUser=require('../toolbox/controller/ctrlUser');
-var ctrlMCOrigin=require('../mc/controller/ctrlMCOrigin');
+var ctrlMCModel=require('../mc/controller/ctrlMCModel');
 
-router.get('/mco/:id',function(req,res){
+router.get('/model/:id',function(req,res){
 	if (req.params.id==='list'){
 		var page;
 		if (!req.query.page)
@@ -14,21 +14,21 @@ router.get('/mco/:id',function(req,res){
 			page=req.query.page;
 
 		console.log(page);
-		ctrlMCOrigin.getAll(page,function(err,mcs){
+		ctrlMCModel.getAll(page,function(err,mcs){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!mcs) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(mcs));
 		});
 	}
 	else if (req.params.id==='count'){
-		ctrlMCOrigin.getCount(function(err,count){
+		ctrlMCModel.getCount(function(err,count){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!count) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify({count:count}));
 		});
 	}
 	else{
-		ctrlMCOrigin.getOneById(req.params.id,function(err,mc){
+		ctrlMCModel.getOneById(req.params.id,function(err,mc){
 			if (err || !mc) res.status(500).end(JSON.stringify(err));
 			else{
 				res.status(200).end(JSON.stringify(mc));
@@ -37,13 +37,27 @@ router.get('/mco/:id',function(req,res){
 	}
 });
 
-router.post('/mco/:id',function(req,res){
+router.post('/model/:id',function(req,res){
 	if (req.params.id==='update'){
-		ctrlMCOrigin.updateOneById(req.body.mco,function(err,mc){
-			if (err) res.status(500).end(JSON.stringify(err));
-			else if (!mc) res.status(500).end();
-			else res.status(200).end(JSON.stringify(mc));
-		});
+		var id=req.body.mc.id;
+		var mc={
+			maker:req.body.maker,
+			label:req.body.label,
+			yearStart:req.body.yearStart,
+			yearEnd:req.body.yearEnd
+		};
+		if (!id)
+			ctrlMCModel.addOne(mc,function(err,mc){
+				if (err) res.status(500).end(JSON.stringify(err));
+				else if (!mc) res.status(500).end();
+				else res.status(200).end(JSON.stringify(mc));
+			});
+		else
+			ctrlMCModel.updateOneById(id,mc,function(err,mc){
+				if (err) res.status(500).end(JSON.stringify(err));
+				else if (!mc) res.status(500).end();
+				else res.status(200).end(JSON.stringify(mc));
+			});
 	}
 	else{
 		res.status(404).end();

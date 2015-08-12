@@ -6,6 +6,7 @@ var mcApp=angular.module('mcApp',[
 	'ui.bootstrap',
 	'mcControllers',
 	'mcServices',
+	'ngSanitize',
 ]);
 
 var mcServices=angular.module('mcServices',['ngResource']);

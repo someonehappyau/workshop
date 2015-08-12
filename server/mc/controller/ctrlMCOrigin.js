@@ -1,4 +1,4 @@
-'use restrict';
+'use strict';
 
 var svcMCOrigin=require('../service/svcMCOrigin');
 
