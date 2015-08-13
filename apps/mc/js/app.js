@@ -177,7 +177,10 @@ mcApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$location) 
 							AuthService.authenticate().then(function(){
 								console.log('authenticated');
 								var typeName=$route.current.params.typeName; 
-								if (typeName==='MCOrgState'){
+								if (typeName==='MCOrgState' || 
+									typeName==='MCMaker' ||
+									typeName==='MCModelType'	
+								){
 							    	}
 								else{
 									$location.path('/mc');

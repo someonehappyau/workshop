@@ -14,6 +14,10 @@ function getOneById(id,callback){
 	svcMCModel.getOneById(id,callback);
 };
 
+function addOne(mc,callback){
+	svcMCModel.addOne(mc,callback);
+};
+
 function updateOneById(id,mc,callback){
 	svcMCModel.updateOneById(id,mc,callback);
 };
@@ -23,5 +27,6 @@ module.exports={
 	getCount:getCount,
 	getOneById:getOneById,
 
+	addOne:addOne,
 	updateOneById:updateOneById,
 };

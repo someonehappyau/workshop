@@ -39,21 +39,24 @@ router.get('/model/:id',function(req,res){
 
 router.post('/model/:id',function(req,res){
 	if (req.params.id==='update'){
-		var id=req.body.mc.id;
+		console.log(req.body.model);
+		var id=req.body.model.id;
 		var mc={
 			maker:req.body.maker,
 			label:req.body.label,
 			yearStart:req.body.yearStart,
 			yearEnd:req.body.yearEnd
 		};
+		delete req.body.model.id;
+		console.log(req.body.model);
 		if (!id)
-			ctrlMCModel.addOne(mc,function(err,mc){
+			ctrlMCModel.addOne(req.body.model,function(err,mc){
 				if (err) res.status(500).end(JSON.stringify(err));
 				else if (!mc) res.status(500).end();
 				else res.status(200).end(JSON.stringify(mc));
 			});
 		else
-			ctrlMCModel.updateOneById(id,mc,function(err,mc){
+			ctrlMCModel.updateOneById(id,req.body.model,function(err,mc){
 				if (err) res.status(500).end(JSON.stringify(err));
 				else if (!mc) res.status(500).end();
 				else res.status(200).end(JSON.stringify(mc));

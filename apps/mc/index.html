@@ -81,6 +81,17 @@
 				<li ng-if="isAdmin()"><a href="#/mc/config/MCOrgState">MCO State</a></li>
 		        </ul>
 	        </li>
+	        <li ng-if="isLoggedin()" class="dropdown">
+			<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">MC <span class="caret"></span></a>
+
+		        <ul class="dropdown-menu" role="menu">
+		        	<li><a href="#/mclist">MC List</a></li>
+		        	<li ng-if="isAdmin()" role="separator" class="divider"></li>
+				<li ng-if="isAdmin()"><a href="#/mc/config/MCMaker">Model Maker</a></li>
+				<li ng-if="isAdmin()"><a href="#/mc/config/MCModelType">Model Type</a></li>
+		        	<li ng-if="isAdmin()" role="separator" class="divider"></li>
+		        </ul>
+	        </li>
 	        <li><a href="">About</a></li>
 	      </ul>
 		  <ul class="nav navbar-nav navbar-right">

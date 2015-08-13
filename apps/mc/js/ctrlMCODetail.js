@@ -1,10 +1,21 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc){
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse){
+			$scope.model={
+				id:'',
+				maker:'',
+				label:'',
+				yearStart:'',
+				yearEnd:'',
+				type:''
+			};
+
 			$scope.loadMCO=function(id){
 				MCOriginSvc.getOne({id:id}).$promise.then(function(mco){
 					$scope.mco=mco;
+					$scope.model.id=mco.mcFinal;
+					$scope.loadMCModel();
 				},
 				function(err){
 					console.log(err);
@@ -30,7 +41,13 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				}
 			};
 
-			$scope.loadMCModel=function(id){
+			$scope.loadMCModel=function(){
+				//console.log($scope.model);
+				var id;
+				if (!$scope.model.id)
+					id='0';
+				else
+					id=$scope.model.id;
 				MCModelSvc.getOne({id:id}).$promise.then(function(model){
 					$scope.changeStateExisted($scope.stateExisted.model,true);	
 				},
@@ -40,6 +57,28 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				});
 			};
 
+			$scope.submitModel=function(){
+				MCModelSvc.update({model:$scope.model,mcoid:$scope.mco.id}).$promise.then(function(model){
+					$scope.model=model;
+					$scope.loadMCModel();
+				},
+				function(err){
+					console.log(err);
+				});
+					
+			};
+
+			$scope.loadType=function(typename,objname){
+				TDTypeSvc.list({typeName:typename}).$promise.then(function(types){
+					if (!!types){
+						var model=$parse(objname);
+						model.assign($scope,types);
+					}
+				});
+			};
+			
+			$scope.loadType('MCMaker','makers');
+			$scope.loadType('MCModelType','modelTypes');
 
 
 		}]);

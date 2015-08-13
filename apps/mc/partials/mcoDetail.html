@@ -9,10 +9,10 @@
 			<accordion close-others="false">
 				<accordion-group is-open="io_model">
 				<accordion-heading>Model <span class="label {{stateExisted.model.type}}">{{stateExisted.model.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_model, 'glyphicon-chevron-right': !io_model}"></i></accordion-heading>
-					<form name="f_maker">
+					<form name="f_maker" ng-submit="submitModel()">
 						<div class="form-group">
 							<label>Maker</label>
-							<select ng-model="model_maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
+							<select ng-model="model.maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
 						</div>
 						<div class="form-group">
 							<label>Model Name</label>
@@ -25,6 +25,10 @@
 						<div class="form-group">
 							<label>End Year</label>
 							<input type="text" class="form-control" ng-model="model.yearEnd" ng-maxlength="4">
+						</div>
+						<div class="form-group">
+							<label>Type</label>
+							<select ng-model="model.type" class="form-control" ng-options="type.id as type.label for type in modelTypes"></select>
 						</div>
 						<div class="form-group">
 							<input type="submit" class="btn btn-block" value="Update">
