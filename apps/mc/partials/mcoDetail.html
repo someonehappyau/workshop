@@ -6,46 +6,56 @@
 		<div class="col-md-5" ng-bind-html="mco.tableContent"></div>
 		<div class="col-md-1"></div>
 		<div class="col-md-6">
-			<accordion close-others="false">
-				<accordion-group is-open="io_model">
-				<accordion-heading>Model <span class="label {{stateExisted.model.type}}">{{stateExisted.model.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_model, 'glyphicon-chevron-right': !io_model}"></i></accordion-heading>
-					<form name="f_maker" ng-submit="submitModel()">
-						<div class="form-group">
-							<label>Maker</label>
-							<select ng-model="model.maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
-						</div>
-						<div class="form-group">
-							<label>Model Name</label>
-							<input type="text" class="form-control" require ng-model="model.label" ng-maxlength="100">
-						</div>
-						<div class="form-group">
-							<label>Start Year</label>
-							<input type="text" class="form-control" require ng-model="model.yearStart" ng-maxlength="4">
-						</div>
-						<div class="form-group">
-							<label>End Year</label>
-							<input type="text" class="form-control" ng-model="model.yearEnd" ng-maxlength="4">
-						</div>
-						<div class="form-group">
-							<label>Type</label>
-							<select ng-model="model.type" class="form-control" ng-options="type.id as type.label for type in modelTypes"></select>
-						</div>
-						<div class="form-group">
-							<input type="submit" class="btn btn-block" value="Update">
-						</div>
-					</form>
+			<div class="row">
+				<div class="col-md-12">
+					<alert type="success"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>abcde</alert>
+					<alert type="danger"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>abcde</alert>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<accordion close-others="false">
+						<accordion-group is-open="io_model">
+						<accordion-heading>Model <span class="label {{stateExisted.model.type}}">{{stateExisted.model.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_model, 'glyphicon-chevron-right': !io_model}"></i></accordion-heading>
+							<form name="f_maker" ng-submit="submitModel()">
+								<div class="form-group">
+									<label>Maker</label>
+									<select ng-model="model.maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
+								</div>
+								<div class="form-group">
+									<label>Model Name</label>
+									<input type="text" class="form-control" require ng-model="model.label" ng-maxlength="100">
+								</div>
+								<div class="form-group">
+									<label>Start Year</label>
+									<input type="text" class="form-control" require ng-model="model.yearStart" ng-maxlength="4">
+								</div>
+								<div class="form-group">
+									<label>End Year</label>
+									<input type="text" class="form-control" ng-model="model.yearEnd" ng-maxlength="4">
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="model.type" class="form-control" ng-options="type.id as type.label for type in modelTypes"></select>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 
 
-				</accordion-group>
-				<accordion-group is-open="io_engine">
-					<accordion-heading>Engine <span class="label {{stateExisted.engine.type}}">{{stateExisted.engine.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_engine, 'glyphicon-chevron-right': !io_engine}"></i></accordion-heading>
+						</accordion-group>
+						<accordion-group is-open="io_engine">
+							<accordion-heading>Engine <span class="label {{stateExisted.engine.type}}">{{stateExisted.engine.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_engine, 'glyphicon-chevron-right': !io_engine}"></i></accordion-heading>
 
-				</accordion-group>
-				<accordion-group is-open="io_frame">
-					<accordion-heading>Frame <span class="label {{stateExisted.frame.type}}">{{stateExisted.frame.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_frame, 'glyphicon-chevron-right': !io_frame}"></i></accordion-heading>
+						</accordion-group>
+						<accordion-group is-open="io_frame">
+							<accordion-heading>Frame <span class="label {{stateExisted.frame.type}}">{{stateExisted.frame.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_frame, 'glyphicon-chevron-right': !io_frame}"></i></accordion-heading>
 
-				</accordion-group>
-			</accordion>
+						</accordion-group>
+					</accordion>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
