@@ -3,13 +3,39 @@
 		<div class="col-md-12"><h1 class="text-center">MC Origin Detail</h1></div>
 	</div>
 	<div class="row">
-		<div class="col-md-5" ng-bind-html="mco.tableContent"></div>
+		<div class="col-md-12">
+			<toaster-container toaster-options="{'time-out': 2000, 'close-button':true,'newestOnTop':true,'animation-class': 'toast-top-center','show-Duration':10,'hide-Duration':10}"></toaster-container>
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()" dismiss-on-timeout="{{alert.timeout}}"><span class="glyphicon glyphicon-{{alert.sign}}" aria-hidden="true"></span>{{alert.msg}}</alert>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5">
+			<div class="row">
+				<div class=col-md-12">
+					<alert type="{{linkStateType}}">{{linkStateMsg}}</alert>
+					<form name="FupdateLink" ng-submit="updateLink()">
+						<input class="form-control" type="submit" value="Update Link">
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">mcFinal: {{mco.mcFinal}}</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" ng-bind-html="mco.tableContent"></div>
+			</div>
+		</div>
 		<div class="col-md-1"></div>
 		<div class="col-md-6">
 			<div class="row">
 				<div class="col-md-12">
-					<alert type="success"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>abcde</alert>
-					<alert type="danger"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>abcde</alert>
+					<form name="loadModel" ng-submit="loadMCModel()">
+						<div class="form-group">
+							<label>Model ID</label>
+							<input class="form-control" type="text" ng-model="model.id">
+						</div>
+						<input class="form-control" type="submit" value="Load Model">
+					</form>
 				</div>
 			</div>
 			<div class="row">

@@ -7,6 +7,8 @@ var mcApp=angular.module('mcApp',[
 	'mcControllers',
 	'mcServices',
 	'ngSanitize',
+	'ngAnimate',
+	'toaster',
 ]);
 
 var mcServices=angular.module('mcServices',['ngResource']);

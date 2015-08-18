@@ -39,7 +39,7 @@ router.get('/mco/:id',function(req,res){
 
 router.post('/mco/:id',function(req,res){
 	if (req.params.id==='update'){
-		ctrlMCOrigin.updateOneById(req.body.mco,function(err,mc){
+		ctrlMCOrigin.updateOneById(req.body.mcoid,req.body.mcFinal,function(err,mc){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!mc) res.status(500).end();
 			else res.status(200).end(JSON.stringify(mc));

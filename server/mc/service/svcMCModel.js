@@ -60,6 +60,19 @@ function getOneById(id,callback){
 	});
 };
 
+function getDuplication(data,callback){
+	var yearStart=data.yearStart;
+	var yearEnd=data.yearEnd;
+	delete data.yearStart;
+	delete data.yearEnd;
+	pool.query('select * from MCModels where maker=? and label=? and ((?>=yearStart and ?<=yearEnd) or (?>=yearStart and ?<=yearEnd) or (?<yearStart and ?>yearEnd))',[data.maker,data.label,data.yearStart,data.yearStart,data.yearEnd,data.yearEnd,data.yearStart,data.yearEnd],function(err,data){
+		if (err || !data) callback(err,data);
+		else{
+				callback(null,data);
+		}
+	});
+};
+
 function addOne(data,callback){
 	pool.query('insert into MCModel set ?',[data],callback);
 };
@@ -72,6 +85,7 @@ module.exports={
 	getAll:getAll,
 	getCount:getCount,
 	getOneById:getOneById,
+	getDuplication:getDuplication,
 
 	addOne:addOne,
 	updateOneById:updateOneById,

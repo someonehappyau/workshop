@@ -14,8 +14,8 @@ function getOneById(id,callback){
 	svcMCOrigin.getOneById(id, callback);
 };
 
-function updateOneById(mc,callback){
-	svcMCOrigin.updateOneById(mc.id, mc.mcFinal, callback);
+function updateOneById(id,mcFinal,callback){
+	svcMCOrigin.updateOneById(id, mcFinal, callback);
 };
 
 module.exports={

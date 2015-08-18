@@ -1,24 +1,43 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse){
-			$scope.model={
-				id:'',
-				maker:'',
-				label:'',
-				yearStart:'',
-				yearEnd:'',
-				type:''
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster){
+			$scope.addAlert=function(type,msg){
+				toaster.pop(type,null,msg);
 			};
+
+			$scope.resetModel=function(){
+				$scope.model={
+					id:'',
+					maker:'',
+					label:'',
+					yearStart:'',
+					yearEnd:'',
+					type:''
+				}
+			};
+			$scope.resetModel();
+
+			$scope.linkStateType='warning';
+			$scope.linkStateMsg='N/A';
 
 			$scope.loadMCO=function(id){
 				MCOriginSvc.getOne({id:id}).$promise.then(function(mco){
 					$scope.mco=mco;
-					$scope.model.id=mco.mcFinal;
-					$scope.loadMCModel();
+					if (!mco.mcFinal){
+
+					}
+					else{
+						$scope.model.id=mco.mcFinal;
+						$scope.loadMCModel();
+					}
+					$scope.updateLinkState();
+					$scope.addAlert('success','Load MC Origin successfully.');
 				},
 				function(err){
 					console.log(err);
+					$scope.addAlert('error',err);
+					$scope.updateLinkState();
 				});
 			};
 
@@ -41,29 +60,63 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				}
 			};
 
+			$scope.updateLink=function(){
+				if (!!$scope.model.id){
+					MCOriginSvc.update({mcoid:$scope.mco.id,mcFinal:$scope.model.id}).$promise.then(function(mco){
+						$scope.mco.mcFinal=$scope.model.id;
+						//console.log(mco);
+						$scope.updateLinkState();
+						$scope.addAlert('success','Update Link successfully.');
+					},
+					function(err){
+						$scope.updateLinkState();
+						$scope.addAlert('error',err);
+					});
+				}
+			};
+
+			$scope.updateLinkState=function(){
+				if ($scope.mco.mcFinal===$scope.model.id){
+						$scope.linkStateType='success';
+						$scope.linkStateMsg='Linked to model id:'+$scope.mco.mcFinal;
+				}
+				else{
+						$scope.linkStateType='danger';
+						$scope.linkStateMsg='Not linked to model id:'+$scope.model.id;
+				}
+			};
+
 			$scope.loadMCModel=function(){
-				//console.log($scope.model);
 				var id;
 				if (!$scope.model.id)
 					id='0';
 				else
 					id=$scope.model.id;
 				MCModelSvc.getOne({id:id}).$promise.then(function(model){
-					$scope.changeStateExisted($scope.stateExisted.model,true);	
+					$scope.model=model;
+					$scope.changeStateExisted($scope.stateExisted.model,true);
+					$scope.updateLinkState();
+					$scope.addAlert('success','Load Model successfully.');
 				},
 				function(err){
+					$scope.resetModel();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.model,false);
+					$scope.updateLinkState();
+					$scope.addAlert('error',err);
 				});
 			};
 
 			$scope.submitModel=function(){
-				MCModelSvc.update({model:$scope.model,mcoid:$scope.mco.id}).$promise.then(function(model){
-					$scope.model=model;
+				MCModelSvc.update({model:$scope.model,mcoid:$scope.mco.id}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.model.id=data.insertId;
+					$scope.addAlert('success','Update Model successfully.');
 					$scope.loadMCModel();
 				},
 				function(err){
 					console.log(err);
+					$scope.addAlert('error',err);
 				});
 					
 			};
