@@ -1,22 +1,10 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster){
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc){
 			$scope.addAlert=function(type,msg){
 				toaster.pop(type,null,msg);
 			};
-
-			$scope.resetModel=function(){
-				$scope.model={
-					id:'',
-					maker:'',
-					label:'',
-					yearStart:'',
-					yearEnd:'',
-					type:''
-				}
-			};
-			$scope.resetModel();
 
 			$scope.linkStateType='warning';
 			$scope.linkStateMsg='N/A';
@@ -97,12 +85,34 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.changeStateExisted($scope.stateExisted.model,true);
 					$scope.updateLinkState();
 					$scope.addAlert('success','Load Model successfully.');
+
+					$scope.loadMCEngine();
 				},
 				function(err){
-					$scope.resetModel();
+					$scope.resetAll();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.model,false);
 					$scope.updateLinkState();
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCEngine=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCEngineSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(engine){
+					$scope.engine=engine;
+					$scope.changeStateExisted($scope.stateExisted.engine,true);
+					$scope.addAlert('success','Load Engine successfully.');
+				},
+				function(err){
+					$scope.resetEngine();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.engine,false);
 					$scope.addAlert('error',err);
 				});
 			};
@@ -121,6 +131,79 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					
 			};
 
+			$scope.submitEngine=function(){
+				if (!$scope.model.id)
+					$scope.engine.model=0;
+				else
+					$scope.engine.model=$scope.model.id;
+
+				MCEngineSvc.update({engine:$scope.engine}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.engine.id=data.insertId;
+					$scope.addAlert('success','Update Engine successfully.');
+					$scope.loadMCEngine();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.resetModel=function(){
+				
+				$scope.changeStateExisted($scope.stateExisted.model,false);
+				$scope.model={
+					id:'',
+					maker:'',
+					label:'',
+					yearStart:'',
+					yearEnd:'',
+					type:''
+				}
+			};
+			$scope.resetModel();
+
+			$scope.resetEngine=function(){
+				$scope.changeStateExisted($scope.stateExisted.engine,false);
+				$scope.engine={
+					id:'',
+					model:0,
+					engCylCount:'',
+					engFormat:'',
+					engMount:'',
+					engType:'',
+					engCylValveInlet:'',
+					engCylValveExhaust:'',
+					engCamType:'',
+					engCapacity:'',
+					engBore:'',
+					engStroke:'',
+					engCompressionRatio:'',
+					engCooling:'',
+					engLubrication:'',
+					engInductionType:'',
+					engInductionTBDiameter:'',
+					engInductionDesc:'',
+					engMaxPowerHP:'',
+					engMaxPowerKW:'',
+					engMaxPowerRPM:'',
+					engMaxTorqueNM:'',
+					engMaxTorqueFTLB:'',
+					engMaxTorqueRPM:'',
+					engClutchOperation:'',
+					engClutchType:'',
+					engClutchPlateCount:'',
+					engIgnition:'',
+					engStarting:''
+				}
+			};
+			$scope.resetEngine();
+
+			$scope.resetAll=function(){
+				$scope.resetModel();
+				$scope.resetEngine();
+			};
+
 			$scope.loadType=function(typename,objname){
 				TDTypeSvc.list({typeName:typename}).$promise.then(function(types){
 					if (!!types){
@@ -129,10 +212,26 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					}
 				});
 			};
-			
-			$scope.loadType('MCMaker','makers');
-			$scope.loadType('MCModelType','modelTypes');
+		
+			$scope.reloadTypes=function(){
+				console.log('reloading...');	
+				$scope.loadType('MCMaker','makers');
+				$scope.loadType('MCModelType','modelTypes');
 
+				$scope.loadType('MCEngFormat','engFormats');
+				$scope.loadType('MCEngMount','engMounts');
+				$scope.loadType('MCEngType','engTypes');
+				$scope.loadType('MCEngCamType','engCamTypes');
+				$scope.loadType('MCEngCooling','engCoolings');
+				$scope.loadType('MCEngLubrication','engLubrications');
+				$scope.loadType('MCEngInductionType','engInductionTypes');
+				$scope.loadType('MCEngClutchOperation','engClutchOperations');
+				$scope.loadType('MCEngClutchType','engClutchTypes');
+				$scope.loadType('MCEngIgnition','engIgnitions');
+				$scope.loadType('MCEngStarting','engStartings');
+			};
+
+			$scope.reloadTypes();
 
 		}]);
 

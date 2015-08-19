@@ -181,7 +181,18 @@ mcApp.factory('AuthService', function (UserSvc, Session, $cookies,$q,$location) 
 								var typeName=$route.current.params.typeName; 
 								if (typeName==='MCOrgState' || 
 									typeName==='MCMaker' ||
-									typeName==='MCModelType'	
+									typeName==='MCModelType' ||
+									typeName==='MCEngFormat' ||	
+									typeName==='MCEngMount' ||	
+									typeName==='MCEngType' ||	
+									typeName==='MCEngCamType' ||	
+									typeName==='MCEngCooling' ||	
+									typeName==='MCEngLubrication' ||	
+									typeName==='MCEngInductionType' ||	
+									typeName==='MCEngClutchOperation' ||	
+									typeName==='MCEngClutchType' ||	
+									typeName==='MCEngIgnition' ||	
+									typeName==='MCEngStarting'	
 								){
 							    	}
 								else{

@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class=col-md-12">
 					<alert type="{{linkStateType}}">{{linkStateMsg}}</alert>
-					<form name="FupdateLink" ng-submit="updateLink()">
+					<form name="f_updateLink" ng-submit="updateLink()">
 						<input class="form-control" type="submit" value="Update Link">
 					</form>
 				</div>
@@ -29,7 +29,12 @@
 		<div class="col-md-6">
 			<div class="row">
 				<div class="col-md-12">
-					<form name="loadModel" ng-submit="loadMCModel()">
+					<input type="button" class="form-control" ng-click="reloadTypes()" value="Refresh Types">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form name="f_loadModel" ng-submit="loadMCModel()">
 						<div class="form-group">
 							<label>Model ID</label>
 							<input class="form-control" type="text" ng-model="model.id">
@@ -43,7 +48,7 @@
 					<accordion close-others="false">
 						<accordion-group is-open="io_model">
 						<accordion-heading>Model <span class="label {{stateExisted.model.type}}">{{stateExisted.model.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_model, 'glyphicon-chevron-right': !io_model}"></i></accordion-heading>
-							<form name="f_maker" ng-submit="submitModel()">
+							<form name="f_model" ng-submit="submitModel()">
 								<div class="form-group">
 									<label>Maker</label>
 									<select ng-model="model.maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
@@ -68,12 +73,122 @@
 									<input type="submit" class="btn btn-block" value="Update">
 								</div>
 							</form>
-
-
 						</accordion-group>
 						<accordion-group is-open="io_engine">
 							<accordion-heading>Engine <span class="label {{stateExisted.engine.type}}">{{stateExisted.engine.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_engine, 'glyphicon-chevron-right': !io_engine}"></i></accordion-heading>
-
+							<form name="f_engine" ng-submit="submitEngine()">
+								<div class="form-group">
+									<label>Cylinder Count</label>
+									<input type="text" class="form-control" ng-model="engine.engCylCount">
+								</div>
+								<div class="form-group">
+									<label>Format</label>
+									<select ng-model="engine.engFormat" class="form-control" ng-options="type.id as type.label for type in engFormats"></select>
+								</div>
+								<div class="form-group">
+									<label>Mount</label>
+									<select ng-model="engine.engMount" class="form-control" ng-options="type.id as type.label for type in engMounts"></select>
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="engine.engType" class="form-control" ng-options="type.id as type.label for type in engTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Count of inlet valves</label>
+									<input type="text" class="form-control" ng-model="engine.engCylValveInlet">
+								</div>
+								<div class="form-group">
+									<label>Count of exhaust valves</label>
+									<input type="text" class="form-control" ng-model="engine.engCylValveExhaust">
+								</div>
+								<div class="form-group">
+									<label>Cam Type</label>
+									<select ng-model="engine.engCamType" class="form-control" ng-options="type.id as type.label for type in engCamTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Capacity</label>
+									<input type="text" class="form-control" ng-model="engine.engCapacity">
+								</div>
+								<div class="form-group">
+									<label>Bore</label>
+									<input type="text" class="form-control" ng-model="engine.engBore">
+								</div>
+								<div class="form-group">
+									<label>Stroke</label>
+									<input type="text" class="form-control" ng-model="engine.engStroke">
+								</div>
+								<div class="form-group">
+									<label>Compression Ratio</label>
+									<input type="text" class="form-control" ng-model="engine.engCompressionRatio">
+								</div>
+								<div class="form-group">
+									<label>Cooling</label>
+									<select ng-model="engine.engCooling" class="form-control" ng-options="type.id as type.label for type in engCoolings"></select>
+								</div>
+								<div class="form-group">
+									<label>Lubrication</label>
+									<select ng-model="engine.engLubrication" class="form-control" ng-options="type.id as type.label for type in engLubrications"></select>
+								</div>
+								<div class="form-group">
+									<label>Induction Type</label>
+									<select ng-model="engine.engInductionType" class="form-control" ng-options="type.id as type.label for type in engInductionTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Induction Throttle Body Diameter</label>
+									<input type="text" class="form-control" ng-model="engine.engInductionTBDiameter">
+								</div>
+								<div class="form-group">
+									<label>Induction Description</label>
+									<input type="text" class="form-control" ng-model="engine.engInductionDesc">
+								</div>
+								<div class="form-group">
+									<label>Max Power (HP)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerHP">
+								</div>
+								<div class="form-group">
+									<label>Max Power (KW)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerKW">
+								</div>
+								<div class="form-group">
+									<label>Max Power (RPM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerRPM">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (NM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueNM">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (FT LB)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueFTLB">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (RPM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueRPM">
+								</div>
+								<div class="form-group">
+									<label>Clutch Operation Method</label>
+									<select ng-model="engine.engClutchOperation" class="form-control" ng-options="type.id as type.label for type in engClutchOperations"></select>
+								</div>
+								<div class="form-group">
+									<label>Clutch Type</label>
+									<select ng-model="engine.engClutchType" class="form-control" ng-options="type.id as type.label for type in engClutchTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Count of Clutch Plate</label>
+									<input type="text" class="form-control" ng-model="engine.engClutchPlateCount">
+								</div>
+								<div class="form-group">
+									<label>Ignition</label>
+									<select ng-model="engine.engIgnition" class="form-control" ng-options="type.id as type.label for type in engIgnitions"></select>
+								</div>
+								<div class="form-group">
+									<label>Starting Method</label>
+									<select ng-model="engine.engStarting" class="form-control" ng-options="type.id as type.label for type in engStartings"></select>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_frame">
 							<accordion-heading>Frame <span class="label {{stateExisted.frame.type}}">{{stateExisted.frame.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_frame, 'glyphicon-chevron-right': !io_frame}"></i></accordion-heading>

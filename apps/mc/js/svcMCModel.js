@@ -11,3 +11,12 @@ mcServices.factory('MCModelSvc',
 			});
 		}]);
 			
+
+mcServices.factory('MCEngineSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/engine/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
