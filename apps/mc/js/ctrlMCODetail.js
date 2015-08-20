@@ -34,7 +34,12 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			$scope.stateExisted={
 				model:{type:'label-danger',msg:'Not Found'},
 				engine:{type:'label-danger',msg:'Not Found'},
-				frame:{type:'label-danger',msg:'Not Found'}
+				frame:{type:'label-danger',msg:'Not Found'},
+				suspension:{type:'label-danger',msg:'Not Found'},
+				brake:{type:'label-danger',msg:'Not Found'},
+				wheel:{type:'label-danger',msg:'Not Found'},
+				dimension:{type:'label-danger',msg:'Not Found'},
+				drive:{type:'label-danger',msg:'Not Found'}
 			};
 			
 			$scope.changeStateExisted=function(state,value){
