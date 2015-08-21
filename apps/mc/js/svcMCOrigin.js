@@ -7,6 +7,7 @@ mcServices.factory('MCOriginSvc',
 				list:{method:'GET',params:{id:'list'}},
 				getCount:{method:'GET',params:{id:'count'}},
 				getOne:{method:'GET'},
+				imageFromPage:{method:'GET',params:{id:'imageFromPage'}},
 				update:{method:'POST',params:{id:'update'}}
 			});
 		}]);

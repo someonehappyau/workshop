@@ -4,6 +4,8 @@ var express=require('express');
 var router=express.Router();
 var ctrlUser=require('../toolbox/controller/ctrlUser');
 var ctrlMCOrigin=require('../mc/controller/ctrlMCOrigin');
+var imageFromPage=require('../util/imageFromPage');
+var url=require('url');
 
 router.get('/mco/:id',function(req,res){
 	if (req.params.id==='list'){
@@ -25,6 +27,18 @@ router.get('/mco/:id',function(req,res){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!count) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify({count:count}));
+		});
+	}
+	else if (req.params.id==='imageFromPage'){
+		console.log(req.query);
+		imageFromPage.getList(url.resolve(req.query.urlMaker,req.query.urlModel),function(err,response,result){
+			var data={
+					err:err,
+					res:response,
+					result:result
+				};
+			console.log(data);
+			res.status(200).end(JSON.stringify(data));
 		});
 	}
 	else{

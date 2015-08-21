@@ -30,6 +30,19 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			};
 
 			$scope.loadMCO($routeParams.id);
+
+			$scope.orgPics=[];
+			$scope.loadPictures=function(){
+				console.log('load picture');
+				MCOriginSvc.imageFromPage({urlMaker:$scope.mco.urlMaker,urlModel:$scope.mco.urlModel}).$promise.then(function(data){
+					console.log(data.err);
+					console.log(data.res);
+					$scope.orgPics=data.result;
+				},
+				function(err){
+					console.log(err);
+				});
+			};
 			
 			$scope.stateExisted={
 				model:{type:'label-danger',msg:'Not Found'},
