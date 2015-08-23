@@ -38,12 +38,26 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					console.log(data.err);
 					console.log(data.res);
 					$scope.orgPics=data.result;
+					for (var i=0;i<data.result.length;i++){
+						$scope.orgPicsSel[i]=false;
+					}
 				},
 				function(err){
 					console.log(err);
 				});
 			};
 			
+			$scope.orgPicsSel=[];
+			$scope.savePics=function(){
+				var urls=[];
+				for (var i=0;i<$scope.orgPics.length;i++){
+					if($scope.orgPicsSel[i]==true){
+						urls.push($scope.orgPics[i]);
+					}
+				}
+				console.log(urls);
+			};
+
 			$scope.stateExisted={
 				model:{type:'label-danger',msg:'Not Found'},
 				engine:{type:'label-danger',msg:'Not Found'},

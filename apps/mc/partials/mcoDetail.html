@@ -27,8 +27,20 @@
 			<div class="row">
 				<div class="col-md-12">
 					<input type="button" class="form-control" value="Load Pictures" ng-click="loadPictures()">
-					<div class="row" ng-repeat="pic in orgPics track by $index">
-						<img src="{{pic}}"/>
+					<div class="row">
+						<form name="SavePic" ng-submit="savePics()">
+						<table>
+							<tr ng-repeat="pic in orgPics">
+								<td>
+									<div class="row">
+										<label><input type="checkbox" ng-model="orgPicsSel[$index]"/>{{pic}}
+											<img src="{{pic}}"></label>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<input ng-if="orgPics.length>0" class="form-control" type="submit" value="Save Pics">
+						</form>
 					</div>
 				</div>
 			</div>
