@@ -13,6 +13,7 @@ var rtTodo=require('./router/rtTodo');
 var rtMCOrigin=require('./router/rtMCOrigin');
 var rtMCModel=require('./router/rtMCModel');
 var rtMCEngine=require('./router/rtMCEngine');
+var rtMCPic=require('./router/rtMCPic');
 
 var app=express();
 
@@ -43,6 +44,7 @@ app.use('/toolbox/svcTodolist',rtTodo);
 app.use('/mc/svcMCO',rtMCOrigin);
 app.use('/mc/svcMC',rtMCModel);
 app.use('/mc/svcMC',rtMCEngine);
+app.use('/mc/svcMC',rtMCPic);
 
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));

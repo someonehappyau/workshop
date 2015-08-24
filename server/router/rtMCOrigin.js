@@ -6,6 +6,7 @@ var ctrlUser=require('../toolbox/controller/ctrlUser');
 var ctrlMCOrigin=require('../mc/controller/ctrlMCOrigin');
 var imageFromPage=require('../util/imageFromPage');
 var url=require('url');
+var saveImageFromUrl=require('../util/saveImageFromUrl');
 
 router.get('/mco/:id',function(req,res){
 	if (req.params.id==='list'){

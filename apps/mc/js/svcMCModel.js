@@ -20,3 +20,11 @@ mcServices.factory('MCEngineSvc',
 				update:{method:'POST',params:{id:'update'}}
 			});
 		}]);
+
+mcServices.factory('MCPicSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/mcpic/:id',{id:'@id'},{
+				addOne:{method:'POST',params:{id:'savePics'}}
+			});
+		}]);

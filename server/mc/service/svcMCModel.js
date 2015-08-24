@@ -77,6 +77,31 @@ function addOne(data,callback){
 	pool.query('insert into MCModel set ?',[data],callback);
 };
 
+function addGalleryLink(mcid,picid,callback){
+	pool.query('select * from MCGallery where model=? and pic=?',[mcid,picid],function(err,data){
+		if (err)
+			callback(err,null);
+		else{
+			if (data.length===0){
+				pool.query('insert into MCGallery set model=?,pic=?',[mcid,picid],function(err,data){
+					if (err)
+						callback(err,null);
+					else
+						callback(null,data);
+				});
+			}
+			else{
+				pool.query('update MCGallery set model=?,pic=?',[mcid,picid],function(err,data){
+					if (err)
+						callback(err,null);
+					else
+						callback(null,data);
+				});
+			}
+		}
+	});
+};
+
 function updateOneById(id, data, callback){
 	pool.query('update MCModel set ? where id=?',[data,id],callback);
 };
@@ -88,5 +113,6 @@ module.exports={
 	getDuplication:getDuplication,
 
 	addOne:addOne,
+	addGalleryLink:addGalleryLink,
 	updateOneById:updateOneById,
 };

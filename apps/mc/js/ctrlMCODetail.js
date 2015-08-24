@@ -1,7 +1,7 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc){
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc){
 			$scope.addAlert=function(type,msg){
 				toaster.pop(type,null,msg);
 			};
@@ -56,6 +56,12 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					}
 				}
 				console.log(urls);
+				MCPicSvc.addOne({mcid:$scope.model.id,urls:urls}).$promise.then(function(data){
+					console.log(data);
+				},
+				function(err){
+					console.log(err);
+				});
 			};
 
 			$scope.stateExisted={

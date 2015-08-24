@@ -18,6 +18,10 @@ function addOne(mc,callback){
 	svcMCModel.addOne(mc,callback);
 };
 
+function addGalleryLink(mcid,picid,callback){
+	svcMCModel.addGalleryLink(mcid,picid,callback);
+};
+
 function updateOneById(id,mc,callback){
 	svcMCModel.updateOneById(id,mc,callback);
 };
@@ -28,5 +32,6 @@ module.exports={
 	getOneById:getOneById,
 
 	addOne:addOne,
+	addGalleryLink:addGalleryLink,
 	updateOneById:updateOneById,
 };
