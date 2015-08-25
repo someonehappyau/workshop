@@ -228,6 +228,14 @@
 						<accordion-group is-open="io_drive">
 							<accordion-heading>Drive <span class="label {{stateExisted.drive.type}}">{{stateExisted.drive.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_drive, 'glyphicon-chevron-right': !io_drive}"></i></accordion-heading>
 						</accordion-group>
+						<accordion-group is-open="io_gallery">
+							<accordion-heading>Gallery <span class="label {{stateExisted.gallery.type}}">{{stateExisted.gallery.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_gallery, 'glyphicon-chevron-right': !io_gallery}"></i></accordion-heading>
+							<input type="button" ng-click="updateMCGalleryPosition()" value="Update Position">
+							<div class="row" ui-sortable="sortableOptions" ng-model="mcGalleries">
+								<div ng-repeat="img in mcGalleries" style="width:100px;"><img style="width:100%;height:auto" src="/mc/svcMC/mcpic/{{img.picFileName}}"/></div>
+							</div>
+								
+						</accordion-group>
 					</accordion>
 				</div>
 			</div>

@@ -27,6 +27,13 @@ router.get('/model/:id',function(req,res){
 			else res.status(200).end(JSON.stringify({count:count}));
 		});
 	}
+	else if (req.params.id==='gallery'){
+		ctrlMCModel.getGallery(req.query.mcid,function(err,imgs){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else if (!imgs) res.status(200).end(JSON.stringify([]));
+			else res.status(200).end(JSON.stringify(imgs));
+		});
+	}
 	else{
 		ctrlMCModel.getOneById(req.params.id,function(err,mc){
 			if (err || !mc) res.status(500).end(JSON.stringify(err));

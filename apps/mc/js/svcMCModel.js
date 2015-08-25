@@ -7,6 +7,7 @@ mcServices.factory('MCModelSvc',
 				list:{method:'GET',params:{id:'list'}},
 				getCount:{method:'GET',params:{id:'count'}},
 				getOne:{method:'GET'},
+				getGallery:{method:'GET',params:{id:'gallery'},isArray:true},
 				update:{method:'POST',params:{id:'update'}}
 			});
 		}]);

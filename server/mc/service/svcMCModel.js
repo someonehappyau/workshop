@@ -60,6 +60,10 @@ function getOneById(id,callback){
 	});
 };
 
+function getGallery(mcid,callback){
+	pool.query('select * from MCGalleries where model=? order by position',[mcid],callback);
+};
+
 function getDuplication(data,callback){
 	var yearStart=data.yearStart;
 	var yearEnd=data.yearEnd;
@@ -110,6 +114,7 @@ module.exports={
 	getAll:getAll,
 	getCount:getCount,
 	getOneById:getOneById,
+	getGallery:getGallery,
 	getDuplication:getDuplication,
 
 	addOne:addOne,

@@ -58,8 +58,13 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				console.log(urls);
 				MCPicSvc.addOne({mcid:$scope.model.id,urls:urls}).$promise.then(function(data){
 					console.log(data);
+					if (data.fail>0)
+						$scope.addAlert('warning','Save pics: '+data.success+' Success. '+data.success+' Failed.');
+					else
+						$scope.addAlert('success',data.success+' pic(s) has been saved successfully.');
 				},
 				function(err){
+					$scope.addAlert('error',err);
 					console.log(err);
 				});
 			};
@@ -72,7 +77,8 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				brake:{type:'label-danger',msg:'Not Found'},
 				wheel:{type:'label-danger',msg:'Not Found'},
 				dimension:{type:'label-danger',msg:'Not Found'},
-				drive:{type:'label-danger',msg:'Not Found'}
+				drive:{type:'label-danger',msg:'Not Found'},
+				gallery:{type:'label-danger',msg:'Not Found'}
 			};
 			
 			$scope.changeStateExisted=function(state,value){
@@ -125,6 +131,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.addAlert('success','Load Model successfully.');
 
 					$scope.loadMCEngine();
+					$scope.loadMCGallery();
 				},
 				function(err){
 					$scope.resetAll();
@@ -151,6 +158,32 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetEngine();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.engine,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCGallery=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCModelSvc.getGallery({mcid:modelId}).$promise.then(function(imgs){
+					if (imgs.length===0){
+						$scope.changeStateExisted($scope.stateExisted.gallery,false);
+						$scope.addAlert('warning','No images found.');
+					}
+					else{
+						$scope.mcGalleries=imgs;
+						$scope.changeStateExisted($scope.stateExisted.gallery,true);
+						$scope.addAlert('success','Load Gallery successfully.');
+					}
+				},
+				function(err){
+					$scope.resetGallery();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.gallery,false);
 					$scope.addAlert('error',err);
 				});
 			};
@@ -185,6 +218,13 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					console.log(err);
 					$scope.addAlert('error',err);
 				});
+			};
+
+			$scope.updateMCGalleryPosition=function(){
+				for (var i=0;i<$scope.mcGalleries.length;i++){
+					var img=$scope.mcGalleries[i];
+					console.log(i+'model:'+img.model+'; pic:'+img.pic+'; fileName:'+img.picFileName);
+				}
 			};
 
 			$scope.resetModel=function(){
@@ -237,9 +277,18 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			};
 			$scope.resetEngine();
 
+			$scope.sortableOptions={
+			};
+
+			$scope.resetGallery=function(){
+				$scope.mcGalleries=[];
+			};
+			$scope.resetGallery();
+
 			$scope.resetAll=function(){
 				$scope.resetModel();
 				$scope.resetEngine();
+				$scope.resetGallery();
 			};
 
 			$scope.loadType=function(typename,objname){

@@ -14,6 +14,10 @@ function getOneById(id,callback){
 	svcMCModel.getOneById(id,callback);
 };
 
+function getGallery(mcid,callback){
+	svcMCModel.getGallery(mcid,callback);
+};
+
 function addOne(mc,callback){
 	svcMCModel.addOne(mc,callback);
 };
@@ -30,6 +34,7 @@ module.exports={
 	getAll:getAll,
 	getCount:getCount,
 	getOneById:getOneById,
+	getGallery:getGallery,
 
 	addOne:addOne,
 	addGalleryLink:addGalleryLink,

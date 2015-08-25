@@ -7,6 +7,10 @@ var ctrlMCPic=require('../mc/controller/ctrlMCPic');
 var ctrlMCModel=require('../mc/controller/ctrlMCModel');
 var async=require('async');
 
+router.get('/mcpic/:imgName',function(req,res){
+	ctrlMCPic.getPic(req.params.imgName,res);
+});
+
 router.post('/mcpic/:id',function(req,res){
 	if (req.params.id==='savePics'){
 		var mcid,urls;

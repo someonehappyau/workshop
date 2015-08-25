@@ -9,6 +9,7 @@ var mcApp=angular.module('mcApp',[
 	'ngSanitize',
 	'ngAnimate',
 	'toaster',
+	'ui.sortable'
 ]);
 
 var mcServices=angular.module('mcServices',['ngResource']);

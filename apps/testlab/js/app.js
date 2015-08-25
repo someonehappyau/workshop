@@ -17,6 +17,17 @@ testlabControllers.controller('ctrl1',
 			
 			$scope.val1=svc1.bang();
 			$scope.val2=fty1.allF('and');
+
+			$scope.imgs=[
+				{fileName:'f1'},
+				{fileName:'f2'},
+				{fileName:'f3'},
+				{fileName:'f4'},
+				{fileName:'f5'} 
+				];
+			$scope.sortableOptions={
+			};
+
 		}]);
 
 var testlabServices=angular.module('testlabServices',[]);
