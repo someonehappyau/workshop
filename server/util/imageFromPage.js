@@ -13,6 +13,8 @@ function getList(url,callback){
 				//console.log(imgs[i].attribs.src);
 				if (imgs[i].attribs.src.indexOf('../../_borders')===0){
 				}
+				else if (imgs[i].attribs.src.indexOf('../../../../template')===0){
+				}
 				else{
 					var imgsrc=urlHandler.resolve('http://www.motorcyclespecs.co.za/model/',imgs[i].attribs.src);
 					if (result.indexOf(imgsrc)===-1){

@@ -8,7 +8,8 @@ mcServices.factory('MCModelSvc',
 				getCount:{method:'GET',params:{id:'count'}},
 				getOne:{method:'GET'},
 				getGallery:{method:'GET',params:{id:'gallery'},isArray:true},
-				update:{method:'POST',params:{id:'update'}}
+				update:{method:'POST',params:{id:'update'} 
+				}
 			});
 		}]);
 			
@@ -26,6 +27,7 @@ mcServices.factory('MCPicSvc',
 		['$resource',
 		function($resource){
 			return $resource('/mc/svcMC/mcpic/:id',{id:'@id'},{
-				addOne:{method:'POST',params:{id:'savePics'}}
+				addPics:{method:'POST',params:{id:'savePics'}},
+				updatePositions:{method:'POST',params:{id:'updatePositions'}}
 			});
 		}]);

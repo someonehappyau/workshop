@@ -56,10 +56,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					}
 				}
 				console.log(urls);
-				MCPicSvc.addOne({mcid:$scope.model.id,urls:urls}).$promise.then(function(data){
+				MCPicSvc.addPics({mcid:$scope.model.id,urls:urls}).$promise.then(function(data){
 					console.log(data);
 					if (data.fail>0)
-						$scope.addAlert('warning','Save pics: '+data.success+' Success. '+data.success+' Failed.');
+						$scope.addAlert('warning','Save pics: '+data.success+' Success. '+data.fail+' Failed.');
 					else
 						$scope.addAlert('success',data.success+' pic(s) has been saved successfully.');
 				},
@@ -221,10 +221,24 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			};
 
 			$scope.updateMCGalleryPosition=function(){
+				var positions=[];
 				for (var i=0;i<$scope.mcGalleries.length;i++){
-					var img=$scope.mcGalleries[i];
-					console.log(i+'model:'+img.model+'; pic:'+img.pic+'; fileName:'+img.picFileName);
+					positions[i]={id:$scope.mcGalleries[i].id,pos:i+1};
+					//var img=$scope.mcGalleries[i];
+					//console.log(i+'model:'+img.model+'; pic:'+img.pic+'; fileName:'+img.picFileName);
 				}
+				console.log(positions);
+				MCPicSvc.updatePositions({positions:positions}).$promise.then(function(data){
+					console.log(data);
+					if (data.fail>0)
+						$scope.addAlert('warning','Update Position: '+data.success+' Success. '+data.fail+' Failed.');
+					else
+						$scope.addAlert('success','Position of '+data.success+' pic(s) has been updated successfully.');
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
 			};
 
 			$scope.resetModel=function(){

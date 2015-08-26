@@ -34,7 +34,7 @@
 								<td>
 									<div class="row">
 										<label><input type="checkbox" ng-model="orgPicsSel[$index]"/>{{pic}}
-											<div style="width:400px;"><img style="width:100%;height:auto;" src="{{pic}}"></div></label>
+											<div style="width:400px;"><img style="width:100%;height:auto;" ng-src="{{pic}}"></div></label>
 									</div>
 								</td>
 							</tr>
@@ -232,7 +232,7 @@
 							<accordion-heading>Gallery <span class="label {{stateExisted.gallery.type}}">{{stateExisted.gallery.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_gallery, 'glyphicon-chevron-right': !io_gallery}"></i></accordion-heading>
 							<input type="button" ng-click="updateMCGalleryPosition()" value="Update Position">
 							<div class="row" ui-sortable="sortableOptions" ng-model="mcGalleries">
-								<div ng-repeat="img in mcGalleries" style="width:100px;"><img style="width:100%;height:auto" src="/mc/svcMC/mcpic/{{img.picFileName}}"/></div>
+								<div ng-repeat="img in mcGalleries" style="width:100px;"><img style="width:100%;height:auto" ng-src="/mc/svcMC/mcpic/{{img.picFileName}}"/></div>
 							</div>
 								
 						</accordion-group>
