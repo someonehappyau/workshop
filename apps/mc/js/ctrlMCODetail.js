@@ -69,6 +69,31 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				});
 			};
 
+			$scope.PicsSel=[];
+			$scope.selectPics=function(imgid){
+				if ($scope.PicsSel.indexOf(imgid)===-1){
+					$scope.PicsSel.push(imgid);
+				}
+				else{
+					$scope.PicsSel.splice($scope.PicsSel.indexOf(imgid),1);
+				}
+			};
+
+			$scope.deletePics=function(){
+				console.log($scope.PicsSel);
+				MCPicSvc.deletePics({pics:$scope.PicsSel}).$promise.then(function(data){
+					console.log('delete done');
+					console.log(data);
+					if (data.fail>0)
+						$scope.addAlert('warning','Delete Pics: '+data.success+' Success. '+data.fail+' Failed.');
+					else
+						$scope.addAlert('success',data.success+' pic(s) has been deleted successfully.');
+					$scope.loadMCGallery();
+				},
+				function(err){
+					console.log(err);
+				});
+			};
 			$scope.stateExisted={
 				model:{type:'label-danger',msg:'Not Found'},
 				engine:{type:'label-danger',msg:'Not Found'},
@@ -335,7 +360,8 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			$scope.reloadTypes();
 
 			var uploader = $scope.uploader = new FileUploader({
-			    url: 'upload.php'
+			    url: 'svcMC/mcpic/uploadPics' 
+				//formData: [{mcid:$scope.model.id}]
 			});
 
 			// FILTERS
@@ -354,12 +380,14 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			    console.info('onWhenAddingFileFailed', item, filter, options);
 			};
 			uploader.onAfterAddingFile = function(fileItem) {
+				fileItem.formData.push({mcid:$scope.model.id});
 			    console.info('onAfterAddingFile', fileItem);
 			};
 			uploader.onAfterAddingAll = function(addedFileItems) {
 			    console.info('onAfterAddingAll', addedFileItems);
 			};
 			uploader.onBeforeUploadItem = function(item) {
+				//item.formData.push({mcid:$scope.model.id});
 			    console.info('onBeforeUploadItem', item);
 			};
 			uploader.onProgressItem = function(fileItem, progress) {
@@ -381,6 +409,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			    console.info('onCompleteItem', fileItem, response, status, headers);
 			};
 			uploader.onCompleteAll = function() {
+				$scope.loadMCGallery();
 			    console.info('onCompleteAll');
 			};
 

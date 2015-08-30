@@ -30,5 +30,6 @@ function save(url,desPath,callback){
 };
 
 module.exports={
+	getFileName:getFileName,
 	save:save
 };

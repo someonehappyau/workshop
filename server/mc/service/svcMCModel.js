@@ -86,8 +86,9 @@ function addGalleryLink(mcid,picid,callback){
 		if (err)
 			callback(err,null);
 		else{
+			var now=new Date();
 			if (data.length===0){
-				pool.query('insert into MCGallery set model=?,pic=?',[mcid,picid],function(err,data){
+				pool.query('insert into MCGallery set model=?,pic=?,position=?',[mcid,picid,now.getTime()],function(err,data){
 					if (err)
 						callback(err,null);
 					else
@@ -95,7 +96,7 @@ function addGalleryLink(mcid,picid,callback){
 				});
 			}
 			else{
-				pool.query('update MCGallery set model=?,pic=?',[mcid,picid],function(err,data){
+				pool.query('update MCGallery set model=?,pic=?,position=?',[mcid,picid,now.getTime()],function(err,data){
 					if (err)
 						callback(err,null);
 					else

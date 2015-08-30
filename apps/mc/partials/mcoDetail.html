@@ -231,8 +231,9 @@
 						<accordion-group is-open="io_gallery">
 							<accordion-heading>Gallery <span class="label {{stateExisted.gallery.type}}">{{stateExisted.gallery.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_gallery, 'glyphicon-chevron-right': !io_gallery}"></i></accordion-heading>
 							<input type="button" ng-click="updateMCGalleryPosition()" value="Update Position">
+							<input type="button" ng-click="deletePics()" value="Delte Pics">
 							<div class="row" ui-sortable="sortableOptions" ng-model="mcGalleries">
-								<div ng-repeat="img in mcGalleries" style="width:100px;"><img style="width:100%;height:auto" ng-src="/mc/svcMC/mcpic/{{img.picFileName}}"/></div>
+								<div ng-repeat="img in mcGalleries" style="width:100px;"><label><input type="checkbox" ng-model="temp" ng-change="selectPics(img.id)">{{img.id}}<img style="width:100%;height:auto" ng-src="/mc/svcMC/mcpic/{{img.picFileName}}"/></label></div>
 							</div>
 								
 						</accordion-group>
@@ -240,7 +241,7 @@
 
 
 					</accordion>
-					<input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+					<input name='file' type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
 					<div class="col-md-12" style="margin-bottom: 40px">
 					    <h2>Uploads only images (with canvas preview)</h2>
 					    <h3>The queue</h3>

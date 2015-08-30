@@ -38,9 +38,34 @@ function updatePositions(positions,callback){
 	});
 };
 
+function deletePics(ids,callback){
+	var suc=0,fail=0;
+	async.each(ids,function(id,cb){
+		svcMCPic.deletePic(id,function(err,data){
+			if (err)
+				fail++;
+			else if (data.affectedRows!==1)
+				fail++;
+			else
+				suc++;
+			cb();
+		});
+	},
+	function(err){
+		if(err){
+			callback(err,null);
+			console.log(err);
+		}
+		else{
+			callback(null,{success:suc,fail:fail});
+		}
+	});
+};
+
 module.exports={
 	addOne:addOne,
 	getPic:getPic,
 	
 	updatePositions:updatePositions,
+	deletePics:deletePics,
 };
