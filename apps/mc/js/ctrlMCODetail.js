@@ -1,7 +1,7 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc','FileUploader',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc,FileUploader){
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc','FileUploader','$timeout',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc,FileUploader,$timeout){
 			$scope.addAlert=function(type,msg){
 				toaster.pop(type,null,msg);
 			};
@@ -92,6 +92,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				},
 				function(err){
 					console.log(err);
+					$scope.addAlert('error',err);
 				});
 			};
 			$scope.stateExisted={
@@ -193,9 +194,13 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					modelId=0;
 				else
 					modelId=$scope.model.id;
-
+				$scope.resetGallery();
+				$scope.PicsSel=[];
 				MCModelSvc.getGallery({mcid:modelId}).$promise.then(function(imgs){
+					console.log(imgs.length);
+					console.log(imgs);
 					if (imgs.length===0){
+						$scope.mcGalleries=[];
 						$scope.changeStateExisted($scope.stateExisted.gallery,false);
 						$scope.addAlert('warning','No images found.');
 					}
@@ -409,7 +414,9 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			    console.info('onCompleteItem', fileItem, response, status, headers);
 			};
 			uploader.onCompleteAll = function() {
-				$scope.loadMCGallery();
+				$timeout(function(){
+					$scope.loadMCGallery();
+				},1000);
 			    console.info('onCompleteAll');
 			};
 

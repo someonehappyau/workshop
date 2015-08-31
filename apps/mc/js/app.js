@@ -182,7 +182,8 @@ mcApp.config(['$routeProvider',
 							console.log('authenticated');
 							var typeName=$route.current.params.typeName; 
 							if (typeName==='MCOrgState' || 
-								typeName==='MCMaker' ||
+								typeName==='MCMakerState' ||
+								typeName==='MCMakerCountry' ||
 								typeName==='MCModelType' ||
 								typeName==='MCEngFormat' ||	
 								typeName==='MCEngMount' ||	
