@@ -12,6 +12,7 @@ var rtTodo=require('./router/rtTodo');
 
 var rtMCOrigin=require('./router/rtMCOrigin');
 var rtMCModel=require('./router/rtMCModel');
+var rtMCMaker=require('./router/rtMCMaker');
 var rtMCEngine=require('./router/rtMCEngine');
 var rtMCPic=require('./router/rtMCPic');
 
@@ -26,7 +27,7 @@ app.use(require('express-session')({
 	secret: 'cat',
 	resave: false,
 	saveUninitialized:false,
-	cookie:{path:'/toolbox',maxAge:900000},
+	cookie:{path:'/',maxAge:900000},
 	rolling:true
 }));
 app.use(passport.initialize());
@@ -43,6 +44,7 @@ app.use('/toolbox/svcTodolist',rtTodo);
 
 app.use('/mc/svcMCO',rtMCOrigin);
 app.use('/mc/svcMC',rtMCModel);
+app.use('/mc/svcMC',rtMCMaker);
 app.use('/mc/svcMC',rtMCEngine);
 app.use('/mc/svcMC',rtMCPic);
 
