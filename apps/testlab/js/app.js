@@ -1,6 +1,9 @@
 'use strict';
 
 var testlabApp=angular.module('testlabApp',[
+		'ngRoute',
+		'ui.bootstrap',
+
 		'testlabControllers',
 		'testlabServices',
 		'testlabProviders',
@@ -30,7 +33,7 @@ testlabControllers.controller('ctrl1',
 
 		}]);
 
-var testlabServices=angular.module('testlabServices',[]);
+var testlabServices=angular.module('testlabServices',['ngResource']);
 
 testlabServices.service('svc1',function(){
 	this.bang=function(){
