@@ -24,7 +24,8 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^1.0.0",
     "request": "^2.61.0",
-    "shortid": "^2.2.2"
+    "shortid": "^2.2.2",
+    "winston": "^1.0.1"
   },
   "scripts": {
     "start": "node server/app.js",
