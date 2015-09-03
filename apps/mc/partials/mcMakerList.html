@@ -1,0 +1,44 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">MCMaker</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			Search: <input ng-model="query">
+			<input type="button" ng-click="addMCMaker()" value="ADD">
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Country</th>
+						<th>Brand Image</th>
+						<th>State</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="maker in mcmakers | filter: query">
+						<td>{{maker.label}}</td>
+						<td>{{maker.description | limitTo:20}}</td>
+						<td>{{maker.countryLabel}}</td>
+						<td>{{maker.imageBrand}}</td>
+						<td>{{maker.stateLabel}}</td>
+						<td><button type="button" class="btn btn-primary" ng-click="editMCMaker(maker.id)">EDIT</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
+

@@ -157,6 +157,19 @@ mcApp.config(['$routeProvider',
 								}]
 				}
 			}).
+			when('/mc/config/MCMaker',{
+				templateUrl:'partials/mcMakerList.html',
+				controller:'MCMakerCtrl',
+				resolve:{
+					validation: ['AuthService','$location',function(AuthService,$location){
+										AuthService.authenticate().then(function(){
+										},
+										function(){
+											$location.path('/mc');
+										});
+								}]
+				}
+			}).
 			when('/edittodo/:id',{
 				templateUrl:'partials/todolist_add.html',
 				controller:'TodolistAddCtrl',

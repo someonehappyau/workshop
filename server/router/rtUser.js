@@ -51,6 +51,7 @@ router.post('/toolbox/user/:id',function(req,res){
 						user.sessionId='';
 						res.status(200)
 						.cookie('username', user.username,{path:'/toolbox'})
+						.cookie('username', user.username,{path:'/mc'})
 						.end(JSON.stringify({sessionid:'',user:user}));
 					}
 				});
