@@ -188,6 +188,126 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				});
 			};
 
+			$scope.loadMCFrame=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCFrameSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.frame=data;
+					$scope.changeStateExisted($scope.stateExisted.frame,true);
+					$scope.addAlert('success','Load Frame successfully.');
+				},
+				function(err){
+					$scope.resetFrame();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.frame,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCSuspension=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCSuspensionSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.suspension=data;
+					$scope.changeStateExisted($scope.stateExisted.suspension,true);
+					$scope.addAlert('success','Load Suspension successfully.');
+				},
+				function(err){
+					$scope.resetSuspension();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.suspension,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCBrake=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCBrakeSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.brake=data;
+					$scope.changeStateExisted($scope.stateExisted.brake,true);
+					$scope.addAlert('success','Load Brake successfully.');
+				},
+				function(err){
+					$scope.resetBrake();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.brake,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCWheel=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCWheelSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.wheel=data;
+					$scope.changeStateExisted($scope.stateExisted.wheel,true);
+					$scope.addAlert('success','Load Wheel successfully.');
+				},
+				function(err){
+					$scope.resetWheel();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.wheel,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCDimension=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCDimensionSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.dimension=data;
+					$scope.changeStateExisted($scope.stateExisted.dimension,true);
+					$scope.addAlert('success','Load Dimension successfully.');
+				},
+				function(err){
+					$scope.resetDimension();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.dimension,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.loadMCDrive=function(){
+				var modelId;
+				if (!$scope.model.id)
+					modelId=0;
+				else
+					modelId=$scope.model.id;
+
+				MCDriveSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
+					$scope.drive=data;
+					$scope.changeStateExisted($scope.stateExisted.drive,true);
+					$scope.addAlert('success','Load Drive successfully.');
+				},
+				function(err){
+					$scope.resetDrive();
+					console.log(err);
+					$scope.changeStateExisted($scope.stateExisted.drive,false);
+					$scope.addAlert('error',err);
+				});
+			};
+
 			$scope.loadMCGallery=function(){
 				var modelId;
 				if (!$scope.model.id)
@@ -250,6 +370,114 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				});
 			};
 
+			$scope.submitFrame=function(){
+				if (!$scope.model.id)
+					$scope.frame.model=0;
+				else
+					$scope.frame.model=$scope.model.id;
+
+				MCFrameSvc.update({frame:$scope.frame}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.frame.id=data.insertId;
+					$scope.addAlert('success','Update Frame successfully.');
+					$scope.loadMCFrame();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.submitSuspension=function(){
+				if (!$scope.model.id)
+					$scope.suspension.model=0;
+				else
+					$scope.suspension.model=$scope.model.id;
+
+				MCSuspensionSvc.update({suspension:$scope.suspension}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.suspension.id=data.insertId;
+					$scope.addAlert('success','Update Suspension successfully.');
+					$scope.loadMCSuspension();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.submitBrake=function(){
+				if (!$scope.model.id)
+					$scope.brake.model=0;
+				else
+					$scope.brake.model=$scope.model.id;
+
+				MCBrakeSvc.update({brake:$scope.brake}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.brake.id=data.insertId;
+					$scope.addAlert('success','Update Brake successfully.');
+					$scope.loadMCBrake();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.submitWheel=function(){
+				if (!$scope.model.id)
+					$scope.wheel.model=0;
+				else
+					$scope.wheel.model=$scope.model.id;
+
+				MCWheelSvc.update({wheel:$scope.wheel}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.wheel.id=data.insertId;
+					$scope.addAlert('success','Update Wheel successfully.');
+					$scope.loadMCWheel();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.submitDimension=function(){
+				if (!$scope.model.id)
+					$scope.dimension.model=0;
+				else
+					$scope.dimension.model=$scope.model.id;
+
+				MCDimensionSvc.update({dimension:$scope.dimension}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.dimension.id=data.insertId;
+					$scope.addAlert('success','Update Dimension successfully.');
+					$scope.loadMCDimension();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
+			$scope.submitDrive=function(){
+				if (!$scope.model.id)
+					$scope.drive.model=0;
+				else
+					$scope.drive.model=$scope.model.id;
+
+				MCDriveSvc.update({drive:$scope.drive}).$promise.then(function(data){
+					if (!!data.insertId)
+						$scope.drive.id=data.insertId;
+					$scope.addAlert('success','Update Drive successfully.');
+					$scope.loadMCDrive();
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
 			$scope.updateMCGalleryPosition=function(){
 				var positions=[];
 				for (var i=0;i<$scope.mcGalleries.length;i++){
@@ -281,7 +509,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					yearStart:'',
 					yearEnd:'',
 					type:''
-				}
+				};
 			};
 			$scope.resetModel();
 
@@ -317,9 +545,125 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					engClutchPlateCount:'',
 					engIgnition:'',
 					engStarting:''
-				}
+				};
 			};
 			$scope.resetEngine();
+
+			$scope.resetFrame=function(){
+				$scope.changeStateExisted($scope.stateExisted.frame,false);
+				$scope.frame={
+					id:'',
+					model:0,
+					frameMaterial:'',
+					frameType:'',
+					frameRake:'',
+					frameTrail:''
+				};
+			};
+			$scope.resetFrame();
+
+			$scope.resetSuspension=function(){
+				$scope.changeStateExisted($scope.stateExisted.suspension,false);
+				$scope.suspension={
+					id:'',
+					model:0,
+					suspFType:'',
+					suspFDiameter:'',
+					suspFPreload:'',
+					suspFRebound:'',
+					suspFCompression:'',
+					suspFTravel:'',
+					suspFDesc:'',
+					suspRType:'',
+					suspRDiameter:'',
+					suspRPreload:'',
+					suspRRebound:'',
+					suspRCompression:'',
+					suspRTravel:'',
+					suspRDesc:''
+				};
+			};
+			$scope.resetSuspension();
+
+			$scope.resetBrake=function(){
+				$scope.changeStateExisted($scope.stateExisted.brake,false);
+				$scope.brake={
+					id:'',
+					model:0,
+					brakeFType:'',
+					brakeFDiscCount:'',
+					brakeFDiscDiameter:'',
+					brakeFDiscPistonCountPerCaliper:'',
+					brakeFDesc:'',
+					brakeRType:'',
+					brakeRDiscCount:'',
+					brakeRDiscDiameter:'',
+					brakeRDiscPistonCountPerCaliper:'',
+					brakeRDesc:''
+				};
+			};
+			$scope.resetBrake();
+
+			$scope.resetWheel=function(){
+				$scope.changeStateExisted($scope.stateExisted.wheel,false);
+				$scope.wheel={
+					id:'',
+					model:0,
+					wheelFDiameter:'',
+					wheelFRimWidth:'',
+					wheelFRimType:'',
+					wheelFTyreType:'',
+					wheelFTyreWidth:'',
+					wheelFTyreRatio:'',
+					wheelFDesc:'',
+					wheelRDiameter:'',
+					wheelRRimWidth:'',
+					wheelRRimType:'',
+					wheelRTyreType:'',
+					wheelRTyreWidth:'',
+					wheelRTyreRatio:'',
+					wheelRDesc:''
+				};
+			};
+			$scope.resetWheel();
+
+			$scope.resetDimension=function(){
+				$scope.changeStateExisted($scope.stateExisted.dimension,false);
+				$scope.dimension={
+					id:'',
+					model:0,
+					dimLength:'',
+					dimWidth:'',
+					dimHeight:'',
+					dimWheelBase:'',
+					dimSeatHeight:'',
+					dimSeatHeightAlt:'',
+					dimSeatHeightDesc:'',
+					dimDryWeight:'',
+					dimWetWeight:'',
+					dimGroundClearance:'',
+					dimTankCapacity:'',
+					dimTankCapacityRes:''
+				};
+			};
+			$scope.resetDimension();
+
+			$scope.resetDrive=function(){
+				$scope.changeStateExisted($scope.stateExisted.drive,false);
+				$scope.drive={
+					id:'',
+					model:0,
+					drvTransmissionType:'',
+					drvTransmissionGearCount:'',
+					drvWheelDriveType:'',
+					drvTransmissionGearRatio:'',
+					drvPrimaryDriveRatio:'',
+					drvFinalDriveRatio1:'',
+					drvFinalDriveRatio2:''
+				};
+			};
+			$scope.resetDrive();
+
 
 			$scope.sortableOptions={
 			};
@@ -360,6 +704,20 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				$scope.loadType('MCEngClutchType','engClutchTypes');
 				$scope.loadType('MCEngIgnition','engIgnitions');
 				$scope.loadType('MCEngStarting','engStartings');
+
+				$scope.loadType('MCFrameMaterial','frameMaterial');
+				$scope.loadType('MCFrameType','frameType');
+
+				$scope.loadType('MCSuspTypeFront','suspTypeFront');
+				$scope.loadType('MCSuspTypeRear','suspTypeRear');
+
+				$scope.loadType('MCBrakeType','brakeType');
+
+				$scope.loadType('MCWheelRimType','wheelRimType');
+				$scope.loadType('MCWheelTyreType','wheelTyreType');
+
+				$scope.loadType('MCDrvTransmissionType','drvTransmissionType');
+				$scope.loadType('MCDrvWheelDriveType','drvWheelDriveType');
 			};
 
 			$scope.reloadTypes();

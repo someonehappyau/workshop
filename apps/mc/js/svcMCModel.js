@@ -23,6 +23,60 @@ mcServices.factory('MCEngineSvc',
 			});
 		}]);
 
+mcServices.factory('MCFrameSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/frame/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
+mcServices.factory('MCSuspensionSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/suspension/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
+mcServices.factory('MCBrakeSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/brake/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
+mcServices.factory('MCWheelSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/wheel/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
+mcServices.factory('MCDimensionSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/dimension/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
+mcServices.factory('MCDriveSvc',
+		['$resource',
+		function($resource){
+			return $resource('/mc/svcMC/drive/:id',{id:'@id'},{
+				getOne:{method:'GET'},
+				update:{method:'POST',params:{id:'update'}}
+			});
+		}]);
+
 mcServices.factory('MCPicSvc',
 		['$resource',
 		function($resource){

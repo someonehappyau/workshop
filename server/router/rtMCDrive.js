@@ -3,22 +3,22 @@
 var express=require('express');
 var router=express.Router();
 var ctrlUser=require('../toolbox/controller/ctrlUser');
-var ctrlMCEngine=require('../mc/controller/ctrlMCEngine');
+var ctrlMCDrive=require('../mc/controller/ctrlMCDrive');
 
-router.get('/engine/:id',function(req,res){
+router.get('/drive/:id',function(req,res){
 	if (req.params.id==='list'){
 		res.status(500).end();
 	}
 	else{
 		console.log(req.query);
 		if (req.body.byModel==='true'){
-			ctrlMCEngine.getOneByModelId(req.params.id,function(err,data){
+			ctrlMCDrive.getOneByModelId(req.params.id,function(err,data){
 				if (err || !data) res.status(500).end(JSON.stringify(err));
 				else res.status(200).end(JSON.stringify(data));
 			});
 		}
 		else{
-			ctrlMCEngine.getOneById(req.params.id,function(err,data){
+			ctrlMCDrive.getOneById(req.params.id,function(err,data){
 				if (err || !data) res.status(500).end(JSON.stringify(err));
 				else res.status(200).end(JSON.stringify(data));
 			});
@@ -26,18 +26,18 @@ router.get('/engine/:id',function(req,res){
 	}
 });
 
-router.post('/engine/:id',function(req,res){
+router.post('/drive/:id',function(req,res){
 	if (req.params.id==='update'){
-		var id=req.body.engine.id;
-		delete req.body.engine.id;
+		var id=req.body.drive.id;
+		delete req.body.drive.id;
 		if (!id)
-			ctrlMCEngine.addOne(req.body.engine,function(err,data){
+			ctrlMCDrive.addOne(req.body.drive,function(err,data){
 				if (err) res.status(500).end(JSON.stringify(err));
 				else if (!data) res.status(500).end();
 				else res.status(200).end(JSON.stringify(data));
 			});
 		else
-			ctrlMCEngine.updateOneById(id,req.body.engine,function(err,data){
+			ctrlMCDrive.updateOneById(id,req.body.drive,function(err,data){
 				if (err) res.status(500).end(JSON.stringify(err));
 				else if (!data) res.status(500).end();
 				else res.status(200).end(JSON.stringify(data));
