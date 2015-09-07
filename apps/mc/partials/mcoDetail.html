@@ -212,21 +212,302 @@
 						</accordion-group>
 						<accordion-group is-open="io_frame">
 							<accordion-heading>Frame <span class="label {{stateExisted.frame.type}}">{{stateExisted.frame.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_frame, 'glyphicon-chevron-right': !io_frame}"></i></accordion-heading>
+							<form name="f_Frame" ng-submit="submitFrame()">
+								<div class="form-group">
+									<label>Material</label>
+									<select ng-model="frame.frameMaterial" class="form-control" ng-options="type.id as type.label for type in frameMaterials"></select>
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="frame.frameType" class="form-control" ng-options="type.id as type.label for type in frameTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rake (degree)</label>
+									<input type="text" class="form-control" ng-model="frame.frameRake">
+								</div>
+								<div class="form-group">
+									<label>Trail (mm)</label>
+									<input type="text" class="form-control" ng-model="frame.frameTrail">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_suspension">
 							<accordion-heading>Suspension <span class="label {{stateExisted.suspension.type}}">{{stateExisted.suspension.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_suspension, 'glyphicon-chevron-right': !io_suspension}"></i></accordion-heading>
+							<form name="f_Suspension" ng-submit="submitSuspension()">
+								<div class="form-group">
+									<label>Front Type</label>
+									<select ng-model="suspension.suspFType" class="form-control" ng-options="type.id as type.label for type in suspTypeFronts"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Diameter</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Preload</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFPreload">
+								</div>
+								<div class="form-group">
+									<label>Front Rebound</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFRebound">
+								</div>
+								<div class="form-group">
+									<label>Front Compression</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFCompression">
+								</div>
+								<div class="form-group">
+									<label>Front Travel</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFTravel">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Type</label>
+									<select ng-model="suspension.suspRType" class="form-control" ng-options="type.id as type.label for type in suspTypeRears"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Diameter</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Preload</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRPreload">
+								</div>
+								<div class="form-group">
+									<label>Rear Rebound</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRRebound">
+								</div>
+								<div class="form-group">
+									<label>Rear Compression</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRCompression">
+								</div>
+								<div class="form-group">
+									<label>Rear Travel</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRTravel">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="suspension.susRFDesc">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_brake">
 							<accordion-heading>Brake <span class="label {{stateExisted.brake.type}}">{{stateExisted.brake.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_brake, 'glyphicon-chevron-right': !io_brake}"></i></accordion-heading>
+							<form name="f_Brake" ng-submit=submitBrake()">
+								<div class="form-group">
+									<label>Front Type</label>
+									<select ng-model="brake.brakeFType" class="form-control" ng-options="type.id as type.label for type in brakeTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Disc Count</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscCount">
+								</div>
+								<div class="form-group">
+									<label>Front Disc Diameter</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Disc Piston Count Per Caliper</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscPistonCountPerCaliper">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Type</label>
+									<select ng-model="brake.brakeRType" class="form-control" ng-options="type.id as type.label for type in brakeTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Count</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscCount">
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Diameter</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Piston Count Per Caliper</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscPistonCountPerCaliper">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDesc">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_wheel">
 							<accordion-heading>Wheel <span class="label {{stateExisted.wheel.type}}">{{stateExisted.wheel.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_wheel, 'glyphicon-chevron-right': !io_wheel}"></i></accordion-heading>
+							<form name="f_Wheel" ng-submit="submitWheel()">
+								<div class="form-group">
+									<label>Front Diameter</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Rim Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFRimWidth">
+								</div>
+								<div class="form-group">
+									<label>Front Rim Type</label>
+									<select ng-model="wheel.wheelFRimType" class="form-control" ng-options="type.id as type.label for type in wheelRimTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Type</label>
+									<select ng-model="wheel.wheelFTyreType" class="form-control" ng-options="type.id as type.label for type in wheelTyreTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFTyreWidth">
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Ratio</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFTyreRatio">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Diameter</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Rim Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRRimWidth">
+								</div>
+								<div class="form-group">
+									<label>Rear Rim Type</label>
+									<select ng-model="wheel.wheelRRimType" class="form-control" ng-options="type.id as type.label for type in wheelRimTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Type</label>
+									<select ng-model="wheel.wheelRTyreType" class="form-control" ng-options="type.id as type.label for type in wheelTyreTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRTyreWidth">
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Ratio</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRTyreRatio">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRDesc">
+								</div>
+								
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_dimension">
 							<accordion-heading>Dimension <span class="label {{stateExisted.dimension.type}}">{{stateExisted.dimension.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_dimension, 'glyphicon-chevron-right': !io_dimension}"></i></accordion-heading>
+							<form name="f_Dimension" ng-submit="submitDimension()">
+								<div class="form-group">
+									<label>Length</label>
+									<input type="text" class="form-control" ng-model="dimension.dimLength">
+								</div>
+								<div class="form-group">
+									<label>Width</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWidth">
+								</div>
+								<div class="form-group">
+									<label>Height</label>
+									<input type="text" class="form-control" ng-model="dimension.dimHeight">
+								</div>
+								<div class="form-group">
+									<label>WheelBase</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWheelBase">
+								</div>
+								<div class="form-group">
+									<label>Seat Height</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeight">
+								</div>
+								<div class="form-group">
+									<label>Seat Height Alternative</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeightAlt">
+								</div>
+								<div class="form-group">
+									<label>Seat Height Description</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeightDesc">
+								</div>
+								<div class="form-group">
+									<label>Dry Weight (kg)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimDryWeight">
+								</div>
+								<div class="form-group">
+									<label>Wet Weight (kg)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWetWeight">
+								</div>
+								<div class="form-group">
+									<label>Ground Clearance (mm)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimGroundClearance">
+								</div>
+								<div class="form-group">
+									<label>Tank Capacity (L)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimTankCapacity">
+								</div>
+								<div class="form-group">
+									<label>Tank Capacity (Reserve) (L)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimTankCapacityRes">
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_drive">
 							<accordion-heading>Drive <span class="label {{stateExisted.drive.type}}">{{stateExisted.drive.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_drive, 'glyphicon-chevron-right': !io_drive}"></i></accordion-heading>
+							<form name="f_Drive" ng-submit="submitDrive()">
+								<div class="form-group">
+									<label>Transmission Type</label>
+									<select ng-model="drive.drvTransmissionType" class="form-control" ng-options="type.id as type.label for type in drvTransmissionTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Transimission Gear Count</label>
+									<input type="text" class="form-control" ng-model="drive.drvTransmissionGearCount">
+								</div>
+								<div class="form-group">
+									<label>Wheel Drive Type</label>
+									<select ng-model="drive.drvWheelDriveType" class="form-control" ng-options="type.id as type.label for type in drvWheelDriveTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Transmission Gear Ratio</label>
+									<input type="text" class="form-control" ng-model="drive.drvTransmissionGearRatio">
+								</div>
+								<div class="form-group">
+									<label>Primary Drive Ratio</label>
+									<input type="text" class="form-control" ng-model="drive.drvPrimaryDriveRatio">
+								</div>
+								<div class="form-group">
+									<label>Final Drive Ratio 1</label>
+									<input type="text" class="form-control" ng-model="drive.drvFinalDriveRatio1">
+								</div>
+								<div class="form-group">
+									<label>Final Drive Ratio 2</label>
+									<input type="text" class="form-control" ng-model="drive.drvFinalDriveRatio2">
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
 						</accordion-group>
 						<accordion-group is-open="io_gallery">
 							<accordion-heading>Gallery <span class="label {{stateExisted.gallery.type}}">{{stateExisted.gallery.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_gallery, 'glyphicon-chevron-right': !io_gallery}"></i></accordion-heading>

@@ -705,19 +705,19 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 				$scope.loadType('MCEngIgnition','engIgnitions');
 				$scope.loadType('MCEngStarting','engStartings');
 
-				$scope.loadType('MCFrameMaterial','frameMaterial');
-				$scope.loadType('MCFrameType','frameType');
+				$scope.loadType('MCFrameMaterial','frameMaterials');
+				$scope.loadType('MCFrameType','frameTypes');
 
-				$scope.loadType('MCSuspTypeFront','suspTypeFront');
-				$scope.loadType('MCSuspTypeRear','suspTypeRear');
+				$scope.loadType('MCSuspTypeFront','suspTypeFronts');
+				$scope.loadType('MCSuspTypeRear','suspTypeRears');
 
-				$scope.loadType('MCBrakeType','brakeType');
+				$scope.loadType('MCBrakeType','brakeTypes');
 
-				$scope.loadType('MCWheelRimType','wheelRimType');
-				$scope.loadType('MCWheelTyreType','wheelTyreType');
+				$scope.loadType('MCWheelRimType','wheelRimTypes');
+				$scope.loadType('MCWheelTyreType','wheelTyreTypes');
 
-				$scope.loadType('MCDrvTransmissionType','drvTransmissionType');
-				$scope.loadType('MCDrvWheelDriveType','drvWheelDriveType');
+				$scope.loadType('MCDrvTransmissionType','drvTransmissionTypes');
+				$scope.loadType('MCDrvWheelDriveType','drvWheelDriveTypes');
 			};
 
 			$scope.reloadTypes();
