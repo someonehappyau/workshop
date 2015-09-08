@@ -1,0 +1,7 @@
+{
+	"model":{
+		"brand":"./imageLib/manual/mc/brand/",
+		"country":"./imageLib/manual/mc/country/",
+		"web":"./imageLib/pool/web/mc/model/"
+	}
+}

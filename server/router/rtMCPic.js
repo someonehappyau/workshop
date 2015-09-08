@@ -11,7 +11,7 @@ var path=require('path');
 
 var storage=multer.diskStorage({
 	destination:function(req,file,cb){
-					cb(null,path.join(__dirname,'../mc/pics'));
+					cb(null,path.join(__dirname,'../../../myq'));
 				},
 	filename:function(req,file,cb){
 				 cb(null,saveImageFromUrl.getFileName()+path.extname(file.originalname));
