@@ -3,9 +3,11 @@
 var fs=require('fs');
 var gm=require('gm');
 var path=require('path');
+var cfg=require('../cfg/cfg');
 
 function updateSizedFile(fileName,callback){
-	var imgSize=JSON.parse(fs.readFileSync(path.join(__dirname,'galleryImageSize.json'),'utf8'));
+	var imgSize=cfg.imageSize;
+
 	var f_dir=path.dirname(fileName);
 	var f_ext=path.extname(fileName);
 	var f_name=path.basename(fileName,f_ext);

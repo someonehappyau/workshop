@@ -3,9 +3,16 @@
 var fs=require('fs');
 var path=require('path');
 
+var cfgImageLib=require('./cfgImageLib');
+
+function getCfgJson(cfgPath){
+	return JSON.parse(fs.readFileSync(path.join(__dirname,cfgPath)),'utf8');
+};
+
 var setting={
-	db:JSON.parse(fs.readFileSync(path.join(__dirname,'./cfgDbSetting.json')),'utf8'),
-	imageLib:JSON.parse(fs.readFileSync(path.join(__dirname,'cfgImageLib.json')),'utf8')
+	db:getCfgJson('./cfgDbSetting.json'),
+	imageLib:cfgImageLib,
+	imageSize:getCfgJson('./cfgGalleryImageSize.json')
 };
 
 module.exports=setting;

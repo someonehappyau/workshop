@@ -5,20 +5,20 @@ var router=express.Router();
 var saveImageFromUrl=require('../util/saveImageFromUrl');
 var ctrlMCPic=require('../mc/controller/ctrlMCPic');
 var ctrlMCModel=require('../mc/controller/ctrlMCModel');
+var cfg=require('../cfg/cfg');
 var async=require('async');
 var multer=require('multer');
 var path=require('path');
 
 var storage=multer.diskStorage({
 	destination:function(req,file,cb){
-					cb(null,path.join(__dirname,'../../../myq'));
+					cb(null,cfg.imageLib.model.web);
 				},
 	filename:function(req,file,cb){
 				 cb(null,saveImageFromUrl.getFileName()+path.extname(file.originalname));
 			 }
 });
 
-//var upload=multer({dest:path.join(__dirname,'../mc/pics')}).single('file');
 var upload=multer({storage:storage}).array('file');
 
 router.get('/mcpic/:imgName',function(req,res){
@@ -47,7 +47,7 @@ router.post('/mcpic/:id',function(req,res){
 						var picid;
 						async.series([
 							function(cb1){
-								saveImageFromUrl.save(url,'../mc/pics/',function(err,fn){
+								saveImageFromUrl.save(url,cfg.imageLib.model.web,function(err,fn){
 									if (err){
 										bFail=true;
 									}

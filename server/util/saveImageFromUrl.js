@@ -16,7 +16,7 @@ function getFileName(){
 
 function save(url,desPath,callback){
 	var fileName=getFileName()+path.extname(url);
-	var des=fs.createWriteStream(path.join(__dirname,desPath+fileName));
+	var des=fs.createWriteStream(path.join(desPath,fileName));
 	request(url)
 	.pipe(des)
 	.on('finish',function(){

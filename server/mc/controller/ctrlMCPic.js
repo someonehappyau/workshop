@@ -4,13 +4,14 @@ var svcMCPic=require('../service/svcMCPic');
 var fs=require('fs');
 var path=require('path');
 var async=require('async');
+var cfg=require('../../cfg/cfg');
 
 function addOne(fileName,callback){
 	svcMCPic.addOne(fileName,callback);
 };
 
 function getPic(fileName,res){
-	var r=fs.createReadStream(path.join(__dirname,'../pics/'+fileName));
+	var r=fs.createReadStream(cfg.imageLib.model.web+fileName);
 	r.pipe(res);	
 };
 

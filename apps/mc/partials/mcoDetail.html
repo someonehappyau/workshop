@@ -303,7 +303,7 @@
 						</accordion-group>
 						<accordion-group is-open="io_brake">
 							<accordion-heading>Brake <span class="label {{stateExisted.brake.type}}">{{stateExisted.brake.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_brake, 'glyphicon-chevron-right': !io_brake}"></i></accordion-heading>
-							<form name="f_Brake" ng-submit=submitBrake()">
+							<form name="f_Brake" ng-submit="submitBrake()">
 								<div class="form-group">
 									<label>Front Type</label>
 									<select ng-model="brake.brakeFType" class="form-control" ng-options="type.id as type.label for type in brakeTypes"></select>

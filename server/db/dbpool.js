@@ -3,8 +3,9 @@
 var mysql=require('mysql');
 var fs=require('fs');
 var path=require('path');
+var cfg=require('../cfg/cfg');
 
-var setting=JSON.parse(fs.readFileSync(path.join(__dirname,'dbSetting.json')),'utf8');
+var setting=cfg.db;
 var pool=mysql.createPool({
 	connectionLimit	: 2,
     	host		: setting.host,
