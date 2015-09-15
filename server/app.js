@@ -55,7 +55,7 @@ app.use('/bower',express.static(path.join(__dirname,'../bower_components')));
 app.use(express.static(__dirname + '/public'));
 
 
-app.listen(3000);
+app.listen(3001);
 
 process.on('uncaughtException', function (err) {
 	  console.log('Caught exception: ' + err);
