@@ -131,7 +131,7 @@ mcApp.config(['$routeProvider',
 				templateUrl:'partials/mc.html',
 				controller:'MCCtrl'
 			}).
-			when('/mcolist',{
+			when('/mcolist/:searchStr?/:currentPage?',{
 				templateUrl:'partials/mcolist.html',
 				controller:'MCOriginCtrl',
 				resolve:{
@@ -144,7 +144,7 @@ mcApp.config(['$routeProvider',
 								}]
 				}
 			}).
-			when('/mcoDetail/:id',{
+			when('/mcoDetail/:id/:searchStr?/:currentPage?',{
 				templateUrl:'partials/mcoDetail.html',
 				controller:'MCODetailCtrl',
 				resolve:{

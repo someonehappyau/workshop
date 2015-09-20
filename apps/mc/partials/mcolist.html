@@ -8,8 +8,12 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
 			<form class="form-inline">
-				<label>Search:</label>
+				<label>Filter:</label>
 				<input type="text" class="form-control" ng-model="query">
+
+				<label>Search:</label>
+				<input type="text" class="form-control" ng-model="searchStr">
+				<input type="button" class="form-control" ng-click="doSearch()" value="Search">
 			</form>
 		</div>
 		<div class="col-md-1"></div>

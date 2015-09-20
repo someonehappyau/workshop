@@ -2,12 +2,12 @@
 
 var svcMCOrigin=require('../service/svcMCOrigin');
 
-function getAll(page, callback){
-	svcMCOrigin.getAll(page,10,callback);
+function getAll(page,searchStr, callback){
+	svcMCOrigin.getAll(page,10,searchStr,callback);
 };
 
-function getCount(callback){
-	svcMCOrigin.getCount(callback);
+function getCount(searchStr,callback){
+	svcMCOrigin.getCount(searchStr,callback);
 };
 
 function getOneById(id,callback){

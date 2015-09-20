@@ -2,6 +2,16 @@
 
 mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc','FileUploader','$timeout',
 		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc,FileUploader,$timeout){
+			if (!$routeParams.searchStr)
+				$scope.searchStr=' ';
+			else
+				$scope.searchStr=$routeParams.searchStr;
+
+			if (!$routeParams.currentPage)
+				$scope.currentPage=1;
+			else
+				$scope.currentPage=$routeParams.currentPage;
+
 			$scope.addAlert=function(type,msg){
 				toaster.pop(type,null,msg);
 			};
