@@ -9,16 +9,22 @@ mcControllers.controller('MCModelListCtrl',['$scope','MCModelSvc','$location','$
 		if (typeof($scope.searchStr)!=='undefined')
 			$scope.searchStr=$scope.searchStr.trim();
 
+		if ($routeParams.currentPage==='undefined' || !$routeParams.currentPage)
+			$scope.currentPage=1;
+		else
+			$scope.currentPage=$routeParams.currentPage;
+
 		$scope.doSearch=function(){
 			$scope.updateMCs();
 		};
 		
 		var firstUpdate=true;
 
-		$scope.currentPage=$routeParams.currentPage;
-
+		
 		$scope.updateMCs=function(){
 			console.log($scope.currentPage);
+			if ($scope.currentPage==='undefined')
+				$scope.currentPage=1;
 			var shouldShow={
 				page:$scope.currentPage,
 				searchStr:$scope.searchStr

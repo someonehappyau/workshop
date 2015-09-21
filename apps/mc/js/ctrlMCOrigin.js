@@ -9,16 +9,22 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 		if (typeof($scope.searchStr)!=='undefined')
 			$scope.searchStr=$scope.searchStr.trim();
 
+		if ($routeParams.currentPage==='undefined' || !$routeParams.currentPage)
+			$scope.currentPage=1;
+		else
+			$scope.currentPage=$routeParams.currentPage;
+
 		$scope.doSearch=function(){
 			$scope.updateMCOs();
 		};
 		
 		var firstUpdate=true;
 
-		$scope.currentPage=$routeParams.currentPage;
-
+		
 		$scope.updateMCOs=function(){
 			console.log($scope.currentPage);
+			if ($scope.currentPage==='undefined')
+				$scope.currentPage=1;
 			var shouldShow={
 				page:$scope.currentPage,
 				searchStr:$scope.searchStr
