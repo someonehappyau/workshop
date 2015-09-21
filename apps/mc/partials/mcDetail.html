@@ -1,0 +1,570 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12"><h1 class="text-center">MC Detail</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<toaster-container toaster-options="{'time-out': 2000, 'close-button':true,'newestOnTop':true,'animation-class': 'toast-top-center','show-Duration':10,'hide-Duration':10}"></toaster-container>
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert()" dismiss-on-timeout="{{alert.timeout}}"><span class="glyphicon glyphicon-{{alert.sign}}" aria-hidden="true"></span>{{alert.msg}}</alert>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<a href="/mc/#/mcmodellist/{{searchStr}}/{{currentPage}}">Back to MC list</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<input type="button" class="form-control" ng-click="reloadTypes()" value="Refresh Types">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form name="f_loadModel" ng-submit="loadMCModel()">
+						<div class="form-group">
+							<label>Model ID</label>
+							<input class="form-control" type="text" ng-model="model.id">
+						</div>
+						<input class="form-control" type="submit" value="Load Model">
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<accordion close-others="false">
+						<accordion-group is-open="io_model">
+						<accordion-heading>Model <span class="label {{stateExisted.model.type}}">{{stateExisted.model.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_model, 'glyphicon-chevron-right': !io_model}"></i></accordion-heading>
+							<form name="f_model" ng-submit="submitModel()">
+								<div class="form-group">
+									<label>Maker</label>
+									<select ng-model="model.maker" class="form-control" ng-options="maker.id as maker.label for maker in makers"></select>
+								</div>
+								<div class="form-group">
+									<label>Model Name</label>
+									<input type="text" class="form-control" require ng-model="model.label" ng-maxlength="100">
+								</div>
+								<div class="form-group">
+									<label>Start Year</label>
+									<input type="text" class="form-control" require ng-model="model.yearStart" ng-maxlength="4">
+								</div>
+								<div class="form-group">
+									<label>End Year</label>
+									<input type="text" class="form-control" ng-model="model.yearEnd" ng-maxlength="4">
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="model.type" class="form-control" ng-options="type.id as type.label for type in modelTypes"></select>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_engine">
+							<accordion-heading>Engine <span class="label {{stateExisted.engine.type}}">{{stateExisted.engine.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_engine, 'glyphicon-chevron-right': !io_engine}"></i></accordion-heading>
+							<form name="f_engine" ng-submit="submitEngine()">
+								<div class="form-group">
+									<label>Cylinder Count</label>
+									<input type="text" class="form-control" ng-model="engine.engCylCount">
+								</div>
+								<div class="form-group">
+									<label>Format</label>
+									<select ng-model="engine.engFormat" class="form-control" ng-options="type.id as type.label for type in engFormats"></select>
+								</div>
+								<div class="form-group">
+									<label>Mount</label>
+									<select ng-model="engine.engMount" class="form-control" ng-options="type.id as type.label for type in engMounts"></select>
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="engine.engType" class="form-control" ng-options="type.id as type.label for type in engTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Count of inlet valves</label>
+									<input type="text" class="form-control" ng-model="engine.engCylValveInlet">
+								</div>
+								<div class="form-group">
+									<label>Count of exhaust valves</label>
+									<input type="text" class="form-control" ng-model="engine.engCylValveExhaust">
+								</div>
+								<div class="form-group">
+									<label>Cam Type</label>
+									<select ng-model="engine.engCamType" class="form-control" ng-options="type.id as type.label for type in engCamTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Capacity</label>
+									<input type="text" class="form-control" ng-model="engine.engCapacity">
+								</div>
+								<div class="form-group">
+									<label>Bore</label>
+									<input type="text" class="form-control" ng-model="engine.engBore">
+								</div>
+								<div class="form-group">
+									<label>Stroke</label>
+									<input type="text" class="form-control" ng-model="engine.engStroke">
+								</div>
+								<div class="form-group">
+									<label>Compression Ratio</label>
+									<input type="text" class="form-control" ng-model="engine.engCompressionRatio">
+								</div>
+								<div class="form-group">
+									<label>Cooling</label>
+									<select ng-model="engine.engCooling" class="form-control" ng-options="type.id as type.label for type in engCoolings"></select>
+								</div>
+								<div class="form-group">
+									<label>Lubrication</label>
+									<select ng-model="engine.engLubrication" class="form-control" ng-options="type.id as type.label for type in engLubrications"></select>
+								</div>
+								<div class="form-group">
+									<label>Induction Type</label>
+									<select ng-model="engine.engInductionType" class="form-control" ng-options="type.id as type.label for type in engInductionTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Induction Throttle Body Diameter</label>
+									<input type="text" class="form-control" ng-model="engine.engInductionTBDiameter">
+								</div>
+								<div class="form-group">
+									<label>Induction Description</label>
+									<input type="text" class="form-control" ng-model="engine.engInductionDesc">
+								</div>
+								<div class="form-group">
+									<label>Max Power (HP)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerHP">
+								</div>
+								<div class="form-group">
+									<label>Max Power (KW)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerKW">
+								</div>
+								<div class="form-group">
+									<label>Max Power (RPM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxPowerRPM">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (NM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueNM">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (FT LB)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueFTLB">
+								</div>
+								<div class="form-group">
+									<label>Max Torque (RPM)</label>
+									<input type="text" class="form-control" ng-model="engine.engMaxTorqueRPM">
+								</div>
+								<div class="form-group">
+									<label>Clutch Operation Method</label>
+									<select ng-model="engine.engClutchOperation" class="form-control" ng-options="type.id as type.label for type in engClutchOperations"></select>
+								</div>
+								<div class="form-group">
+									<label>Clutch Type</label>
+									<select ng-model="engine.engClutchType" class="form-control" ng-options="type.id as type.label for type in engClutchTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Count of Clutch Plate</label>
+									<input type="text" class="form-control" ng-model="engine.engClutchPlateCount">
+								</div>
+								<div class="form-group">
+									<label>Ignition</label>
+									<select ng-model="engine.engIgnition" class="form-control" ng-options="type.id as type.label for type in engIgnitions"></select>
+								</div>
+								<div class="form-group">
+									<label>Starting Method</label>
+									<select ng-model="engine.engStarting" class="form-control" ng-options="type.id as type.label for type in engStartings"></select>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_frame">
+							<accordion-heading>Frame <span class="label {{stateExisted.frame.type}}">{{stateExisted.frame.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_frame, 'glyphicon-chevron-right': !io_frame}"></i></accordion-heading>
+							<form name="f_Frame" ng-submit="submitFrame()">
+								<div class="form-group">
+									<label>Material</label>
+									<select ng-model="frame.frameMaterial" class="form-control" ng-options="type.id as type.label for type in frameMaterials"></select>
+								</div>
+								<div class="form-group">
+									<label>Type</label>
+									<select ng-model="frame.frameType" class="form-control" ng-options="type.id as type.label for type in frameTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rake (degree)</label>
+									<input type="text" class="form-control" ng-model="frame.frameRake">
+								</div>
+								<div class="form-group">
+									<label>Trail (mm)</label>
+									<input type="text" class="form-control" ng-model="frame.frameTrail">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_suspension">
+							<accordion-heading>Suspension <span class="label {{stateExisted.suspension.type}}">{{stateExisted.suspension.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_suspension, 'glyphicon-chevron-right': !io_suspension}"></i></accordion-heading>
+							<form name="f_Suspension" ng-submit="submitSuspension()">
+								<div class="form-group">
+									<label>Front Type</label>
+									<select ng-model="suspension.suspFType" class="form-control" ng-options="type.id as type.label for type in suspTypeFronts"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Diameter</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Preload</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFPreload">
+								</div>
+								<div class="form-group">
+									<label>Front Rebound</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFRebound">
+								</div>
+								<div class="form-group">
+									<label>Front Compression</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFCompression">
+								</div>
+								<div class="form-group">
+									<label>Front Travel</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFTravel">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="suspension.suspFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Type</label>
+									<select ng-model="suspension.suspRType" class="form-control" ng-options="type.id as type.label for type in suspTypeRears"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Diameter</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Preload</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRPreload">
+								</div>
+								<div class="form-group">
+									<label>Rear Rebound</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRRebound">
+								</div>
+								<div class="form-group">
+									<label>Rear Compression</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRCompression">
+								</div>
+								<div class="form-group">
+									<label>Rear Travel</label>
+									<input type="text" class="form-control" ng-model="suspension.suspRTravel">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="suspension.susRFDesc">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_brake">
+							<accordion-heading>Brake <span class="label {{stateExisted.brake.type}}">{{stateExisted.brake.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_brake, 'glyphicon-chevron-right': !io_brake}"></i></accordion-heading>
+							<form name="f_Brake" ng-submit="submitBrake()">
+								<div class="form-group">
+									<label>Front Type</label>
+									<select ng-model="brake.brakeFType" class="form-control" ng-options="type.id as type.label for type in brakeTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Disc Count</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscCount">
+								</div>
+								<div class="form-group">
+									<label>Front Disc Diameter</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Disc Piston Count Per Caliper</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDiscPistonCountPerCaliper">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="brake.brakeFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Type</label>
+									<select ng-model="brake.brakeRType" class="form-control" ng-options="type.id as type.label for type in brakeTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Count</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscCount">
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Diameter</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Disc Piston Count Per Caliper</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDiscPistonCountPerCaliper">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="brake.brakeRDesc">
+								</div>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_wheel">
+							<accordion-heading>Wheel <span class="label {{stateExisted.wheel.type}}">{{stateExisted.wheel.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_wheel, 'glyphicon-chevron-right': !io_wheel}"></i></accordion-heading>
+							<form name="f_Wheel" ng-submit="submitWheel()">
+								<div class="form-group">
+									<label>Front Diameter</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFDiameter">
+								</div>
+								<div class="form-group">
+									<label>Front Rim Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFRimWidth">
+								</div>
+								<div class="form-group">
+									<label>Front Rim Type</label>
+									<select ng-model="wheel.wheelFRimType" class="form-control" ng-options="type.id as type.label for type in wheelRimTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Type</label>
+									<select ng-model="wheel.wheelFTyreType" class="form-control" ng-options="type.id as type.label for type in wheelTyreTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFTyreWidth">
+								</div>
+								<div class="form-group">
+									<label>Front Tyre Ratio</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFTyreRatio">
+								</div>
+								<div class="form-group">
+									<label>Front Description</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelFDesc">
+								</div>
+
+								<div class="form-group">
+									<label>Rear Diameter</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRDiameter">
+								</div>
+								<div class="form-group">
+									<label>Rear Rim Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRRimWidth">
+								</div>
+								<div class="form-group">
+									<label>Rear Rim Type</label>
+									<select ng-model="wheel.wheelRRimType" class="form-control" ng-options="type.id as type.label for type in wheelRimTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Type</label>
+									<select ng-model="wheel.wheelRTyreType" class="form-control" ng-options="type.id as type.label for type in wheelTyreTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Width</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRTyreWidth">
+								</div>
+								<div class="form-group">
+									<label>Rear Tyre Ratio</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRTyreRatio">
+								</div>
+								<div class="form-group">
+									<label>Rear Description</label>
+									<input type="text" class="form-control" ng-model="wheel.wheelRDesc">
+								</div>
+								
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_dimension">
+							<accordion-heading>Dimension <span class="label {{stateExisted.dimension.type}}">{{stateExisted.dimension.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_dimension, 'glyphicon-chevron-right': !io_dimension}"></i></accordion-heading>
+							<form name="f_Dimension" ng-submit="submitDimension()">
+								<div class="form-group">
+									<label>Length</label>
+									<input type="text" class="form-control" ng-model="dimension.dimLength">
+								</div>
+								<div class="form-group">
+									<label>Width</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWidth">
+								</div>
+								<div class="form-group">
+									<label>Height</label>
+									<input type="text" class="form-control" ng-model="dimension.dimHeight">
+								</div>
+								<div class="form-group">
+									<label>WheelBase</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWheelBase">
+								</div>
+								<div class="form-group">
+									<label>Seat Height</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeight">
+								</div>
+								<div class="form-group">
+									<label>Seat Height Alternative</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeightAlt">
+								</div>
+								<div class="form-group">
+									<label>Seat Height Description</label>
+									<input type="text" class="form-control" ng-model="dimension.dimSeatHeightDesc">
+								</div>
+								<div class="form-group">
+									<label>Dry Weight (kg)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimDryWeight">
+								</div>
+								<div class="form-group">
+									<label>Wet Weight (kg)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimWetWeight">
+								</div>
+								<div class="form-group">
+									<label>Ground Clearance (mm)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimGroundClearance">
+								</div>
+								<div class="form-group">
+									<label>Tank Capacity (L)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimTankCapacity">
+								</div>
+								<div class="form-group">
+									<label>Tank Capacity (Reserve) (L)</label>
+									<input type="text" class="form-control" ng-model="dimension.dimTankCapacityRes">
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_drive">
+							<accordion-heading>Drive <span class="label {{stateExisted.drive.type}}">{{stateExisted.drive.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_drive, 'glyphicon-chevron-right': !io_drive}"></i></accordion-heading>
+							<form name="f_Drive" ng-submit="submitDrive()">
+								<div class="form-group">
+									<label>Transmission Type</label>
+									<select ng-model="drive.drvTransmissionType" class="form-control" ng-options="type.id as type.label for type in drvTransmissionTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Transimission Gear Count</label>
+									<input type="text" class="form-control" ng-model="drive.drvTransmissionGearCount">
+								</div>
+								<div class="form-group">
+									<label>Wheel Drive Type</label>
+									<select ng-model="drive.drvWheelDriveType" class="form-control" ng-options="type.id as type.label for type in drvWheelDriveTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Transmission Gear Ratio</label>
+									<input type="text" class="form-control" ng-model="drive.drvTransmissionGearRatio">
+								</div>
+								<div class="form-group">
+									<label>Primary Drive Ratio</label>
+									<input type="text" class="form-control" ng-model="drive.drvPrimaryDriveRatio">
+								</div>
+								<div class="form-group">
+									<label>Final Drive Ratio 1</label>
+									<input type="text" class="form-control" ng-model="drive.drvFinalDriveRatio1">
+								</div>
+								<div class="form-group">
+									<label>Final Drive Ratio 2</label>
+									<input type="text" class="form-control" ng-model="drive.drvFinalDriveRatio2">
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block" value="Update">
+								</div>
+							</form>
+						</accordion-group>
+						<accordion-group is-open="io_gallery">
+							<accordion-heading>Gallery <span class="label {{stateExisted.gallery.type}}">{{stateExisted.gallery.msg}}</span><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': io_gallery, 'glyphicon-chevron-right': !io_gallery}"></i></accordion-heading>
+							<input type="button" ng-click="updateMCGalleryPosition()" value="Update Position">
+							<input type="button" ng-click="deletePics()" value="Delte Pics">
+							<div class="row" ui-sortable="sortableOptions" ng-model="mcGalleries">
+								<div ng-repeat="img in mcGalleries" style="width:100px;"><label><input type="checkbox" ng-model="temp" ng-change="selectPics(img.id)">{{img.id}}<img style="width:100%;height:auto" ng-src="/mc/svcMC/mcpic/{{img.picFileName}}"/></label></div>
+							</div>
+								
+						</accordion-group>
+
+
+
+					</accordion>
+					<input name='file' type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+					<div class="col-md-12" style="margin-bottom: 40px">
+					    <h2>Uploads only images (with canvas preview)</h2>
+					    <h3>The queue</h3>
+					    <p>Queue length: {{ uploader.queue.length }}</p>
+
+					    <table class="table">
+						<thead>
+						    <tr>
+							<th width="50%">Name</th>
+							<th ng-show="uploader.isHTML5">Size</th>
+							<th ng-show="uploader.isHTML5">Progress</th>
+							<th>Status</th>
+							<th>Actions</th>
+						    </tr>
+						</thead>
+						<tbody>
+						    <tr ng-repeat="item in uploader.queue">
+							<td>
+							    <strong>{{ item.file.name }}</strong>
+							    <!-- Image preview -->
+							    <!--auto height-->
+							    <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+							    <!--auto width-->
+							    <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+							    <!--fixed width and height -->
+							    <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+							</td>
+							<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+							<td ng-show="uploader.isHTML5">
+							    <div class="progress" style="margin-bottom: 0;">
+								<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+							    </div>
+							</td>
+							<td class="text-center">
+							    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+							    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+							    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+							</td>
+							<td nowrap>
+							    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+								<span class="glyphicon glyphicon-upload"></span> Upload
+							    </button>
+							    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+								<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+							    </button>
+							    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+								<span class="glyphicon glyphicon-trash"></span> Remove
+							    </button>
+							</td>
+						    </tr>
+						</tbody>
+					    </table>
+
+					    <div>
+						<div>
+						    Queue progress:
+						    <div class="progress" style="">
+							<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+						    </div>
+						</div>
+						<button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+						    <span class="glyphicon glyphicon-upload"></span> Upload all
+						</button>
+						<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+						    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+						</button>
+						<button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+						    <span class="glyphicon glyphicon-trash"></span> Remove all
+						</button>
+					    </div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

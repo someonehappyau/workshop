@@ -1,7 +1,7 @@
 'use strict';
 
-mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$routeParams',
-		function($scope,MCOriginSvc,$location,$routeParams){
+mcControllers.controller('MCModelListCtrl',['$scope','MCModelSvc','$location','$routeParams',
+		function($scope,MCModelSvc,$location,$routeParams){
 
 		$scope.searchStr=$routeParams.searchStr;
 		if ($scope.searchStr==='undefined')
@@ -10,23 +10,23 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 			$scope.searchStr=$scope.searchStr.trim();
 
 		$scope.doSearch=function(){
-			$scope.updateMCOs();
+			$scope.updateMCs();
 		};
 		
 		var firstUpdate=true;
 
 		$scope.currentPage=$routeParams.currentPage;
 
-		$scope.updateMCOs=function(){
+		$scope.updateMCs=function(){
 			console.log($scope.currentPage);
 			var shouldShow={
 				page:$scope.currentPage,
 				searchStr:$scope.searchStr
 			};
-			MCOriginSvc.list(shouldShow).$promise.then(function(mcos){
-				console.log(mcos);
-				$scope.totalItems=mcos.totalCount;
-				$scope.mcos=mcos.data;
+			MCModelSvc.list(shouldShow).$promise.then(function(data){
+				console.log(data);
+				$scope.totalItems=data.totalCount;
+				$scope.mcs=data.data;
 				if (firstUpdate===true){
 					$scope.currentPage=$routeParams.currentPage;	
 					firstUpdate=false;
@@ -35,10 +35,10 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 			},
 			function(err){
 				console.log(err);
-				$scope.mcos=[];
+				$scope.mcs=[];
 			});
 		};
-		$scope.updateMCOs();
+		$scope.updateMCs();
 
 		$scope.updateCount=function(){
 			console.log('update count-'+$scope.currentPage);
@@ -46,7 +46,7 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 				page:$scope.currentPage,
 				searchStr:$scope.searchStr
 			};
-			MCOriginSvc.getCount(shouldShow).$promise.then(function(count){
+			MCModelSvc.getCount(shouldShow).$promise.then(function(count){
 				$scope.totalItems=count.count;
 			},
 			function(err){
@@ -60,7 +60,7 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 				return;
 			console.log('page changed-'+$scope.currentPage);
 			$scope.query='';
-			$scope.updateMCOs();
+			$scope.updateMCs();
 			return;
 		};
 
@@ -69,7 +69,7 @@ mcControllers.controller('MCOriginCtrl',['$scope','MCOriginSvc','$location','$ro
 		//console.log($scope.currentPage);
 
 		$scope.gotoDetail=function(id){
-			$location.path('/mcoDetail/'+id+'/'+$scope.searchStr+'/'+$scope.currentPage+'/');
+			$location.path('/mcDetail/'+id+'/'+$scope.searchStr+'/'+$scope.currentPage+'/');
 		};
 
 		}]);

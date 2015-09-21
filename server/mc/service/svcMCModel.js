@@ -5,9 +5,9 @@ var async=require('async');
 var pool=require('../../db/dbpool');
 var mysql=require('mysql');
 
-function getAll(page,countPerPage,callback){
+function getAll(page,countPerPage,searchStr,callback){
 	var offset=(page-1)*countPerPage;
-	var condition='where 1=1 ';
+	var condition='where 1=1 and (maker like \'%'+searchStr+'%\' or label like \'%'+searchStr+'%\')';
 
 	var resultCount,resultData,errCount,errResult;
 	async.parallel([
@@ -39,8 +39,8 @@ function getAll(page,countPerPage,callback){
 		});
 };
 
-function getCount(callback){
-	var condition='where 1=1 ';
+function getCount(searchStr,callback){
+	var condition='where 1=1 and (maker like \'%'+searchStr+'%\' or label like \'%'+searchStr+'%\')';
 	pool.query('select count(*) as count from MCModels '+condition,function(err,data){
 		console.log(JSON.stringify(data[0].count));
 		if (err) callback(err,-1);

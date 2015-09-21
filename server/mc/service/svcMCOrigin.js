@@ -19,7 +19,7 @@ function getAll(page,countPerPage,searchStr,callback){
 			});
 		},
 		function(done){
-			pool.query('select id,line,maker,urlModel,lineState,mcFinal from MCOrigin '+condition+' order by maker limit ?,?',[offset,countPerPage],function(err,result){
+			pool.query('select id,line,maker,urlModel,lineState,mcFinal from MCOrigin '+condition+' order by maker,line limit ?,?',[offset,countPerPage],function(err,result){
 				errResult=err;
 				resultData=result;
 				done();

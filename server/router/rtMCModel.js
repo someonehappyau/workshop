@@ -13,15 +13,27 @@ router.get('/model/:id',function(req,res){
 		else
 			page=req.query.page;
 
+		var searchStr;
+		if (!req.query.searchStr)
+			searchStr='';
+		else
+			searchStr=req.query.searchStr;
+
 		console.log(page);
-		ctrlMCModel.getAll(page,function(err,mcs){
+		ctrlMCModel.getAll(page,searchStr,function(err,mcs){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!mcs) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify(mcs));
 		});
 	}
 	else if (req.params.id==='count'){
-		ctrlMCModel.getCount(function(err,count){
+		var searchStr;
+		if (!req.query.searchStr)
+			searchStr='';
+		else
+			searchStr=req.query.searchStr;
+
+		ctrlMCModel.getCount(searchStr,function(err,count){
 			if (err) res.status(500).end(JSON.stringify(err));
 			else if (!count) res.status(200).end(JSON.stringify());
 			else res.status(200).end(JSON.stringify({count:count}));

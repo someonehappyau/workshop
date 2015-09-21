@@ -2,12 +2,12 @@
 
 var svcMCModel=require('../service/svcMCModel');
 
-function getAll(page,callback){
-	svcMCModel.getAll(page,10,callback);
+function getAll(page,searchStr,callback){
+	svcMCModel.getAll(page,10,searchStr,callback);
 };
 
-function getCount(callback){
-	svcMCModel.getCount(callback);
+function getCount(searchStr,callback){
+	svcMCModel.getCount(searchStr,callback);
 };
 
 function getOneById(id,callback){

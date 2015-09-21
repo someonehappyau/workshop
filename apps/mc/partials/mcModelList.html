@@ -1,0 +1,59 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="text-center">MC Model</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<form class="form-inline">
+				<label>Filter:</label>
+				<input type="text" class="form-control" ng-model="query">
+
+				<label>Search:</label>
+				<input type="text" class="form-control" ng-model="searchStr">
+				<input type="button" class="form-control" ng-click="doSearch()" value="Search">
+			</form>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<pagination class="pull-right" total-items="totalItems" max-size="10" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+			<table class="table table-bordered table-striped tabel-hover">
+				<thead>
+					<tr class="info">
+						<th>ID</th>
+						<th>Maker</th>
+						<th>Label</th>
+						<th>Start Year</th>
+						<th>End Year</th>
+						<th>Type</th>
+						<th>State</th>
+						<th>State Edit</th>
+						<th>State Gallery</th>
+						<th>Detail</th>
+					</tr>
+				<thead>
+				<tbody>
+					<tr ng-dblclick="showDetail(mc.id)" ng-repeat="mc in mcs | filter: query as result">
+						<td>{{mc.id}}</td>
+						<td>{{mc.makerLabel}}</td>
+						<td>{{mc.label}}</td>
+						<td>{{mc.yearStart}}</td>
+						<td>{{mc.yearEnd}}</td>
+						<td>{{mc.typeLabel}}</td>
+						<td>{{mc.stateLabel}}</td>
+						<td>{{mc.stateEditLabel}}</td>
+						<td>{{mc.stateGalleryLabel}}</td>
+						<td><button type="button" class="btn btn-primary" ng-click="gotoDetail(mc.id)">DETAIL</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<pagination class="pull-right" total-items="totalItems" max-size="10" boundary-links="true" rotate="false" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>

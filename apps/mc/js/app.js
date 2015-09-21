@@ -144,6 +144,32 @@ mcApp.config(['$routeProvider',
 								}]
 				}
 			}).
+			when('/mcmodellist/:searchStr?/:currentPage?',{
+				templateUrl:'partials/mcModelList.html',
+				controller:'MCModelListCtrl',
+				resolve:{
+					validation: ['AuthService','$location',function(AuthService,$location){
+										AuthService.authenticate().then(function(){
+										},
+										function(){
+											$location.path('/mc');
+										});
+								}]
+				}
+			}).
+			when('/mcDetail/:id/:searchStr?/:currentPage?',{
+				templateUrl:'partials/mcDetail.html',
+				controller:'MCDetailCtrl',
+				resolve:{
+					validation: ['AuthService','$location',function(AuthService,$location){
+										AuthService.authenticate().then(function(){
+										},
+										function(){
+											$location.path('/mc');
+										});
+								}]
+				}
+			}).
 			when('/mcoDetail/:id/:searchStr?/:currentPage?',{
 				templateUrl:'partials/mcoDetail.html',
 				controller:'MCODetailCtrl',
