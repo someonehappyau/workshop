@@ -1,7 +1,7 @@
 'use strict';
 
-mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc','FileUploader','$timeout',
-		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc,FileUploader,$timeout){
+mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCFrameSvc','MCSuspensionSvc','MCBrakeSvc','MCWheelSvc','MCDimensionSvc','MCDriveSvc','MCPicSvc','FileUploader','$timeout',
+		function($scope,MCOriginSvc,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCFrameSvc,MCSuspensionSvc,MCBrakeSvc,MCWheelSvc,MCDimensionSvc,MCDriveSvc,MCPicSvc,FileUploader,$timeout){
 			if (!$routeParams.searchStr)
 				$scope.searchStr=' ';
 			else
@@ -167,6 +167,12 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.addAlert('success','Load Model successfully.');
 
 					$scope.loadMCEngine();
+					$scope.loadMCFrame();
+					$scope.loadMCSuspension();
+					$scope.loadMCBrake();
+					$scope.loadMCWheel();
+					$scope.loadMCDimension();
+					$scope.loadMCDrive();
 					$scope.loadMCGallery();
 				},
 				function(err){
@@ -194,7 +200,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetEngine();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.engine,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Engine: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -214,7 +223,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetFrame();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.frame,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Frame: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -234,7 +246,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetSuspension();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.suspension,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Suspension: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -254,7 +269,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetBrake();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.brake,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Brake: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -274,7 +292,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetWheel();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.wheel,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Wheel: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -294,7 +315,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetDimension();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.dimension,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Dimension: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -314,7 +338,10 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					$scope.resetDrive();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.drive,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Drive: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -686,6 +713,12 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			$scope.resetAll=function(){
 				$scope.resetModel();
 				$scope.resetEngine();
+				$scope.resetFrame();
+				$scope.resetSuspension();
+				$scope.resetBrake();
+				$scope.resetWheel();
+				$scope.resetDimension();
+				$scope.resetDrive();
 				$scope.resetGallery();
 			};
 

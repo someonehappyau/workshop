@@ -14,6 +14,12 @@ var rtMCOrigin=require('./router/rtMCOrigin');
 var rtMCModel=require('./router/rtMCModel');
 var rtMCMaker=require('./router/rtMCMaker');
 var rtMCEngine=require('./router/rtMCEngine');
+var rtMCFrame=require('./router/rtMCFrame');
+var rtMCSuspension=require('./router/rtMCSuspension');
+var rtMCBrake=require('./router/rtMCBrake');
+var rtMCWheel=require('./router/rtMCWheel');
+var rtMCDimension=require('./router/rtMCDimension');
+var rtMCDrive=require('./router/rtMCDrive');
 var rtMCPic=require('./router/rtMCPic');
 
 var app=express();
@@ -46,6 +52,12 @@ app.use('/mc/svcMCO',rtMCOrigin);
 app.use('/mc/svcMC',rtMCModel);
 app.use('/mc/svcMC',rtMCMaker);
 app.use('/mc/svcMC',rtMCEngine);
+app.use('/mc/svcMC',rtMCFrame);
+app.use('/mc/svcMC',rtMCSuspension);
+app.use('/mc/svcMC',rtMCBrake);
+app.use('/mc/svcMC',rtMCWheel);
+app.use('/mc/svcMC',rtMCDimension);
+app.use('/mc/svcMC',rtMCDrive);
 app.use('/mc/svcMC',rtMCPic);
 
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));

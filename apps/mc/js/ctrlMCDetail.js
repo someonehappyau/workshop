@@ -1,7 +1,7 @@
 'use strict';
 
-mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCPicSvc','FileUploader','$timeout',
-		function($scope,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCPicSvc,FileUploader,$timeout){
+mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','TDTypeSvc','$parse','toaster','MCEngineSvc','MCFrameSvc','MCSuspensionSvc','MCBrakeSvc','MCWheelSvc','MCDimensionSvc','MCDriveSvc','MCPicSvc','FileUploader','$timeout',
+		function($scope,$routeParams,MCModelSvc,TDTypeSvc,$parse,toaster,MCEngineSvc,MCFrameSvc,MCSuspensionSvc,MCBrakeSvc,MCWheelSvc,MCDimensionSvc,MCDriveSvc,MCPicSvc,FileUploader,$timeout){
 			if (!$routeParams.searchStr)
 				$scope.searchStr=' ';
 			else
@@ -15,11 +15,11 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 			$scope.addAlert=function(type,msg){
 				toaster.pop(type,null,msg);
 			};
-
+			/*
 			$scope.linkStateType='warning';
 			$scope.linkStateMsg='N/A';
 
-			/*
+			
 			$scope.loadMCO=function(id){
 				MCOriginSvc.getOne({id:id}).$promise.then(function(mco){
 					$scope.mco=mco;
@@ -160,6 +160,12 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 			*/
 
 			$scope.loadMCModel=function(id){
+				if (!id){
+					if (!$scope.model)
+						id=0;
+					else
+						id=$scope.model.id;
+				}
 				MCModelSvc.getOne({id:id}).$promise.then(function(model){
 					$scope.model=model;
 					$scope.changeStateExisted($scope.stateExisted.model,true);
@@ -167,13 +173,19 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.addAlert('success','Load Model successfully.');
 
 					$scope.loadMCEngine();
+					$scope.loadMCFrame();
+					$scope.loadMCSuspension();
+					$scope.loadMCBrake();
+					$scope.loadMCWheel();
+					$scope.loadMCDimension();
+					$scope.loadMCDrive();
 					$scope.loadMCGallery();
 				},
 				function(err){
 					$scope.resetAll();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.model,false);
-					$scope.updateLinkState();
+					//$scope.updateLinkState();
 					$scope.addAlert('error',err);
 				});
 			};
@@ -195,7 +207,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetEngine();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.engine,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Engine: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -215,7 +230,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetFrame();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.frame,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Frame: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -235,7 +253,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetSuspension();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.suspension,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Suspension: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -255,7 +276,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetBrake();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.brake,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Brake: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -275,7 +299,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetWheel();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.wheel,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Wheel: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -295,7 +322,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetDimension();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.dimension,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Dimension: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -315,7 +345,10 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					$scope.resetDrive();
 					console.log(err);
 					$scope.changeStateExisted($scope.stateExisted.drive,false);
-					$scope.addAlert('error',err);
+					if (err.data==='not found')
+						$scope.addAlert('warning','Drive: Not Found.');
+					else
+						$scope.addAlert('error',err);
 				});
 			};
 
@@ -687,6 +720,12 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 			$scope.resetAll=function(){
 				$scope.resetModel();
 				$scope.resetEngine();
+				$scope.resetFrame();
+				$scope.resetSuspension();
+				$scope.resetBrake();
+				$scope.resetWheel();
+				$scope.resetDimension();
+				$scope.resetDrive();
 				$scope.resetGallery();
 			};
 

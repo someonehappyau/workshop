@@ -11,9 +11,10 @@ router.get('/wheel/:id',function(req,res){
 	}
 	else{
 		console.log(req.query);
-		if (req.body.byModel==='true'){
+		if (req.query.byModel==='true'){
 			ctrlMCWheel.getOneByModelId(req.params.id,function(err,data){
-				if (err || !data) res.status(500).end(JSON.stringify(err));
+				if (err) res.status(500).end(JSON.stringify(err));
+				else if (!data) res.status(500).end('not found');
 				else res.status(200).end(JSON.stringify(data));
 			});
 		}
