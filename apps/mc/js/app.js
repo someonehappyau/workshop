@@ -234,7 +234,22 @@ mcApp.config(['$routeProvider',
 								typeName==='MCEngClutchOperation' ||	
 								typeName==='MCEngClutchType' ||	
 								typeName==='MCEngIgnition' ||	
-								typeName==='MCEngStarting'	
+								typeName==='MCEngStarting' ||
+
+								typeName==='MCFrameMaterial' ||
+								typeName==='MCFrameType' ||
+
+								typeName==='MCSuspTypeFront' ||
+								typeName==='MCSuspTypeRear' ||
+
+								typeName==='MCBrakeType' ||
+								
+								typeName==='MCWheelRimType' ||
+								typeName==='MCWheelTyreType' ||
+
+								typeName==='MCDrvTransmissionType' ||
+								typeName==='MCDrvWheelDriveType'
+
 							){
 							}
 							else{

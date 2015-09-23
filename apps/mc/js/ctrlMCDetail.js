@@ -167,7 +167,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 						id=$scope.model.id;
 				}
 				MCModelSvc.getOne({id:id}).$promise.then(function(model){
-					$scope.model=model;
+					//$scope.model=model;
+					$scope.dataCopy($scope.model,model);
 					$scope.changeStateExisted($scope.stateExisted.model,true);
 					//$scope.updateLinkState();
 					$scope.addAlert('success','Load Model successfully.');
@@ -199,7 +200,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCEngineSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(engine){
-					$scope.engine=engine;
+					$scope.dataCopy($scope.engine,engine);
+					//$scope.engine=engine;
 					$scope.changeStateExisted($scope.stateExisted.engine,true);
 					$scope.addAlert('success','Load Engine successfully.');
 				},
@@ -222,7 +224,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCFrameSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.frame=data;
+					$scope.dataCopy($scope.frame,data);
+					//$scope.frame=data;
 					$scope.changeStateExisted($scope.stateExisted.frame,true);
 					$scope.addAlert('success','Load Frame successfully.');
 				},
@@ -245,7 +248,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCSuspensionSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.suspension=data;
+					$scope.dataCopy($scope.suspension,data);
+					//$scope.suspension=data;
 					$scope.changeStateExisted($scope.stateExisted.suspension,true);
 					$scope.addAlert('success','Load Suspension successfully.');
 				},
@@ -268,7 +272,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCBrakeSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.brake=data;
+					$scope.dataCopy($scope.brake,data);
+					//$scope.brake=data;
 					$scope.changeStateExisted($scope.stateExisted.brake,true);
 					$scope.addAlert('success','Load Brake successfully.');
 				},
@@ -291,7 +296,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCWheelSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.wheel=data;
+					$scope.dataCopy($scope.wheel,data);
+					//$scope.wheel=data;
 					$scope.changeStateExisted($scope.stateExisted.wheel,true);
 					$scope.addAlert('success','Load Wheel successfully.');
 				},
@@ -314,7 +320,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCDimensionSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.dimension=data;
+					$scope.dataCopy($scope.dimension,data);
+					//$scope.dimension=data;
 					$scope.changeStateExisted($scope.stateExisted.dimension,true);
 					$scope.addAlert('success','Load Dimension successfully.');
 				},
@@ -337,7 +344,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					modelId=$scope.model.id;
 
 				MCDriveSvc.getOne({id:modelId, byModel:'true'}).$promise.then(function(data){
-					$scope.drive=data;
+					$scope.dataCopy($scope.drive,data);
+					//$scope.drive=data;
 					$scope.changeStateExisted($scope.stateExisted.drive,true);
 					$scope.addAlert('success','Load Drive successfully.');
 				},
@@ -708,6 +716,11 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 			};
 			$scope.resetDrive();
 
+			$scope.dataCopy=function(dataOld,dataNew){
+				for (var key in dataOld){
+					dataOld[key]=dataNew[key];
+				}
+			};
 
 			$scope.sortableOptions={
 			};
