@@ -259,6 +259,10 @@
 									<select ng-model="suspension.suspFType" class="form-control" ng-options="type.id as type.label for type in suspTypeFronts"></select>
 								</div>
 								<div class="form-group">
+									<label>Front Brand</label>
+									<select ng-model="suspension.suspFBrand" class="form-control" ng-options="type.id as type.label for type in suspBrands"></select>
+								</div>
+								<div class="form-group">
 									<label>Front Diameter</label>
 									<input type="text" class="form-control" ng-model="suspension.suspFDiameter">
 								</div>
@@ -286,6 +290,10 @@
 								<div class="form-group">
 									<label>Rear Type</label>
 									<select ng-model="suspension.suspRType" class="form-control" ng-options="type.id as type.label for type in suspTypeRears"></select>
+								</div>
+								<div class="form-group">
+									<label>Rear Brand</label>
+									<select ng-model="suspension.suspRBrand" class="form-control" ng-options="type.id as type.label for type in suspBrands"></select>
 								</div>
 								<div class="form-group">
 									<label>Rear Diameter</label>

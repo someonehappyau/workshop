@@ -618,6 +618,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					id:'',
 					model:0,
 					suspFType:'',
+					suspFBrand:'',
 					suspFDiameter:'',
 					suspFPreload:0,
 					suspFRebound:0,
@@ -625,6 +626,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					suspFTravel:'',
 					suspFDesc:'',
 					suspRType:'',
+					suspRBrand:'',
 					suspRDiameter:'',
 					suspRPreload:0,
 					suspRRebound:0,
@@ -773,6 +775,7 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 
 				$scope.loadType('MCSuspTypeFront','suspTypeFronts');
 				$scope.loadType('MCSuspTypeRear','suspTypeRears');
+				$scope.loadType('MCSuspBrand','suspBrands');
 
 				$scope.loadType('MCBrakeType','brakeTypes');
 

@@ -241,6 +241,7 @@ mcApp.config(['$routeProvider',
 
 								typeName==='MCSuspTypeFront' ||
 								typeName==='MCSuspTypeRear' ||
+								typeName==='MCSuspBrand' ||
 
 								typeName==='MCBrakeType' ||
 								
