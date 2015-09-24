@@ -5,6 +5,8 @@ var bodyParser=require('body-parser');
 var cookieParser=require('cookie-parser');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
+var FileStreamRotator=require('file-stream-rotator');
+var fs=require('fs');
 
 var rtTDConfig=require('./router/rtTDConfig');
 var rtUser=require('./router/rtUser');
@@ -24,8 +26,22 @@ var rtMCPic=require('./router/rtMCPic');
 
 var app=express();
 
+var logDirectory = __dirname + '/log';
+
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// create a rotating write stream
+var accessLogStream = FileStreamRotator.getStream({
+  filename: logDirectory + '/access-%DATE%.log',
+  frequency: 'daily',
+  verbose: false
+});
+
+// setup the logger
+app.use(logger('combined', {stream: accessLogStream}));
+
 app.use(cookieParser());
-app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
