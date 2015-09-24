@@ -596,7 +596,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					engClutchType:'',
 					engClutchPlateCount:'',
 					engIgnition:'',
-					engStarting:''
+					engStarting:'',
+					engDesc:''
 				};
 			};
 			$scope.resetEngine();
@@ -609,7 +610,8 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					frameMaterial:'',
 					frameType:'',
 					frameRake:'',
-					frameTrail:''
+					frameTrail:'',
+					frameDesc:''
 				};
 			};
 			$scope.resetFrame();
@@ -621,16 +623,16 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					model:0,
 					suspFType:'',
 					suspFDiameter:'',
-					suspFPreload:'',
-					suspFRebound:'',
-					suspFCompression:'',
+					suspFPreload:0,
+					suspFRebound:0,
+					suspFCompression:0,
 					suspFTravel:'',
 					suspFDesc:'',
 					suspRType:'',
 					suspRDiameter:'',
-					suspRPreload:'',
-					suspRRebound:'',
-					suspRCompression:'',
+					suspRPreload:0,
+					suspRRebound:0,
+					suspRCompression:0,
 					suspRTravel:'',
 					suspRDesc:''
 				};
@@ -711,7 +713,9 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					drvTransmissionGearRatio:'',
 					drvPrimaryDriveRatio:'',
 					drvFinalDriveRatio1:'',
-					drvFinalDriveRatio2:''
+					drvFinalDriveRatio2:'',
+					drvIsSlip:0,
+					drvHasReverseGear:0
 				};
 			};
 			$scope.resetDrive();

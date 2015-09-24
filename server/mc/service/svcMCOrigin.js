@@ -7,7 +7,7 @@ var mysql=require('mysql');
 
 function getAll(page,countPerPage,searchStr,callback){
 	var offset=(page-1)*countPerPage;
-	var condition='where 1=1 and maker like \'%'+searchStr+'%\'';
+	var condition='where 1=1 and urlModel like \'%'+searchStr+'%\'';
 
 	var resultCount,resultData,errCount,errResult;
 	async.parallel([
@@ -40,7 +40,7 @@ function getAll(page,countPerPage,searchStr,callback){
 };
 
 function getCount(searchStr,callback){
-	var condition='where 1=1 and maker like \'%'+searchStr+'%\'';
+	var condition='where 1=1 and urlModel like \'%'+searchStr+'%\'';
 	pool.query('select count(*) as count from MCOrigin '+condition,function(err,data){
 		console.log(JSON.stringify(data[0].count));
 		if (err) callback(err,-1);

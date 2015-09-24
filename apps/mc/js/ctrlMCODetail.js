@@ -22,6 +22,9 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 			$scope.loadMCO=function(id){
 				MCOriginSvc.getOne({id:id}).$promise.then(function(mco){
 					$scope.mco=mco;
+					if (!!$scope.mco.urlModel){
+						$scope.mco.urlModel='http://www.motorcyclespecs.co.za'+$scope.mco.urlModel.slice(2);
+					}
 					if (!mco.mcFinal){
 
 					}
@@ -589,7 +592,8 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					engClutchType:'',
 					engClutchPlateCount:'',
 					engIgnition:'',
-					engStarting:''
+					engStarting:'',
+					engDesc:''
 				};
 			};
 			$scope.resetEngine();
@@ -602,7 +606,8 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					frameMaterial:'',
 					frameType:'',
 					frameRake:'',
-					frameTrail:''
+					frameTrail:'',
+					frameDesc:''
 				};
 			};
 			$scope.resetFrame();
@@ -614,16 +619,16 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					model:0,
 					suspFType:'',
 					suspFDiameter:'',
-					suspFPreload:'',
-					suspFRebound:'',
-					suspFCompression:'',
+					suspFPreload:0,
+					suspFRebound:0,
+					suspFCompression:0,
 					suspFTravel:'',
 					suspFDesc:'',
 					suspRType:'',
 					suspRDiameter:'',
-					suspRPreload:'',
-					suspRRebound:'',
-					suspRCompression:'',
+					suspRPreload:0,
+					suspRRebound:0,
+					suspRCompression:0,
 					suspRTravel:'',
 					suspRDesc:''
 				};
@@ -704,7 +709,9 @@ mcControllers.controller('MCODetailCtrl',['$scope','MCOriginSvc','$routeParams',
 					drvTransmissionGearRatio:'',
 					drvPrimaryDriveRatio:'',
 					drvFinalDriveRatio1:'',
-					drvFinalDriveRatio2:''
+					drvFinalDriveRatio2:'',
+					drvIsSlip:0,
+					drvHasReverseGear:0
 				};
 			};
 			$scope.resetDrive();

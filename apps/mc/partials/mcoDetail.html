@@ -27,6 +27,9 @@
 				<div class="col-md-12">mcFinal: {{mco.mcFinal}}</div>
 			</div>
 			<div class="row">
+				<a href="{{mco.urlModel}}" target="_blank">{{mco.urlModel}}</a>
+			</div>
+			<div class="row">
 				<div class="col-md-12" ng-bind-html="mco.tableContent"></div>
 			</div>
 			<div class="row">
@@ -211,6 +214,10 @@
 									<select ng-model="engine.engStarting" class="form-control" ng-options="type.id as type.label for type in engStartings"></select>
 								</div>
 								<div class="form-group">
+									<label>Engine Description</label>
+									<input type="text" class="form-control" ng-model="engine.engDesc">
+								</div>
+								<div class="form-group">
 									<input type="submit" class="btn btn-block" value="Update">
 								</div>
 							</form>
@@ -225,6 +232,10 @@
 								<div class="form-group">
 									<label>Type</label>
 									<select ng-model="frame.frameType" class="form-control" ng-options="type.id as type.label for type in frameTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Frame Desc</label>
+									<input type="text" class="form-control" ng-model="frame.frameDesc">
 								</div>
 								<div class="form-group">
 									<label>Rake (degree)</label>
@@ -252,16 +263,16 @@
 									<input type="text" class="form-control" ng-model="suspension.suspFDiameter">
 								</div>
 								<div class="form-group">
-									<label>Front Preload</label>
-									<input type="text" class="form-control" ng-model="suspension.suspFPreload">
+									<label>Front Preload
+										<input type="checkbox" ng-model="suspension.suspFPreload" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
-									<label>Front Rebound</label>
-									<input type="text" class="form-control" ng-model="suspension.suspFRebound">
+									<label>Front Rebound
+										<input type="checkbox" ng-model="suspension.suspFRebound" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
-									<label>Front Compression</label>
-									<input type="text" class="form-control" ng-model="suspension.suspFCompression">
+									<label>Front Compression
+										<input type="checkbox" ng-model="suspension.suspFCompression" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
 									<label>Front Travel</label>
@@ -281,16 +292,16 @@
 									<input type="text" class="form-control" ng-model="suspension.suspRDiameter">
 								</div>
 								<div class="form-group">
-									<label>Rear Preload</label>
-									<input type="text" class="form-control" ng-model="suspension.suspRPreload">
+									<label>Rear Preload
+										<input type="checkbox" ng-model="suspension.suspRPreload" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
-									<label>Rear Rebound</label>
-									<input type="text" class="form-control" ng-model="suspension.suspRRebound">
+									<label>Rear Rebound
+										<input type="checkbox" ng-model="suspension.suspRRebound" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
-									<label>Rear Compression</label>
-									<input type="text" class="form-control" ng-model="suspension.suspRCompression">
+									<label>Rear Compression
+										<input type="checkbox" ng-model="suspension.suspRCompression" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
 									<label>Rear Travel</label>
@@ -298,7 +309,7 @@
 								</div>
 								<div class="form-group">
 									<label>Rear Description</label>
-									<input type="text" class="form-control" ng-model="suspension.susRFDesc">
+									<input type="text" class="form-control" ng-model="suspension.suspRDesc">
 								</div>
 
 								<div class="form-group">
@@ -484,6 +495,14 @@
 								<div class="form-group">
 									<label>Transmission Type</label>
 									<select ng-model="drive.drvTransmissionType" class="form-control" ng-options="type.id as type.label for type in drvTransmissionTypes"></select>
+								</div>
+								<div class="form-group">
+									<label>Is Slipper Clutch
+										<input type="checkbox" ng-model="drive.drvIsSlip" ng-true-value="1" ng-false-value="0"></label>
+								</div>
+								<div class="form-group">
+									<label>Has Reverse Gear
+										<input type="checkbox" ng-model="drive.drvHasReverseGear" ng-true-value="1" ng-false-value="0"></label>
 								</div>
 								<div class="form-group">
 									<label>Transimission Gear Count</label>
