@@ -16,7 +16,7 @@ mcControllers.controller('MCMakerCtrl',['$scope','MCMakerSvc','$modal','$rootSco
 			$scope.addMCMaker=function(){
 				var modalInstance=$modal.open({
 					animation:true,
-				    	templateUrl:'partials/MCMakerEdit.html',
+				    	templateUrl:'partials/mcMakerEdit.html',
 				    	controller:'mdlMCMakerAddCtrl'
 				});
 			};
@@ -24,7 +24,7 @@ mcControllers.controller('MCMakerCtrl',['$scope','MCMakerSvc','$modal','$rootSco
 			$scope.editMCMaker=function(id){
 				var modalInstance=$modal.open({
 					animation:true,
-				    	templateUrl:'partials/MCMakerEdit.html',
+				    	templateUrl:'partials/mcMakerEdit.html',
 				    	controller:'mdlMCMakerEditCtrl',
 				    	resolve:{
 						id: function(){
