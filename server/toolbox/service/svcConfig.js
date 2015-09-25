@@ -1,7 +1,7 @@
 var pool=require('../../db/dbpool');
 
 function getAll(configName, callback){
-	pool.query('select * from ??',[configName],callback);
+	pool.query('select * from ?? order by id',[configName],callback);
 };
 
 function getOneById(configName,id,callback){
