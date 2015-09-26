@@ -12,7 +12,12 @@ function addOne(fileName,callback){
 
 function getPic(fileName,res){
 	var r=fs.createReadStream(cfg.imageLib.model.web+fileName);
-	r.pipe(res);	
+	r.on('open',function(){
+		r.pipe(res);
+	});
+	r.on('error',function(err){
+		res.status(404).end();
+	});
 };
 
 function updatePositions(positions,callback){
