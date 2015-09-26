@@ -551,6 +551,24 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 				});
 			};
 
+			$scope.updateMCGalleryState=function(){
+				var states=[];
+				for (var i=0;i<$scope.mcGalleries.length;i++){
+					states[i]={id:$scope.mcGalleries[i].id,state:$scope.mcGalleries[i].state};
+				}
+				MCPicSvc.updateStates({states:states}).$promise.then(function(data){
+					console.log(data);
+					if (data.fail>0)
+						$scope.addAlert('warning','Update State: '+data.success+' Success. '+data.fail+' Failed.');
+					else
+						$scope.addAlert('success','States of '+data.success+' pic(s) has been updated successfully.');
+				},
+				function(err){
+					console.log(err);
+					$scope.addAlert('error',err);
+				});
+			};
+
 			$scope.resetModel=function(){
 				
 				$scope.changeStateExisted($scope.stateExisted.model,false);

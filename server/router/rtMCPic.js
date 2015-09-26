@@ -195,6 +195,12 @@ router.post('/mcpic/:id',function(req,res){
 			else res.status(200).end(JSON.stringify(data));
 		});
 	}
+	else if (req.params.id==='updateStates'){
+		ctrlMCPic.updateStates(req.body.states,function(err,data){
+			if (err) res.status(500).end(JSON.stringify(err));
+			else res.status(200).end(JSON.stringify(data));
+		});
+	}
 	else{
 		res.status(404).end();
 	}

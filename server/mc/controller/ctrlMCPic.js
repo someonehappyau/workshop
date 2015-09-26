@@ -39,6 +39,30 @@ function updatePositions(positions,callback){
 	});
 };
 
+function updateStates(states,callback){
+	var suc=0,fail=0;
+	async.each(states,function(state,cb){
+		svcMCPic.updateState(state,function(err,data){
+			if (err)
+				fail++;
+			else if (data.affectedRows!==1)
+				fail++;
+			else
+				suc++;
+			cb();
+		});
+	},
+	function(err){
+		if (err){
+			callback(err,null);
+			console.log(err);
+		}
+		else{
+			callback(null,{success:suc,fail:fail});
+		}
+	});
+};
+
 function deletePics(ids,callback){
 	var suc=0,fail=0;
 	async.each(ids,function(id,cb){
@@ -68,5 +92,6 @@ module.exports={
 	getPic:getPic,
 	
 	updatePositions:updatePositions,
+	updateStates:updateStates,
 	deletePics:deletePics,
 };

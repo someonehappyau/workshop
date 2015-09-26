@@ -83,6 +83,7 @@ mcServices.factory('MCPicSvc',
 			return $resource('/mc/svcMC/mcpic/:id',{id:'@id'},{
 				addPics:{method:'POST',params:{id:'savePics'}},
 				updatePositions:{method:'POST',params:{id:'updatePositions'}},
+				updateStates:{method:'POST',params:{id:'updateStates'}},
 				deletePics:{method:'POST',params:{id:'deletePics'}}
 			});
 		}]);
