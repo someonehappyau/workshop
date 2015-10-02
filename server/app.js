@@ -35,8 +35,11 @@ fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 var accessLogStream = FileStreamRotator.getStream({
   filename: logDirectory + '/access-%DATE%.log',
   frequency: 'daily',
-  verbose: false
+  verbose: false,
+  date_format: 'YYYYMMDD'
 });
+
+app.enable('trust proxy');
 
 // setup the logger
 app.use(logger('combined', {stream: accessLogStream}));
@@ -75,6 +78,8 @@ app.use('/mc/svcMC',rtMCWheel);
 app.use('/mc/svcMC',rtMCDimension);
 app.use('/mc/svcMC',rtMCDrive);
 app.use('/mc/svcMC',rtMCPic);
+
+app.use('/testlab/test',require('./router/rtTestlab'));
 
 app.use('/testlab',express.static(path.join(__dirname,'../apps/testlab')));
 app.use('/toolbox',express.static(path.join(__dirname,'../apps/toolbox')));
