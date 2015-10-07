@@ -391,7 +391,7 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 			};
 
 			$scope.submitModel=function(){
-				MCModelSvc.update({model:$scope.model,mcoid:$scope.mco.id}).$promise.then(function(data){
+				MCModelSvc.update({model:$scope.model}).$promise.then(function(data){
 					if (!!data.insertId)
 						$scope.model.id=data.insertId;
 					$scope.addAlert('success','Update Model successfully.');
@@ -576,6 +576,7 @@ mcControllers.controller('MCDetailCtrl',['$scope','$routeParams','MCModelSvc','T
 					id:'',
 					maker:'',
 					label:'',
+					nickname:'',
 					yearStart:'',
 					yearEnd:'',
 					type:''
